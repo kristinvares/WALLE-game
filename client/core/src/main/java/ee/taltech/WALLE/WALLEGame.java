@@ -7,15 +7,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import com.esotericsoftware.kryonet.Client;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class WALLEGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
 
+    private Client client;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
+        client = new Client();
+        client.start();
+
     }
 
     @Override
