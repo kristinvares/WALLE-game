@@ -23,6 +23,7 @@ public class WALLEGame extends ApplicationAdapter {
 
         client = new Client();
         client.start();
+        // continue here
     }
 
     @Override
