@@ -20,9 +20,9 @@ public class WALLEGame extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
+
         client = new Client();
         client.start();
-
     }
 
     @Override
