@@ -2,12 +2,14 @@ package ee.taltech.WALLE;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import com.esotericsoftware.kryonet.Client;
+import java.io.IOException;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class WALLEGame extends ApplicationAdapter {
@@ -27,7 +29,7 @@ public class WALLEGame extends ApplicationAdapter {
         client.sendTCP("Start");
         try {
             client.connect(5000, "localhost", 8080, 8081);
-        } catch (I0Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -50,9 +52,9 @@ public class WALLEGame extends ApplicationAdapter {
         batch.begin();
         //batch.draw(image, 140, 210); <- Janne koodirida :)
         // Agol oli videos nii. Tegin samamoodi
-        batch.draw(img, x, y);
+        batch.draw(image, x, y);
         batch.end();
-        clint.sendUDP("test");
+        client.sendUDP("test");
     }
 
     @Override
@@ -60,7 +62,7 @@ public class WALLEGame extends ApplicationAdapter {
         client.close();
         try {
             client.dispose();
-        } catch (I0Exeption e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         batch.dispose();
