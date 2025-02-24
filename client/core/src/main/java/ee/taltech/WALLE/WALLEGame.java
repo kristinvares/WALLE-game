@@ -13,6 +13,7 @@ import com.esotericsoftware.kryonet.Client;
 public class WALLEGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
+    private int x = 0, y = 0;
 
     private Client client;
 
@@ -23,19 +24,45 @@ public class WALLEGame extends ApplicationAdapter {
 
         client = new Client();
         client.start();
-        // continue here
+        client.sendTCP("Start");
+        try {
+            client.connect(5000, "localhost", 8080, 8081);
+        } catch (I0Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendPositionInfoToServer() {
+        client.sendUDP(x + "," + y);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            x -= 10;
+            sendPositionInfoToServer();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            x -= 10;
+            sendPositionInfoToServer();
+        }
         batch.begin();
-        batch.draw(image, 140, 210);
+        //batch.draw(image, 140, 210); <- Janne koodirida :)
+        // Agol oli videos nii. Tegin samamoodi
+        batch.draw(img, x, y);
         batch.end();
+        clint.sendUDP("test");
     }
 
     @Override
     public void dispose() {
+        client.close();
+        try {
+            client.dispose();
+        } catch (I0Exeption e) {
+            throw new RuntimeException(e);
+        }
         batch.dispose();
         image.dispose();
     }
