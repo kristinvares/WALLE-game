@@ -1,12 +1,3 @@
-esimene player sprite 2h
-player character movement 2h
-objektide märkimine tiledis 2h
-Teha teised mängijad nähtavaks, kui nad liituvad serveriga 6h 30m
-Teha algne Hud 1h
-Koosolek 1h
-
-
-
 # ITI0301-2025
 ## WALLE
 ### Mängu kirjeldus:
