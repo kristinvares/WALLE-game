@@ -21,6 +21,14 @@ client -> lwjgl3 -> src -> main -> java -> ee -> taltech -> WALLE -> lwjgl3 -> L
 - KryoNet 2.22 - Network communication
 - Gradle (x.xx) - Build automation tool
 
+### Features:
+
+| Feature                 | Description                                |
+|-------------------------|--------------------------------------------|
+| Multiplayer support     | Multiple players can join                  |
+| Object detection        | Map where u can't run through objects      |
+| Parallel game instances | Multiple games can run simultaneously      |
+
 
 
 ### Authorid:
