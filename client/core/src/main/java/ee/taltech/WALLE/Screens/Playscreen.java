@@ -59,7 +59,7 @@ public class Playscreen implements Screen {
 
         // laadime maailma ja teeme mapi renderdaja
         maploader = new TmxMapLoader();
-        map = maploader.load("level2.tmx");
+        map = maploader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / WALLEGame.PPM);
 
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
