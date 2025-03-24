@@ -10,6 +10,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import ee.taltech.WALLE.Screens.MenuScreen;
 import ee.taltech.WALLE.Screens.Playscreen;
 
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class WALLEGame extends Game {
         });
 
         // Ava mängu põhiekraan
-        setScreen(new Playscreen(this, client));
+        setScreen(new MenuScreen(this, client));
     }
 
     // Tagastab kõik mängijad (kasutatakse Playscreen-is)

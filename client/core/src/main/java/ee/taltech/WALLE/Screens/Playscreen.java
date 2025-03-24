@@ -47,7 +47,12 @@ public class Playscreen implements Screen {
     Vector2 spawnPosition;
 
     public Playscreen(WALLEGame game, Client client) {
-        this.client = client;
+        if (client == null) {
+            this.client = new Client();
+            this.client.start();
+        } else {
+            this.client = client;
+        }
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
         gameCam = new OrthographicCamera();
@@ -123,6 +128,10 @@ public class Playscreen implements Screen {
         float maxSpeed = 1.5f;
         if (player.b2body.getLinearVelocity().len() > maxSpeed) {
             player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().nor().scl(maxSpeed));
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new PauseScreen(game, this));
         }
     }
 
