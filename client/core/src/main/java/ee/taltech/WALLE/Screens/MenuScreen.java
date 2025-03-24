@@ -14,7 +14,7 @@ import com.esotericsoftware.kryonet.Client;
 import ee.taltech.WALLE.WALLEGame;
 
 public class MenuScreen implements Screen {
-    private final WALLEGame game; // Your main game class
+    private final WALLEGame game;
     private Stage stage;
     private Skin skin;
 
@@ -23,8 +23,8 @@ public class MenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        // Load the skin for the buttons (you can customize this)
-        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have a skin file
+        // Load the skin for the buttons
+        skin = new Skin(Gdx.files.internal("uiskin.json")); // no files yet
 
         // Create buttons
         TextButton playButton = new TextButton("Play", skin);
@@ -32,7 +32,7 @@ public class MenuScreen implements Screen {
         TextButton settingsButton = new TextButton("Settings", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
-        // Add listeners to buttons
+        // Button listeners
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
