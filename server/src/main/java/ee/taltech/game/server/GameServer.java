@@ -1,5 +1,9 @@
 package ee.taltech.game.server;
 
+import Network.PacketPosition;
+import Network.PacketUpdatePlayers;
+import Network.Player;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -11,41 +15,64 @@ import java.util.Map;
 
 public class GameServer {
     private Server server;
-    private Map<Integer, String> gameObjects = new HashMap<>();
+    private HashMap<Integer, Player> players = new HashMap<>();
 
     public GameServer() {
         server = new Server();
         server.start();
+
         Kryo kryo = server.getKryo();
+        kryo.register(PacketPosition.class);
+        kryo.register(Player.class);
+        kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
 
         try {
             server.bind(8080, 8081);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         server.addListener(new Listener() {
             @Override
-            public void received(Connection connection, Object object) {
-                if (object instanceof String) {
-                    System.out.println("RECEIVED POSITION FROM CLIENT " + connection.getID() + ": " + object);
-                    gameObjects.put(connection.getID(), (String) object);
-                }
+            public void connected(Connection connection) {
+                System.out.println("CLIENT CONNECTED: " + connection.getID());
 
-                System.out.println("SENDING UPDATED POSITIONS TO CLIENTS: " + gameObjects);
-                server.sendToAllUDP(gameObjects);
+                Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID());
+                players.put(connection.getID(), newPlayer);
+
+                sendUpdatedPlayers();
+            }
+
+            @Override
+            public void received(Connection connection, Object object) {
+                if (object instanceof PacketPosition packet) {
+                    if (players.containsKey(packet.id)) {
+                        Player player = players.get(packet.id);
+                        player.x = packet.x;
+                        player.y = packet.y;
+
+                        sendUpdatedPlayers();
+                    }
+                }
             }
 
             @Override
             public void disconnected(Connection connection) {
                 System.out.println("CLIENT DISCONNECTED: " + connection.getID());
-                gameObjects.remove(connection.getID());
+                players.remove(connection.getID());
+                sendUpdatedPlayers();
             }
         });
+    }
+
+    private void sendUpdatedPlayers() {
+        PacketUpdatePlayers packet = new PacketUpdatePlayers(players);
+        server.sendToAllUDP(packet);
     }
 
     public static void main(String[] args) {
         new GameServer();
     }
 }
+
