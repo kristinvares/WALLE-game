@@ -1,6 +1,11 @@
 plugins {
-    id 'java'
+    id 'application'
 }
+
+application {
+    mainClass = 'ee.taltech.game.server.GameServer'
+}
+
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
@@ -17,4 +22,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ee.taltech.game.server'
+        )
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
