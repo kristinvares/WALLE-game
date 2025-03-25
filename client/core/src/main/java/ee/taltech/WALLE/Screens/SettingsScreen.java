@@ -14,8 +14,8 @@ public class SettingsScreen implements Screen {
     private final Screen previousScreen; // Mäletab eelmist ekraani
     private Stage stage;
     private Skin skin;
-    private Slider brightnessSlider, volumeSlider;
-    private Label brightnessLabel, volumeLabel;
+    private Slider brightnessSlider, volumeSlider, bgmSlider, sfxSlider;
+    private Label brightnessLabel, volumeLabel, bgmLabel, sfxLabel;
 
     public SettingsScreen(WALLEGame game, Screen previousScreen) {
         this.game = game;
@@ -25,9 +25,9 @@ public class SettingsScreen implements Screen {
 
         skin = new Skin(Gdx.files.internal("uiskin.json")); // hetkel pole seda faili
 
-        // === HELEDUS SLIDER ===
-        brightnessSlider = new Slider(1, 100, 1, false, skin);
-        brightnessSlider.setValue(50); // algväärtus, testimiseks
+        // === BRIGHTNESS SLIDER ===
+        brightnessSlider = new Slider(-100, 100, 1, false, skin);
+        brightnessSlider.setValue(0); // algväärtus, testimiseks
         brightnessLabel = new Label("Brightness: " + (int) brightnessSlider.getValue(), skin);
 
         brightnessSlider.addListener(event -> {
@@ -35,13 +35,32 @@ public class SettingsScreen implements Screen {
             return false;
         });  // funktsionaalsus praegu puudub
 
-        // === HELITUUGEVISE SLIDER ===
+        // === VOLUME SLIDER ===
         volumeSlider = new Slider(1, 100, 1, false, skin);
         volumeSlider.setValue(50); // algväärtus, testimiseks
-        volumeLabel = new Label("Volume: " + (int) volumeSlider.getValue(), skin);
+        volumeLabel = new Label("Master volume: " + (int) volumeSlider.getValue(), skin);
 
         volumeSlider.addListener(event -> {
-            volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
+            volumeLabel.setText("Master volume: " + (int) volumeSlider.getValue());
+            return false;
+        });
+
+        // === BGM SLIDER ===
+        bgmSlider = new Slider(1, 100, 1, false, skin);
+        bgmSlider.setValue(50); // algväärtus, testimiseks
+        bgmLabel = new Label("SFX: " + (int) bgmSlider.getValue(), skin);
+
+        bgmSlider.addListener(event -> {
+            bgmLabel.setText("SFX: " + (int) bgmSlider.getValue());
+            return false;
+        });
+        // === SFX SLIDER ===
+        sfxSlider = new Slider(1, 100, 1, false, skin);
+        sfxSlider.setValue(50); // algväärtus, testimiseks
+        sfxLabel = new Label("Backgound music: " + (int) sfxSlider.getValue(), skin);
+
+        sfxSlider.addListener(event -> {
+            sfxLabel.setText("Backgound music: " + (int) sfxSlider.getValue());
             return false;
         });
 
@@ -64,6 +83,14 @@ public class SettingsScreen implements Screen {
         table.add(volumeLabel).padBottom(10);
         table.row();
         table.add(volumeSlider).width(300).padBottom(20);
+        table.row();
+        table.add(bgmLabel).padBottom(10);
+        table.row();
+        table.add(bgmSlider).width(300).padBottom(20);
+        table.row();
+        table.add(sfxLabel).padBottom(10);
+        table.row();
+        table.add(sfxSlider).width(300).padBottom(20);
         table.row();
         table.add(backButton).padTop(20);
 
