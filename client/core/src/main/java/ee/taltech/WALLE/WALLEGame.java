@@ -3,6 +3,8 @@ package ee.taltech.WALLE;
 import Network.PacketPosition;
 import Network.PacketUpdatePlayers;
 import Network.Player;
+import Network.BulletData;
+import Network.PacketBulletDestroy;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,13 +18,20 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class WALLEGame extends Game {
-    public static final int V_WIDTH = 360;
-    public static final int V_HEIGHT = 240;
-    public static final float PPM = 100; // Pixels Per Meter — jääb samaks, nagu sul algselt oli
+    public static final int V_WIDTH = 480;
+    public static final int V_HEIGHT = 360;
+    public static final float PPM = 100;// Pixels Per Meter — jääb samaks, nagu sul algselt oli
+    public static final short DEFAULT_BIT = 1;
+    public static final short PLAYER_BIT = 2;
+    public static final short BULLET_BIT = 4;
+    public static final short WALL_BIT = 8;
+    public static final short ENEMY_BIT = 16;
+    public static final short BRIDGE_BIT = 32;
 
     public SpriteBatch batch;
     public Client client;
     public HashMap<Integer, Player> players = new HashMap<>();
+    Playscreen playscreen;
 
     @Override
     public void create() {
@@ -30,12 +39,15 @@ public class WALLEGame extends Game {
         client = new Client();
         client.start();
 
+
         // Registreeri Kryo jaoks kõik vajalikud klassid
         Kryo kryo = client.getKryo();
         kryo.register(PacketPosition.class);
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(BulletData.class);
+        kryo.register(PacketBulletDestroy.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
@@ -50,7 +62,7 @@ public class WALLEGame extends Game {
             public void received(Connection connection, Object object) {
                 if (object instanceof PacketUpdatePlayers packet) {
                     players.putAll(packet.players);
-                    System.out.println("UUENDATUD MÄNGIJAD SAADUD: " + players);
+
                 }
 
                 if (object instanceof PacketPosition packet) {
@@ -58,8 +70,15 @@ public class WALLEGame extends Game {
                         Player player = players.get(packet.id);
                         player.x = packet.x;
                         player.y = packet.y;
-                        System.out.println("MÄNGIJA UUENDATUD POSITSIOON: ID=" + packet.id + " X=" + packet.x + " Y=" + packet.y);
+
                     }
+                }
+                if (object instanceof BulletData packet) {
+                    playscreen.createRemoteBullet(packet);
+                }
+
+                if (object instanceof PacketBulletDestroy packet) {
+                    playscreen.removeRemoteBullet(packet.bulletId);
                 }
             }
 
@@ -71,7 +90,8 @@ public class WALLEGame extends Game {
         });
 
         // Ava mängu põhiekraan
-        setScreen(new Playscreen(this, client));
+        playscreen = new Playscreen(this, client);
+        setScreen(playscreen);
     }
 
     // Tagastab kõik mängijad (kasutatakse Playscreen-is)
@@ -93,5 +113,3 @@ public class WALLEGame extends Game {
         }
     }
 }
-
-

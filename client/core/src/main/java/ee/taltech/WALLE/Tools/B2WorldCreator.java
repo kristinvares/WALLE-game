@@ -26,9 +26,14 @@ public class B2WorldCreator {
 
             body = world.createBody(bdef);
             shape.setAsBox((rect.getWidth() / 2) / WALLEGame.PPM, (rect.getHeight() / 2) / WALLEGame.PPM);
+
             fdef.shape = shape;
-            fdef.isSensor = false; // Ei lase mängijal neist läbi minna
-            body.createFixture(fdef);
+
+            // Lisa seinadele korrektsed bitmaskid
+            fdef.filter.categoryBits = WALLEGame.WALL_BIT;
+            fdef.filter.maskBits = WALLEGame.PLAYER_BIT | WALLEGame.BULLET_BIT;
+
+            body.createFixture(fdef).setUserData("WALL");
         }
 
         // Mängija `spawn` punkt
