@@ -50,10 +50,9 @@ public class MenuScreen implements Screen {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // game.setScreen(new SettingsScreen(game)); // settings screen
+                game.setScreen(new SettingsScreen(game, MenuScreen.this)); // settings screen
             }
         });
-
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -95,6 +94,9 @@ public class MenuScreen implements Screen {
 
     @Override
     public void pause() {
+    }
+    public Stage getStage() {
+        return stage;
     }
 
     @Override

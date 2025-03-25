@@ -40,7 +40,7 @@ public class PauseScreen implements Screen {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // game.setScreen(new SettingsScreen(game)); // open settings
+                game.setScreen(new SettingsScreen(game, PauseScreen.this)); // // settings screen
             }
         });
 
@@ -80,6 +80,9 @@ public class PauseScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+    }
+    public Stage getStage() {
+        return stage;
     }
 
     @Override

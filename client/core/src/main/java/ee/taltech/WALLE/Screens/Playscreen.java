@@ -47,12 +47,7 @@ public class Playscreen implements Screen {
     Vector2 spawnPosition;
 
     public Playscreen(WALLEGame game, Client client) {
-        if (client == null) {
-            this.client = new Client();
-            this.client.start();
-        } else {
-            this.client = client;
-        }
+        this.client = client;
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
         gameCam = new OrthographicCamera();
