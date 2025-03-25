@@ -33,7 +33,7 @@ public class SettingsScreen implements Screen {
         brightnessSlider.addListener(event -> {
             brightnessLabel.setText("Brightness: " + (int) brightnessSlider.getValue());
             return false;
-        });  // funktsionaalsus praegu puudub
+        });  // funktsionaalsus praegu puudub, to be added
 
         // === VOLUME SLIDER ===
         volumeSlider = new Slider(1, 100, 1, false, skin);
