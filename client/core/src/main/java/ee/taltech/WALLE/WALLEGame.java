@@ -3,6 +3,7 @@ package ee.taltech.WALLE;
 import Network.PacketPosition;
 import Network.PacketUpdatePlayers;
 import Network.Player;
+import Network.PacketDisconnect;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,6 +38,7 @@ public class WALLEGame extends Game {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(PacketDisconnect.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
