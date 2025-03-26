@@ -28,7 +28,7 @@ public class GameServer {
         kryo.register(HashMap.class);
 
         try {
-            server.bind(8080, 8081);
+            server.bind(9090, 8081);
         } catch (IOException e) {
             e.printStackTrace();
         }

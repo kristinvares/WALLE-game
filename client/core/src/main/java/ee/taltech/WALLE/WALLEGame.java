@@ -38,7 +38,7 @@ public class WALLEGame extends Game {
         kryo.register(HashMap.class);
 
         try {
-            client.connect(5000, "193.40.255.32", 8080, 8081);
+            client.connect(5000, "193.40.255.32", 9090, 8081);
             System.out.println("ÜHENDUS SERVERIGA LOODUD!");
         } catch (IOException e) {
             System.err.println("Ühenduse loomine ebaõnnestus: " + e.getMessage());
