@@ -18,4 +18,9 @@ dependencies {
   }
 
   implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+
+  // SLF4J API loggimiseks
+  implementation 'org.slf4j:slf4j-api:2.0.9'
+  // Logback SLF4J implementationi jaoks
+  implementation 'ch.qos.logback:logback-classic:1.4.14'
 }

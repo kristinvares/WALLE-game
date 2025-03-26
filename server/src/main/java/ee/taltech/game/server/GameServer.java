@@ -11,9 +11,14 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
+
+// Logger
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GameServer {
+    private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
+
     private Server server;
     private HashMap<Integer, Player> players = new HashMap<>();
 
@@ -28,15 +33,18 @@ public class GameServer {
         kryo.register(HashMap.class);
 
         try {
-            server.bind(9090, 8081);
+            // Kontrolli ühendust serveri protidega
+            server.bind(8081, 8081);
+            logger.info("Server started on port 8081");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Failed to bind server ports.", e);
         }
 
         server.addListener(new Listener() {
             @Override
             public void connected(Connection connection) {
-                System.out.println("CLIENT CONNECTED: " + connection.getID());
+                // Käsitle kliendi connectimist
+                logger.info("CLIENT CONNECTED: {}", connection.getID());
 
                 Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID());
                 players.put(connection.getID(), newPlayer);
@@ -46,20 +54,20 @@ public class GameServer {
 
             @Override
             public void received(Connection connection, Object object) {
-                if (object instanceof PacketPosition packet) {
-                    if (players.containsKey(packet.id)) {
-                        Player player = players.get(packet.id);
-                        player.x = packet.x;
-                        player.y = packet.y;
+                // Updatei playeri kordinaate
+                if (object instanceof PacketPosition packet && players.containsKey(packet.id)) {
+                    Player player = players.get(packet.id);
+                    player.x = packet.x;
+                    player.y = packet.y;
 
-                        sendUpdatedPlayers();
-                    }
+                    sendUpdatedPlayers();
                 }
             }
 
             @Override
             public void disconnected(Connection connection) {
-                System.out.println("CLIENT DISCONNECTED: " + connection.getID());
+                // Käsitle disconnecte
+                logger.info("CLIENT DISCONNECTED: {}", connection.getID());
                 players.remove(connection.getID());
                 sendUpdatedPlayers();
             }

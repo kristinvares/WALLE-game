@@ -14,7 +14,7 @@
  */
 //Note, the above license and copyright applies to this file only.
 
-package ee.taltech.WALLE.lwjgl3;
+package ee.taltech.walle.lwjgl3;
 
 import org.lwjgl.system.macosx.LibC;
 
@@ -23,6 +23,11 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+
+// Logger
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+// Ma ei katsu jäänud stiili erroreid kuna file loodi libgdx implementeerimisega
 
 /**
  * Adds some utilities to ensure that the JVM was started with the
@@ -34,7 +39,7 @@ import java.util.ArrayList;
  * @author damios
  */
 public class StartupHelper {
-
+    private static final Logger logger = LoggerFactory.getLogger(StartupHelper.class);
     private static final String JVM_RESTARTED_ARG = "jvmIsRestarted";
 
     private StartupHelper() {
@@ -93,7 +98,7 @@ public class StartupHelper {
         // check whether the JVM was previously restarted
         // avoids looping, but most certainly leads to a crash
         if ("true".equals(System.getProperty(JVM_RESTARTED_ARG))) {
-            System.err.println(
+            logger.error(
                     "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument.");
             return false;
         }
@@ -107,7 +112,7 @@ public class StartupHelper {
         //String javaExecPath = ProcessHandle.current().info().command().orElseThrow();
 
         if (!(new File(javaExecPath)).exists()) {
-            System.err.println(
+            logger.error(
                     "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!");
             return false;
         }
@@ -124,7 +129,7 @@ public class StartupHelper {
             if (trace.length > 0) {
                 mainClass = trace[trace.length - 1].getClassName();
             } else {
-                System.err.println("The main class could not be determined.");
+                logger.error("The main class could not be determined.");
                 return false;
             }
         }
@@ -142,13 +147,13 @@ public class StartupHelper {
                 String line;
 
                 while ((line = processOutput.readLine()) != null) {
-                    System.out.println(line);
+                    logger.info(line);
                 }
 
                 process.waitFor();
             }
         } catch (Exception e) {
-            System.err.println("There was a problem restarting the JVM");
+            logger.error("There was a problem restarting the JVM");
             e.printStackTrace();
         }
 
