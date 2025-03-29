@@ -5,6 +5,8 @@ import Network.PacketUpdatePlayers;
 import Network.Player;
 import Network.PacketDisconnect;
 
+import Network.BulletData;
+import Network.PacketBulletDestroy;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -13,11 +15,17 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameServer {
     private Server server;
     private HashMap<Integer, Player> players = new HashMap<>();
+    private HashMap<Integer, BulletData> activeBullets = new HashMap<>();
+    private Queue<Integer> availableIds = new LinkedList<>();
+    private AtomicInteger nextBulletId = new AtomicInteger(1); // Unikaalsed ID-d
+    private HashMap<Integer, Integer> tempToRealBulletMap = new HashMap<>();
 
     public GameServer() {
         server = new Server();
@@ -30,6 +38,8 @@ public class GameServer {
         kryo.register(HashMap.class);
         kryo.register(PacketDisconnect.class);
 
+        kryo.register(BulletData.class);
+        kryo.register(PacketBulletDestroy.class);
 
         try {
             server.bind(8080, 8081);
@@ -58,6 +68,23 @@ public class GameServer {
 
                         sendUpdatedPlayers();
                     }
+                }
+                if (object instanceof BulletData packet) {
+                    int realBulletId = nextBulletId.getAndIncrement(); // Uus ID serveris
+                    tempToRealBulletMap.put(packet.bulletId, realBulletId); // Seome ajutise ja tõelise ID
+                    packet.bulletId = realBulletId;  // Määra uus ametlik ID
+
+                    activeBullets.put(realBulletId, new BulletData(packet.x, packet.y, packet.shooterID));
+
+                    System.out.println("➡️ SERVER SAADAB KUULI ID-ga: " + packet.bulletId +
+                            " | POSITSIOON: " + packet.x + ", " + packet.y);
+                    server.sendToAllUDP(packet);
+                }
+
+                if (object instanceof PacketBulletDestroy packet) {
+                    activeBullets.remove(packet.bulletId);
+                    availableIds.add(packet.bulletId);
+                    server.sendToAllUDP(packet);
                 }
             }
 

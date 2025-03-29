@@ -10,6 +10,7 @@ public class PlayerSprite extends Sprite {
     public World world;
     public Body b2body;
     private TextureRegion playerStand;
+    private float rotationAngle;
 
     public PlayerSprite(World world, Playscreen screen, float startX, float startY) {
         super(screen.getAtlas().findRegion("little_mario"));
@@ -33,6 +34,20 @@ public class PlayerSprite extends Sprite {
         shape.setRadius(6 / WALLEGame.PPM);
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+
+        // Lisa bitmaskid kokkupõrke jaoks
+        fdef.filter.categoryBits = WALLEGame.PLAYER_BIT;
+        fdef.filter.maskBits = WALLEGame.WALL_BIT | WALLEGame.ENEMY_BIT;
+
+        b2body.createFixture(fdef).setUserData(this);
+        shape.dispose();
+    }
+
+    public void setRotation(float angle) {
+        this.rotationAngle = angle;
+    }
+
+    public float getRotation() {
+        return rotationAngle;
     }
 }
