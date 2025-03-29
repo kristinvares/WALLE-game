@@ -144,6 +144,7 @@ public class Playscreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             movement.x = Math.min(velocity.x + acceleration, moveSpeed);
         }
+
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             movement.y = Math.min(velocity.y + acceleration, moveSpeed);
         }
@@ -163,6 +164,10 @@ public class Playscreen implements Screen {
         float maxSpeed = 1.5f;
         if (player.b2body.getLinearVelocity().len() > maxSpeed) {
             player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().nor().scl(maxSpeed));
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new PauseScreen(game, this));
         }
 
         // KUULI LASKMINE
