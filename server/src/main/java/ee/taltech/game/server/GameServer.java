@@ -3,6 +3,8 @@ package ee.taltech.game.server;
 import Network.PacketPosition;
 import Network.PacketUpdatePlayers;
 import Network.Player;
+import Network.PacketDisconnect;
+
 import Network.BulletData;
 import Network.PacketBulletDestroy;
 
@@ -34,6 +36,8 @@ public class GameServer {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(PacketDisconnect.class);
+
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
 

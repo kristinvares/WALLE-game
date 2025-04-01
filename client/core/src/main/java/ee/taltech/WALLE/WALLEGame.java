@@ -3,6 +3,7 @@ package ee.taltech.WALLE;
 import Network.PacketPosition;
 import Network.PacketUpdatePlayers;
 import Network.Player;
+import Network.PacketDisconnect;
 import Network.BulletData;
 import Network.PacketBulletDestroy;
 
@@ -12,6 +13,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import ee.taltech.WALLE.Screens.MenuScreen;
 import ee.taltech.WALLE.Screens.Playscreen;
 
 import java.io.IOException;
@@ -48,6 +50,7 @@ public class WALLEGame extends Game {
         kryo.register(HashMap.class);
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
+        kryo.register(PacketDisconnect.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
@@ -90,6 +93,7 @@ public class WALLEGame extends Game {
         });
 
         // Ava mängu põhiekraan
+        setScreen(new MenuScreen(this, client));
         playscreen = new Playscreen(this, client);
         setScreen(playscreen);
     }
