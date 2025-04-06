@@ -5,12 +5,17 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ee.taltech.WALLE.Screens.Playscreen;
 import ee.taltech.WALLE.WALLEGame;
+// Kristin lisas juurde
+import com.badlogic.gdx.utils.Timer;
 
 public class PlayerSprite extends Sprite {
     public World world;
     public Body b2body;
     private TextureRegion playerStand;
     private float rotationAngle;
+    // Kristin lisas juurde alumised
+    private int health;
+    private int maxHealth;
 
     public PlayerSprite(World world, Playscreen screen, float startX, float startY) {
         super(screen.getAtlas().findRegion("little_mario"));
@@ -18,6 +23,11 @@ public class PlayerSprite extends Sprite {
         playerStand = new TextureRegion(getTexture(),0, 8, 16, 16);
         setBounds(0,0, 16 / WALLEGame.PPM, 16 / WALLEGame.PPM);
         setRegion(playerStand);
+        // Kristin lisas juurde elude algväärtuse
+        // kui palju elu mängijal maksimaalselt olla saab
+        maxHealth = 10;
+        // kui palju elu tal praegu alles on
+        health = maxHealth;
     }
 
     public void update(float dt) {
@@ -49,5 +59,39 @@ public class PlayerSprite extends Sprite {
 
     public float getRotation() {
         return rotationAngle;
+    }
+
+    // Kristin lisas juurde
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+        flashRedOnHit();
+    }
+
+    public void heal(int amount) {
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
+    }
+
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void flashRedOnHit() {
+        setColor(1, 0, 0, 1); // muudab sprite punaseks
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                setColor(1, 1, 1, 1); // muutub tagasi normaalseks
+            }
+        }, 0.2f); // 0.2 sekundi pärast
     }
 }

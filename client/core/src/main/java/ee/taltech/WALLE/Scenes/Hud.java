@@ -19,6 +19,7 @@ public class Hud implements Disposable {
     private float timeCount;
     private Integer score;
 
+
     Label countdownLabel;
     Label scoreLabel;
     Label timeLabel;
