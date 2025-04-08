@@ -21,12 +21,16 @@ public class MenuScreen implements Screen {
     private final WALLEGame game;
     private Stage stage;
     private Client client;
+    private BitmapFont font;
 
     public MenuScreen(WALLEGame game, Client client) {
         this.game = game;
         this.client = client;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
+        // Load the custom font
+        font = new BitmapFont(Gdx.files.internal("fonts/cinzel.fnt"));
 
         // Create buttons with custom borders and text
         TextButton playButton = createCustomButton("Play");
@@ -63,7 +67,7 @@ public class MenuScreen implements Screen {
         TextButtonStyle buttonStyle = new TextButtonStyle();
         buttonStyle.up = new TextureRegionDrawable(buttonRegion); // Set normal state
         buttonStyle.down = new TextureRegionDrawable(buttonRegion); // Set pressed state (optional)
-        buttonStyle.font = new BitmapFont();  // Use default font for text
+        buttonStyle.font = font;  // Use custom Cinzel font
 
         // Create the TextButton with the defined style
         TextButton button = new TextButton(buttonText, buttonStyle);
@@ -78,9 +82,6 @@ public class MenuScreen implements Screen {
                     case "Play":
                         game.setScreen(new Playscreen(game, client)); // Play screen transition
                         break;
-                    // case "Multiplayer":
-                    // game.setScreen(new MultiplayerScreen(game));  // Multiplayer screen transition
-                    // break;
                     case "Settings":
                         game.setScreen(new SettingsScreen(game, MenuScreen.this));  // Pass MenuScreen as the previous screen
                         break;
@@ -95,7 +96,7 @@ public class MenuScreen implements Screen {
     }
 
     private void addButtonListeners(TextButton playButton, TextButton multiplayerButton, TextButton settingsButton, TextButton exitButton) {
-        // Note: Button listeners have been integrated into the `createCustomButton` method already
+        // Button listeners have already been integrated into the `createCustomButton` method
     }
 
     public Stage getStage() {
@@ -139,5 +140,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();  // Dispose of the stage when done
+        font.dispose();  // Dispose of the font to avoid memory leaks
     }
 }
