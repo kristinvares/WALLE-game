@@ -48,9 +48,10 @@ public class WALLEGame extends Game {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(PacketDisconnect.class);
+
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
-        kryo.register(PacketDisconnect.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
