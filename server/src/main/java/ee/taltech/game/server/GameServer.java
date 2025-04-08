@@ -36,10 +36,9 @@ public class GameServer {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
-        kryo.register(PacketDisconnect.class);
-
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
+        kryo.register(PacketDisconnect.class);
 
         try {
             server.bind(8080, 8081);
