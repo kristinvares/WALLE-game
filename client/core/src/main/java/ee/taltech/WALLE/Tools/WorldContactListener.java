@@ -20,8 +20,9 @@ public class WorldContactListener implements ContactListener {
 
         // Kontrollime, kas kuul tabas seina
         if ((fixA.getUserData() instanceof Bullet || fixB.getUserData() instanceof Bullet) &&
-            (fixA.getUserData() != null && fixA.getUserData().equals("WALL") ||
-                fixB.getUserData() != null && fixB.getUserData().equals("WALL"))) {
+            ((fixA.getUserData() != null && fixA.getUserData().equals("WALL")) ||
+                (fixB.getUserData() != null && fixB.getUserData().equals("WALL")))) {
+
 
             Bullet bullet = fixA.getUserData() instanceof Bullet ? (Bullet) fixA.getUserData() : (Bullet) fixB.getUserData();
             bullet.markForDestruction();
