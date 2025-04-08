@@ -79,8 +79,8 @@ public class MenuScreen implements Screen {
                         game.setScreen(new Playscreen(game, client)); // Play screen transition
                         break;
                     // case "Multiplayer":
-                        // game.setScreen(new MultiplayerScreen(game));  // Multiplayer screen transition
-                        // break;
+                    // game.setScreen(new MultiplayerScreen(game));  // Multiplayer screen transition
+                    // break;
                     case "Settings":
                         game.setScreen(new SettingsScreen(game, MenuScreen.this));  // Pass MenuScreen as the previous screen
                         break;
