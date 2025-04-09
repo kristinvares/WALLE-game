@@ -1,12 +1,6 @@
 package ee.taltech.game.server;
 
-import Network.PacketPosition;
-import Network.PacketUpdatePlayers;
-import Network.Player;
-import Network.PacketDisconnect;
-
-import Network.BulletData;
-import Network.PacketBulletDestroy;
+import network.*;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -39,6 +33,8 @@ public class GameServer {
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketDisconnect.class);
+        kryo.register(PacketPlayerHealth.class);
+
 
         try {
             server.bind(8080, 8081);

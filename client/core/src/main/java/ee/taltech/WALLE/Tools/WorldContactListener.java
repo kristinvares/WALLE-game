@@ -1,10 +1,11 @@
 package ee.taltech.WALLE.Tools;
 
-import Network.PacketBulletDestroy;
+import network.PacketBulletDestroy;
 import com.badlogic.gdx.physics.box2d.*;
 import ee.taltech.WALLE.Sprites.Bullet;
 import ee.taltech.WALLE.Sprites.PlayerSprite;
 import ee.taltech.WALLE.WALLEGame;
+import network.PacketPlayerHealth;
 
 public class WorldContactListener implements ContactListener {
     private final WALLEGame game;
@@ -42,6 +43,11 @@ public class WorldContactListener implements ContactListener {
 
             player.takeDamage(1);
             System.out.println("Mängija sai tabamuse! Elud: " + player.getHealth());
+
+            PacketPlayerHealth healthPacket = new PacketPlayerHealth();
+            healthPacket.id = game.client.getID(); // ← või `player.getId()` kui sul on meetod
+            healthPacket.newHealth = player.getHealth();
+            game.client.sendUDP(healthPacket);
 
             bullet.markForDestruction();
             if (!bullet.isRemote()) {
