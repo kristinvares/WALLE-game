@@ -1,5 +1,7 @@
 package ee.taltech.WALLE.Screens;
 
+import Network.PacketIsMultiPlayer;
+import Network.PacketIsSinglePlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -50,9 +53,29 @@ public class MenuScreen implements Screen {
         TextButton multiplayerButton = createCustomButton("MULTIPLAYER");
         TextButton settingsButton = createCustomButton("SETTINGS");
         TextButton exitButton = createCustomButton("QUIT");
+        TextButton playButton = new TextButton("Play", skin);
+        TextButton multiplayerButton = new TextButton("Multiplayer", skin);
+        TextButton settingsButton = new TextButton("Settings", skin);
+        TextButton exitButton = new TextButton("Exit", skin);
 
-        // Add listeners
-        addButtonListeners(playButton, multiplayerButton, settingsButton, exitButton);
+        // Button listeners
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                client.sendTCP(new PacketIsSinglePlayer(client.getID()));
+                game.setScreen(game.getPlayscreen());
+
+                // single-player screen
+            }
+        });
+
+        multiplayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                client.sendTCP(new PacketIsMultiPlayer(client.getID()));
+                game.setScreen(game.getPlayscreen());
+            }
+        });
 
         // Create and center the table
         Table table = new Table();

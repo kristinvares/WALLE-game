@@ -1,11 +1,6 @@
 package ee.taltech.WALLE;
 
-import Network.PacketPosition;
-import Network.PacketUpdatePlayers;
-import Network.Player;
-import Network.PacketDisconnect;
-import Network.BulletData;
-import Network.PacketBulletDestroy;
+import Network.*;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,14 +28,17 @@ public class WALLEGame extends Game {
     public SpriteBatch batch;
     public Client client;
     public HashMap<Integer, Player> players = new HashMap<>();
+    public int gameId;
     Playscreen playscreen;
 
+    public Playscreen getPlayscreen() {
+        return playscreen;
+    }
     @Override
     public void create() {
         batch = new SpriteBatch();
         client = new Client();
         client.start();
-
 
         // Registreeri Kryo jaoks kõik vajalikud klassid
         Kryo kryo = client.getKryo();
@@ -52,6 +50,10 @@ public class WALLEGame extends Game {
 
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
+        kryo.register(PacketDisconnect.class);
+        kryo.register(PacketIsSinglePlayer.class);
+        kryo.register(PacketIsMultiPlayer.class);
+        kryo.register(PacketGameId.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
@@ -66,19 +68,22 @@ public class WALLEGame extends Game {
             public void received(Connection connection, Object object) {
                 if (object instanceof PacketUpdatePlayers packet) {
                     players.putAll(packet.players);
-
                 }
 
                 if (object instanceof PacketPosition packet) {
+
                     if (players.containsKey(packet.id)) {
                         Player player = players.get(packet.id);
                         player.x = packet.x;
                         player.y = packet.y;
-
                     }
                 }
                 if (object instanceof BulletData packet) {
                     playscreen.createRemoteBullet(packet);
+                }
+
+                if (object instanceof PacketGameId packet) {
+                    gameId = packet.getGameId();
                 }
 
                 if (object instanceof PacketBulletDestroy packet) {
