@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -20,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.kryonet.Client;
 import ee.taltech.WALLE.WALLEGame;
+
 
 public class MenuScreen implements Screen {
     private final WALLEGame game;
@@ -32,6 +32,9 @@ public class MenuScreen implements Screen {
     private Texture background1, background2, background3, background4;
     private float scaleX, scaleY, scale;
     private float x, y;
+
+    // Declare buttons
+    private TextButton playButton, multiplayerButton, settingsButton, exitButton;
 
     public MenuScreen(WALLEGame game, Client client) {
         this.game = game;
@@ -49,19 +52,18 @@ public class MenuScreen implements Screen {
         background4 = new Texture(Gdx.files.internal("menu_background/4.png"));
 
         // Create buttons
-        TextButton playButton = createCustomButton("PLAY");
-        TextButton multiplayerButton = createCustomButton("MULTIPLAYER");
-        TextButton settingsButton = createCustomButton("SETTINGS");
-        TextButton exitButton = createCustomButton("QUIT");
+        playButton = createCustomButton("PLAY");
+        multiplayerButton = createCustomButton("MULTIPLAYER");
+        settingsButton = createCustomButton("SETTINGS");
+        exitButton = createCustomButton("QUIT");
 
         // Button listeners
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                System.out.println("Play Button Clicked");
                 client.sendTCP(new PacketIsSinglePlayer(client.getID()));
                 game.setScreen(game.getPlayscreen());
-
-                // single-player screen
             }
         });
 
@@ -70,6 +72,20 @@ public class MenuScreen implements Screen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 client.sendTCP(new PacketIsMultiPlayer(client.getID()));
                 game.setScreen(game.getPlayscreen());
+            }
+        });
+
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                game.setScreen(new SettingsScreen(game, MenuScreen.this)); // Go to settings screen
+            }
+        });
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                Gdx.app.exit(); // Exit the game
             }
         });
 
@@ -99,35 +115,7 @@ public class MenuScreen implements Screen {
         buttonStyle.down = new NinePatchDrawable(ninePatch);
         buttonStyle.font = font;
 
-        TextButton button = new TextButton(buttonText, buttonStyle);
-
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                System.out.println(buttonText + " button clicked!");
-                switch (buttonText) {
-                    case "PLAY":
-                        game.setScreen(new Playscreen(game, client));
-                        break;
-                    case "SETTINGS":
-                        game.setScreen(new SettingsScreen(game, MenuScreen.this));
-                        break;
-                    case "QUIT":
-                        Gdx.app.exit();
-                        break;
-                }
-            }
-        });
-
-        return button;
-    }
-
-    private void addButtonListeners(TextButton... buttons) {
-        // Already integrated in createCustomButton
-    }
-
-    public Stage getStage() {
-        return stage;
+        return new TextButton(buttonText, buttonStyle);
     }
 
     @Override
@@ -193,5 +181,9 @@ public class MenuScreen implements Screen {
         background2.dispose();
         background3.dispose();
         background4.dispose();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
