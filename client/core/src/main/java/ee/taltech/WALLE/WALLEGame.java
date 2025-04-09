@@ -100,6 +100,7 @@ public class WALLEGame extends Game {
 
         // Ava mängu põhiekraan
         setScreen(new MenuScreen(this, client));
+        playscreen = new Playscreen(this, client);
     }
 
     // Tagastab kõik mängijad (kasutatakse Playscreen-is)
