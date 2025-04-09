@@ -1,5 +1,7 @@
 package ee.taltech.WALLE.Screens;
 
+import Network.PacketIsMultiPlayer;
+import Network.PacketIsSinglePlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,14 +38,18 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.setScreen(new Playscreen(game, client));  // single-player screen
+                client.sendTCP(new PacketIsSinglePlayer(client.getID()));
+                game.setScreen(game.getPlayscreen());
+
+                // single-player screen
             }
         });
 
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // game.setScreen(new MultiplayerScreen(game)); // multiplayer screen
+                client.sendTCP(new PacketIsMultiPlayer(client.getID()));
+                game.setScreen(game.getPlayscreen());
             }
         });
 
