@@ -53,10 +53,6 @@ public class MenuScreen implements Screen {
         TextButton multiplayerButton = createCustomButton("MULTIPLAYER");
         TextButton settingsButton = createCustomButton("SETTINGS");
         TextButton exitButton = createCustomButton("QUIT");
-        TextButton playButton = new TextButton("Play", skin);
-        TextButton multiplayerButton = new TextButton("Multiplayer", skin);
-        TextButton settingsButton = new TextButton("Settings", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
 
         // Button listeners
         playButton.addListener(new ClickListener() {
