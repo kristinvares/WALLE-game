@@ -1,27 +1,34 @@
 package ee.taltech.WALLE.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.kryonet.Client;
 import ee.taltech.WALLE.WALLEGame;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MenuScreen implements Screen {
     private final WALLEGame game;
     private Stage stage;
     private Client client;
     private BitmapFont font;
+    private Texture buttonTexture;
+
+    // Declare the background textures
+    private Texture background1, background2, background3, background4;
+    private float scaleX, scaleY, scale;
+    private float x, y;
 
     public MenuScreen(WALLEGame game, Client client) {
         this.game = game;
@@ -29,64 +36,65 @@ public class MenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        // Load the custom font
         font = new BitmapFont(Gdx.files.internal("fonts/cinzel.fnt"));
+        buttonTexture = new Texture(Gdx.files.internal("buttons_dividers/Transparent border/panel-transparent-border-030.png"));
 
-        // Create buttons with custom borders and text
-        TextButton playButton = createCustomButton("Play");
-        TextButton multiplayerButton = createCustomButton("Multiplayer");
-        TextButton settingsButton = createCustomButton("Settings");
-        TextButton exitButton = createCustomButton("Quit");
+        // Load background images
+        background1 = new Texture(Gdx.files.internal("menu_background/1.png"));
+        background2 = new Texture(Gdx.files.internal("menu_background/2.png"));
+        background3 = new Texture(Gdx.files.internal("menu_background/3.png"));
+        background4 = new Texture(Gdx.files.internal("menu_background/4.png"));
 
-        // Add button listeners
+        // Create buttons
+        TextButton playButton = createCustomButton("PLAY");
+        TextButton multiplayerButton = createCustomButton("MULTIPLAYER");
+        TextButton settingsButton = createCustomButton("SETTINGS");
+        TextButton exitButton = createCustomButton("QUIT");
+
+        // Add listeners
         addButtonListeners(playButton, multiplayerButton, settingsButton, exitButton);
 
-        // Add buttons to the stage
+        // Create and center the table
         Table table = new Table();
-        table.top().setFillParent(true);
+        table.setFillParent(true);
+        table.center(); // Center table on screen
+
         table.add(playButton).fillX().uniformX().pad(10);
-        table.row().pad(10, 0, 10, 0);
+        table.row();
         table.add(multiplayerButton).fillX().uniformX().pad(10);
-        table.row().pad(10, 0, 10, 0);
+        table.row();
         table.add(settingsButton).fillX().uniformX().pad(10);
-        table.row().pad(10, 0, 10, 0);
+        table.row();
         table.add(exitButton).fillX().uniformX().pad(10);
 
         stage.addActor(table);
     }
 
     private TextButton createCustomButton(String buttonText) {
-        // Load the custom border images (make sure the paths are correct)
-        Texture buttonTexture = new Texture(Gdx.files.internal("Transparent_border/panel-transparent-border-001.png"));
+        // Create a NinePatch from the button texture (preserve 8px borders)
         TextureRegion buttonRegion = new TextureRegion(buttonTexture);
+        NinePatch ninePatch = new NinePatch(buttonRegion, 20, 20, 8, 8);
 
-        // Create NinePatch from the loaded texture (for border/stretching)
-        NinePatch ninePatch = new NinePatch(buttonRegion, 4, 4, 4, 4); // Adjust the padding values as needed
-
-        // Create the TextButtonStyle and set the background textures for the button
         TextButtonStyle buttonStyle = new TextButtonStyle();
-        buttonStyle.up = new TextureRegionDrawable(buttonRegion); // Set normal state
-        buttonStyle.down = new TextureRegionDrawable(buttonRegion); // Set pressed state (optional)
-        buttonStyle.font = font;  // Use custom Cinzel font
+        buttonStyle.up = new NinePatchDrawable(ninePatch);
+        buttonStyle.down = new NinePatchDrawable(ninePatch);
+        buttonStyle.font = font;
 
-        // Create the TextButton with the defined style
         TextButton button = new TextButton(buttonText, buttonStyle);
 
-        // Add button click listener
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 System.out.println(buttonText + " button clicked!");
-                // Handle screen transitions or actions based on the button clicked
                 switch (buttonText) {
-                    case "Play":
-                        game.setScreen(new Playscreen(game, client)); // Play screen transition
+                    case "PLAY":
+                        game.setScreen(new Playscreen(game, client));
                         break;
-                    case "Settings":
-                        game.setScreen(new SettingsScreen(game, MenuScreen.this));  // Pass MenuScreen as the previous screen
+                    case "SETTINGS":
+                        game.setScreen(new SettingsScreen(game, MenuScreen.this));
                         break;
-                    case "Quit":
-                        Gdx.app.exit();  // Quit the application
+                    case "QUIT":
+                        Gdx.app.exit();
                         break;
                 }
             }
@@ -95,8 +103,8 @@ public class MenuScreen implements Screen {
         return button;
     }
 
-    private void addButtonListeners(TextButton playButton, TextButton multiplayerButton, TextButton settingsButton, TextButton exitButton) {
-        // Button listeners have already been integrated into the `createCustomButton` method
+    private void addButtonListeners(TextButton... buttons) {
+        // Already integrated in createCustomButton
     }
 
     public Stage getStage() {
@@ -104,17 +112,43 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void show() {
-        // This is where you set up any additional logic that happens when the screen is shown.
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear the screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
-        stage.act(delta);  // Update the stage (perform actions on the actors)
-        stage.draw();  // Render the stage
+        // Get screen dimensions
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
+        // Get background image dimensions
+        float bgWidth = background1.getWidth();
+        float bgHeight = background1.getHeight();
+
+        // Calculate the scale factors for the background
+        scaleX = screenWidth / bgWidth;
+        scaleY = screenHeight / bgHeight;
+
+        // Choose the smaller scale factor to avoid distortion (letterboxing or pillarboxing)
+        scale = Math.max(scaleX, scaleY);
+
+        // Calculate the position of the background to center it
+        x = (screenWidth - bgWidth * scale) / 2;
+        y = (screenHeight - bgHeight * scale) / 2;
+
+        // Draw the background images, scaling and positioning them appropriately
+        game.batch.begin();
+        game.batch.draw(background1, x, y, bgWidth * scale, bgHeight * scale);
+        game.batch.draw(background2, x, y, bgWidth * scale, bgHeight * scale);
+        game.batch.draw(background3, x, y, bgWidth * scale, bgHeight * scale);
+        game.batch.draw(background4, x, y, bgWidth * scale, bgHeight * scale);
+        game.batch.end();
+
+        // Draw the UI elements (buttons, sliders, labels)
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -123,23 +157,22 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-        // You can save any game state here if needed.
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-        // This is called when the screen is resumed after being paused.
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-        // This is called when the screen is hidden.
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
-        stage.dispose();  // Dispose of the stage when done
-        font.dispose();  // Dispose of the font to avoid memory leaks
+        stage.dispose();
+        font.dispose();
+        buttonTexture.dispose();
+        background1.dispose();
+        background2.dispose();
+        background3.dispose();
+        background4.dispose();
     }
 }
