@@ -94,7 +94,7 @@ public class Playscreen implements Screen {
         packet.id = client.getID();
         packet.x = player.b2body.getPosition().x;
         packet.y = player.b2body.getPosition().y;
-
+        packet.gameId = game.gameId;
         client.sendUDP(packet);
     }
 
@@ -192,6 +192,7 @@ public class Playscreen implements Screen {
             packet.directionX = bulletDirection.x;
             packet.directionY = bulletDirection.y;
             packet.shooterID = client.getID();
+            packet.gameID = game.gameId;
             System.out.println("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId +
                 " | POSITSIOON: " + packet.x + ", " + packet.y);
 
@@ -214,6 +215,7 @@ public class Playscreen implements Screen {
             if (bullet.isDestroyed()) {
                 PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                 destroyPacket.bulletId = bullet.getId();
+                destroyPacket.gameId = game.gameId;
                 client.sendUDP(destroyPacket);
                 iter.remove();
             }

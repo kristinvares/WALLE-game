@@ -28,6 +28,7 @@ public class WorldContactListener implements ContactListener {
                 if (!bullet.isRemote()) { // Ainult lokaalse kuuli korral
                     PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                     destroyPacket.bulletId = bullet.getId();
+                    destroyPacket.gameId = game.gameId;
                     game.client.sendUDP(destroyPacket);
                 }
 
