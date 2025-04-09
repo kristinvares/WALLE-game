@@ -1,4 +1,4 @@
-package network;
+package networks;
 
 public class PacketPosition {
     public int id;
@@ -13,3 +13,4 @@ public class PacketPosition {
         this.y = y;
     }
 }
+

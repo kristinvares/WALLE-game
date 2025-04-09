@@ -1,11 +1,11 @@
 package ee.taltech.WALLE;
 
-import network.PacketPosition;
-import network.PacketUpdatePlayers;
-import network.Player;
-import network.PacketDisconnect;
-import network.BulletData;
-import network.PacketBulletDestroy;
+import networks.PacketPosition;
+import networks.PacketUpdatePlayers;
+import networks.Player;
+import networks.PacketDisconnect;
+import networks.BulletData;
+import networks.PacketBulletDestroy;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

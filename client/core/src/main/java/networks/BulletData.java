@@ -1,4 +1,4 @@
-package network;
+package networks;
 
 public class BulletData {
     public int bulletId;
@@ -14,3 +14,5 @@ public class BulletData {
         this.shooterID = shooterID;
     }
 }
+
+

@@ -1,4 +1,4 @@
-package network;
+package networks;
 
 public class Player {
     public int id;         // Mängija ID

@@ -1,9 +1,9 @@
-package network;
+package networks;
 
 public class PacketDisconnect {
     public int id;
 
-    // Kryo jaoks vajalik tühi konstruktor
+    // tuhi konstruktor (vajalik Kryo jaoks)
     public PacketDisconnect() {}
 
     public PacketDisconnect(int id) {

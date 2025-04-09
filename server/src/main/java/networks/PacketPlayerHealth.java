@@ -1,4 +1,4 @@
-package network;
+package networks;
 
 public class PacketPlayerHealth {
     public int id;

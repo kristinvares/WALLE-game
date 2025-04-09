@@ -1,4 +1,4 @@
-package network;
+package networks;
 
 public class PacketBulletDestroy {
     public int bulletId;

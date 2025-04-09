@@ -1,11 +1,11 @@
 package ee.taltech.WALLE.Tools;
 
-import network.PacketBulletDestroy;
+import networks.PacketBulletDestroy;
 import com.badlogic.gdx.physics.box2d.*;
 import ee.taltech.WALLE.Sprites.Bullet;
 import ee.taltech.WALLE.Sprites.PlayerSprite;
 import ee.taltech.WALLE.WALLEGame;
-import network.PacketPlayerHealth;
+import networks.PacketPlayerHealth;
 
 public class WorldContactListener implements ContactListener {
     private final WALLEGame game;

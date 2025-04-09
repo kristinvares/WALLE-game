@@ -1,6 +1,6 @@
 package ee.taltech.game.server;
 
-import network.*;
+import networks.*;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
