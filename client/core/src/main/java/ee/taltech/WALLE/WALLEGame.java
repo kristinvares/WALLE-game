@@ -46,6 +46,8 @@ public class WALLEGame extends Game {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(PacketDisconnect.class);
+
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketDisconnect.class);
@@ -97,9 +99,7 @@ public class WALLEGame extends Game {
         });
 
         // Ava mängu põhiekraan
-        playscreen = new Playscreen(this, client);
         setScreen(new MenuScreen(this, client));
-
     }
 
     // Tagastab kõik mängijad (kasutatakse Playscreen-is)
