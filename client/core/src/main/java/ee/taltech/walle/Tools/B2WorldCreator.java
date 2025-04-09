@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class B2WorldCreator {
-    private static final Logger logger = LoggerFactory.getLogger(B2WorldCreator.class);
     private Vector2 playerSpawnPosition;
+    private static final Logger logger = LoggerFactory.getLogger(B2WorldCreator.class);
 
     public B2WorldCreator(World world, TiledMap map) {
         BodyDef bdef = new BodyDef();
@@ -31,20 +31,26 @@ public class B2WorldCreator {
 
             body = world.createBody(bdef);
             shape.setAsBox((rect.getWidth() / 2) / walleGame.PPM, (rect.getHeight() / 2) / walleGame.PPM);
+
             fdef.shape = shape;
-            fdef.isSensor = false; // Ei lase mängijal neist läbi minna
-            body.createFixture(fdef);
+
+            // Lisa seinadele korrektsed bitmaskid
+            fdef.filter.categoryBits = walleGame.WALL_BIT;
+            fdef.filter.maskBits = walleGame.PLAYER_BIT | walleGame.BULLET_BIT;
+
+            body.createFixture(fdef).setUserData("WALL");
         }
 
         // Mängija `spawn` punkt
         for (MapObject object : map.getLayers().get("collision").getObjects()) {
-            if (object.getProperties().containsKey("spawn")) {
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            if (object.getProperties().containsKey("spawn") && object instanceof RectangleMapObject rectangleMapObject) {
+                Rectangle rect = rectangleMapObject.getRectangle();
                 playerSpawnPosition = new Vector2(rect.getX() / walleGame.PPM, rect.getY() / walleGame.PPM);
                 logger.info("Spawn punkt määratud: {}", playerSpawnPosition);
                 return;
             }
         }
+
 
         if (playerSpawnPosition == null) {
             logger.error("VIGA: Spawn punkt puudub kaardil!");
@@ -55,5 +61,7 @@ public class B2WorldCreator {
         return playerSpawnPosition;
     }
 }
+
+
 
 

@@ -1,8 +1,6 @@
 package ee.taltech.walle;
 
-import Network.PacketPosition;
-import Network.PacketUpdatePlayers;
-import Network.Player;
+import Network.*;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,31 +8,34 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import ee.taltech.walle.Screens.MenuScreen;
 import ee.taltech.walle.Screens.Playscreen;
 
 import java.io.IOException;
-
 import java.util.HashMap;
-import java.util.Map;
-
-// Logger
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class walleGame extends Game {
-    private static final Logger logger = LoggerFactory.getLogger(walleGame.class);
-
-    public static final int V_WIDTH = 360;
-    public static final int V_HEIGHT = 240;
-    public static final float PPM = 100; // Pixels Per Meter
+    public static final int V_WIDTH = 480;
+    public static final int V_HEIGHT = 360;
+    public static final float PPM = 100;// Pixels Per Meter — jääb samaks, nagu sul algselt oli
+    public static final short DEFAULT_BIT = 1;
+    public static final short PLAYER_BIT = 2;
+    public static final short BULLET_BIT = 4;
+    public static final short WALL_BIT = 8;
+    public static final short ENEMY_BIT = 16;
+    public static final short BRIDGE_BIT = 32;
 
     public SpriteBatch batch;
     public Client client;
-    public Map<Integer, Player> players = new HashMap<>();
+    public HashMap<Integer, Player> players = new HashMap<>();
+    public int gameId;
+    Playscreen playscreen;
 
+    public Playscreen getPlayscreen() {
+        return playscreen;
+    }
     @Override
     public void create() {
-        // Loo vajalikud elemendid
         batch = new SpriteBatch();
         client = new Client();
         client.start();
@@ -45,13 +46,20 @@ public class walleGame extends Game {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
+        kryo.register(PacketDisconnect.class);
+
+        kryo.register(BulletData.class);
+        kryo.register(PacketBulletDestroy.class);
+        kryo.register(PacketDisconnect.class);
+        kryo.register(PacketIsSinglePlayer.class);
+        kryo.register(PacketIsMultiPlayer.class);
+        kryo.register(PacketGameId.class);
 
         try {
-            // Kontrolli ühendust serveri protidega
-            client.connect(5000, "193.40.255.32", 8081, 8081);
-            logger.info("Ühendus serveriga oli edukas.");
+            client.connect(5000, "localhost", 8080, 8081);
+            System.out.println("ÜHENDUS SERVERIGA LOODUD!");
         } catch (IOException e) {
-            logger.error("Ühenduse loomine ebaõnnestus.", e);
+            System.err.println("Ühenduse loomine ebaõnnestus: " + e.getMessage());
         }
 
         // Kuula serverilt saadetud andmeid
@@ -60,33 +68,50 @@ public class walleGame extends Game {
             public void received(Connection connection, Object object) {
                 if (object instanceof PacketUpdatePlayers packet) {
                     players.putAll(packet.players);
-                    logger.info("Uuendatud mängijad saadud: {}", players);
                 }
 
-                if (object instanceof PacketPosition packet && players.containsKey(packet.id)) {
-                    Player player = players.get(packet.id);
-                    player.x = packet.x;
-                    player.y = packet.y;
-                    logger.info("Mängija uuendatud positsioon: ID={}, X={}, Y={}", packet.id, packet.x, packet.y);
+                if (object instanceof PacketPosition packet) {
+
+                    if (players.containsKey(packet.id)) {
+                        Player player = players.get(packet.id);
+                        player.x = packet.x;
+                        player.y = packet.y;
+                    }
+                }
+                if (object instanceof BulletData packet) {
+                    playscreen.createRemoteBullet(packet);
+                }
+
+                if (object instanceof PacketGameId packet) {
+                    gameId = packet.getGameId();
+                }
+
+                if (object instanceof PacketBulletDestroy packet) {
+                    playscreen.removeRemoteBullet(packet.bulletId);
                 }
             }
 
             @Override
             public void disconnected(Connection connection) {
-                logger.info("Mängija lahkus: {}", connection.getID());
+                System.out.println("MÄNGIJA LAHKUS: " + connection.getID());
                 players.remove(connection.getID());
             }
         });
 
         // Ava mängu põhiekraan
-        setScreen(new Playscreen(this, client));
+        setScreen(new MenuScreen(this, client));
+        playscreen = new Playscreen(this, client);
     }
 
     // Tagastab kõik mängijad (kasutatakse Playscreen-is)
-    public Map<Integer, Player> getPlayers() {
+    public HashMap<Integer, Player> getPlayers() {
         return players;
     }
-    // Render meetod ajutiselt pole vajalik ehk eemaldasin
+
+    @Override
+    public void render() {
+        super.render();
+    }
 
     @Override
     public void dispose() {
@@ -97,5 +122,3 @@ public class walleGame extends Game {
         }
     }
 }
-
-

@@ -1,5 +1,6 @@
 package ee.taltech.walle.Screens;
 
+import Network.*;
 import Network.PacketPosition;
 import Network.Player;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,11 +21,19 @@ import ee.taltech.walle.Scenes.Hud;
 import ee.taltech.walle.Sprites.PlayerSprite;
 import ee.taltech.walle.Tools.B2WorldCreator;
 import ee.taltech.walle.Tools.TiledMapLoader;
+import ee.taltech.walle.Tools.WorldContactListener;
 import ee.taltech.walle.walleGame;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import com.badlogic.gdx.utils.Array; // LISATUD KUULIDE HALDAMISEKS
+import ee.taltech.walle.Sprites.Bullet; // LISATUD KUULI KLASS
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Playscreen implements Screen {
     private walleGame game;
@@ -43,11 +53,17 @@ public class Playscreen implements Screen {
     private Map<Integer, PlayerSprite> remotePlayers = new HashMap<>();
     private TiledMapLoader tiledMapLoader;
     Vector2 spawnPosition;
+    private Array<Bullet> bullets;
+    private HashMap<Integer, Bullet> remoteBullets = new HashMap<>();
+    private int tempBulletId = 1000;
+
+    private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
 
     public Playscreen(walleGame game, Client client) {
         this.client = client;
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
+        bullets = new Array<>();
         gameCam = new OrthographicCamera();
 
         gamePort = new FitViewport(walleGame.V_WIDTH / walleGame.PPM, walleGame.V_HEIGHT / walleGame.PPM, gameCam);
@@ -63,6 +79,7 @@ public class Playscreen implements Screen {
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, 0), true);
+        world.setContactListener(new WorldContactListener(game));
         b2dr = new Box2DDebugRenderer();
 
         B2WorldCreator worldCreator = new B2WorldCreator(world, map);
@@ -70,6 +87,7 @@ public class Playscreen implements Screen {
 
 
         player = new PlayerSprite(world, this, spawnPosition.x, spawnPosition.y);
+
     }
 
     public TextureAtlas getAtlas() {
@@ -82,8 +100,37 @@ public class Playscreen implements Screen {
         packet.id = client.getID();
         packet.x = player.b2body.getPosition().x;
         packet.y = player.b2body.getPosition().y;
-
+        packet.gameId = game.gameId;
         client.sendUDP(packet);
+    }
+
+    public void createRemoteBullet(BulletData packet) {
+        if (packet.shooterID == client.getID()) {
+            return;
+        }
+
+        // Remote kuul (teiste mängijate kuulid)
+        Gdx.app.postRunnable(() -> {
+            if (!remoteBullets.containsKey(packet.bulletId)) {
+                Vector2 direction = new Vector2(packet.directionX, packet.directionY);
+                Bullet bullet = new Bullet(world, this, packet.x, packet.y, direction, true);
+                bullet.setId(packet.bulletId);
+                remoteBullets.put(packet.bulletId, bullet);
+
+                logger.info("✅ REMOTE KUUL LISATUD ID-ga: " + packet.bulletId);
+            }
+        });
+    }
+
+    public void removeRemoteBullet(int bulletId) {
+        Gdx.app.postRunnable(() -> {
+            if (remoteBullets.containsKey(bulletId)) {
+                Bullet bullet = remoteBullets.get(bulletId);
+                bullet.markForDestruction();
+                remoteBullets.remove(bulletId);
+                logger.info("remoteBullets size: {}", remoteBullets.size());
+            }
+        });
     }
 
     @Override
@@ -101,20 +148,22 @@ public class Playscreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             movement.x = Math.max(velocity.x - acceleration, -moveSpeed);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             movement.x = Math.min(velocity.x + acceleration, moveSpeed);
-        } else {
-            movement.x *= 0.9f;
-            if (Math.abs(movement.x) < 0.1f) movement.x = 0;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             movement.y = Math.min(velocity.y + acceleration, moveSpeed);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             movement.y = Math.max(velocity.y - acceleration, -moveSpeed);
-        } else {
-            movement.y *= 0.9f;
-            if (Math.abs(movement.y) < 0.1f) movement.y = 0;
+        }
+
+        // Kui liikumist on toimunud, määrame pöördenurga
+        if (movement.len() > 0.1f) {
+            float angle = (float) Math.toDegrees(Math.atan2(movement.y, movement.x));
+            player.setRotation(angle);
         }
 
         player.b2body.setLinearVelocity(movement);
@@ -124,11 +173,70 @@ public class Playscreen implements Screen {
         if (player.b2body.getLinearVelocity().len() > maxSpeed) {
             player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().nor().scl(maxSpeed));
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new PauseScreen(game, this));
+        }
+
+        // KUULI LASKMINE
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            Vector2 bulletDirection = new Vector2(
+                (float) Math.cos(Math.toRadians(player.getRotation())),
+                (float) Math.sin(Math.toRadians(player.getRotation()))
+            ).nor();
+            int assignedId = tempBulletId++;  // ← Ajutine ID
+            Bullet bullet = new Bullet(world, this,
+                player.b2body.getPosition().x,
+                player.b2body.getPosition().y,
+                bulletDirection);
+            bullet.setId(assignedId); // ← Määra ajutine ID
+            bullets.add(bullet);
+
+            // Saada serverisse
+            BulletData packet = new BulletData();
+            packet.bulletId = assignedId; // Ajutine ID
+            packet.x = player.b2body.getPosition().x;
+            packet.y = player.b2body.getPosition().y;
+            packet.directionX = bulletDirection.x;
+            packet.directionY = bulletDirection.y;
+            packet.shooterID = client.getID();
+            packet.gameID = game.gameId;
+            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId +
+                " | POSITSIOON: " + packet.x + ", " + packet.y);
+
+            client.sendUDP(packet);
+        }
     }
 
-    public void update() {
+    public void update(float dt) {
         handleInput();
         world.step(1 / 60f, 6, 2);
+        world.setContactListener(new WorldContactListener(game));
+
+        Iterator<Bullet> iter = bullets.iterator();
+        while (iter.hasNext()) {
+            Bullet bullet = iter.next();
+            if (bullet.getX() == 0 && bullet.getY() == 0) {
+                bullet.correctPosition(player.b2body.getPosition().x, player.b2body.getPosition().y);
+            }
+            bullet.update(dt);
+            if (bullet.isDestroyed()) {
+                PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
+                destroyPacket.bulletId = bullet.getId();
+                destroyPacket.gameId = game.gameId;
+                client.sendUDP(destroyPacket);
+                iter.remove();
+            }
+        }
+        Iterator<Bullet> iterRemote = remoteBullets.values().iterator();
+        while (iterRemote.hasNext()) {
+            Bullet bullet = iterRemote.next();
+            bullet.update(dt);
+            if (bullet.isDestroyed()) {
+                iterRemote.remove();
+
+            }
+        }
 
         player.update();
         sendPositionInfoToServer();
@@ -160,7 +268,7 @@ public class Playscreen implements Screen {
 
     @Override
     public void render(float dt) {
-        update();
+        update(dt);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -175,7 +283,16 @@ public class Playscreen implements Screen {
             remotePlayer.draw(game.batch);
         }
 
+        for (Bullet bullet : bullets) {
+            bullet.draw(game.batch);
+        }
+
+        for (Bullet bullet : remoteBullets.values()) {
+            bullet.draw(game.batch);
+        }
+
         player.draw(game.batch);
+
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -209,6 +326,10 @@ public class Playscreen implements Screen {
             client.dispose();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.dispose();
         }
 
         tiledMapLoader.dispose();
