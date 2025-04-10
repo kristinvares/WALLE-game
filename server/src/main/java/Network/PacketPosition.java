@@ -3,7 +3,8 @@ package Network;
 public class PacketPosition {
     public int id;
     public int gameId;
-    public float x, y;
+    public float x;
+    public float y;
 
     // Tühi konstruktor (vajalik Kryo jaoks)
     public PacketPosition() {}

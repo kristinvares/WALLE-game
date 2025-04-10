@@ -1,4 +1,4 @@
-package ee.taltech.WALLE.Screens;
+package ee.taltech.walle.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,10 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.walleGame;
 
 public class PauseScreen implements Screen {
-    private final WALLEGame game;
+    private final walleGame game;
     private Stage stage;
     private BitmapFont font;
     private Texture buttonTexture;
@@ -28,7 +28,7 @@ public class PauseScreen implements Screen {
     private float scaleX, scaleY, scale;
     private float x, y;
 
-    public PauseScreen(WALLEGame game, Screen previousScreen) {
+    public PauseScreen(walleGame game, Screen previousScreen) {
         this.game = game;
         this.previousScreen = previousScreen;
         stage = new Stage(new ScreenViewport());
@@ -114,7 +114,9 @@ public class PauseScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // for future multiplayer use
+    }
 
     @Override
     public void render(float delta) {
@@ -159,13 +161,19 @@ public class PauseScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // for future multiplayer use
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        // for future multiplayer use
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+        // for future multiplayer use
+    }
 
     @Override
     public void dispose() {

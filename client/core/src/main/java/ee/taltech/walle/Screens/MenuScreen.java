@@ -1,4 +1,4 @@
-package ee.taltech.WALLE.Screens;
+package ee.taltech.walle.Screens;
 
 import Network.PacketIsMultiPlayer;
 import Network.PacketIsSinglePlayer;
@@ -18,11 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.kryonet.Client;
-import ee.taltech.WALLE.WALLEGame;
-
+import ee.taltech.walle.walleGame;
 
 public class MenuScreen implements Screen {
-    private final WALLEGame game;
+    private final walleGame game;
     private Stage stage;
     private Client client;
     private BitmapFont font;
@@ -36,7 +35,7 @@ public class MenuScreen implements Screen {
     // Declare buttons
     private TextButton playButton, multiplayerButton, settingsButton, exitButton;
 
-    public MenuScreen(WALLEGame game, Client client) {
+    public MenuScreen(walleGame game, Client client) {
         this.game = game;
         this.client = client;
         stage = new Stage(new ScreenViewport());
@@ -61,7 +60,6 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                System.out.println("Play Button Clicked");
                 client.sendTCP(new PacketIsSinglePlayer(client.getID()));
                 game.setScreen(game.getPlayscreen());
             }
@@ -119,7 +117,9 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // needed for Menuscreen dont delete
+    }
 
     @Override
     public void render(float delta) {
@@ -164,13 +164,19 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // needed for Menuscreen dont delete
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        // needed for Menuscreen dont delete
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+        // needed for Menuscreen dont delete
+    }
 
     @Override
     public void dispose() {

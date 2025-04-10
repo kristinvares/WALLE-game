@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d569b1a3-373d-4a37-b2da-ad530e715494" name="Changes" comment="merge conflikt solve?">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/scripts/server" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/scripts/server" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer$1.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="37-menu-loomine-2" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;jaaunt&quot;,
+      &quot;fullname&quot;: &quot;jaaunt&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://gitlab.cs.taltech.ee/krvare/iti0301-2025.git&quot;,
+    &quot;second&quot;: &quot;97c64165-3c92-4ccc-bb40-040c9d3e6fea&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2uBVJecIYAirmhANj6NKmGI3wov" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.C:/Users/abc/IdeaProjects/iti0301-2025/client/core/build.gradle.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "40-seadistada-tulemuur-ja-crowdsec",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/abc/IdeaProjects/iti0301-2025",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\abc\IdeaProjects\iti0301-2025\player_test\src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="player_test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="player_test" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d569b1a3-373d-4a37-b2da-ad530e715494" name="Changes" comment="" />
+      <created>1741721883922</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741721883922</updated>
+      <workItem from="1741721885975" duration="1913000" />
+      <workItem from="1741807858484" duration="742000" />
+      <workItem from="1743017941547" duration="2236000" />
+      <workItem from="1743021761578" duration="2169000" />
+      <workItem from="1743251640459" duration="475000" />
+      <workItem from="1743862538683" duration="2461000" />
+      <workItem from="1744150912521" duration="47000" />
+      <workItem from="1744227870031" duration="819000" />
+      <workItem from="1744228697756" duration="633000" />
+    </task>
+    <task id="LOCAL-00001" summary="merge conflikt solve?">
+      <option name="closed" value="true" />
+      <created>1744228597627</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744228597627</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merge conflikt solve?" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge conflikt solve?" />
+  </component>
+</project>

@@ -1,15 +1,19 @@
-package ee.taltech.WALLE.Tools;
+package ee.taltech.walle.Tools;
 
 import Network.PacketBulletDestroy;
 import com.badlogic.gdx.physics.box2d.*;
-import ee.taltech.WALLE.Sprites.Bullet;
-import ee.taltech.WALLE.Sprites.PlayerSprite;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.Sprites.Bullet;
+import ee.taltech.walle.Sprites.PlayerSprite;
+import ee.taltech.walle.walleGame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WorldContactListener implements ContactListener {
-    private final WALLEGame game;
+    private final walleGame game;
+    private static final Logger logger = LoggerFactory.getLogger(WorldContactListener.class);
 
-    public WorldContactListener(WALLEGame game) {
+
+    public WorldContactListener(walleGame game) {
         this.game = game;
     }
     @Override
@@ -39,19 +43,25 @@ public class WorldContactListener implements ContactListener {
             (fixB.getUserData() != null && fixB.getUserData().equals("WALL") && fixA.getUserData() instanceof PlayerSprite)) {
 
             // Siin saad vajadusel lisada tagasilöögi (knockback) või muud efekti
-            System.out.println("Mängija põrkas vastu seina!");
+            logger.info("Mängija põrkas vastu seina!");
         }
 
 
     }
 
     @Override
-    public void endContact(Contact contact) {}
+    public void endContact(Contact contact) {
+        // Pole hetkel vajalik, valmistus ette eriliste objektide jaoks
+    }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
+    public void preSolve(Contact contact, Manifold oldManifold) {
+        // Hetkel pole vajalik, ettevalmistus
+    }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {}
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+        // Hetkel pole vajalik, ettevalmistus
+    }
 }
 

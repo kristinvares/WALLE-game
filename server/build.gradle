@@ -1,6 +1,11 @@
 plugins {
-    id 'java'
+    id 'application'
 }
+
+application {
+    mainClass = 'ee.taltech.game.server.GameServer'
+}
+
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
@@ -13,8 +18,24 @@ dependencies {
     implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    // SLF4J API loggimiseks
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    // Logback SLF4J implementationi jaoks
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
 }
 
 test {
     useJUnitPlatform()
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ee.taltech.game.server'
+        )
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }

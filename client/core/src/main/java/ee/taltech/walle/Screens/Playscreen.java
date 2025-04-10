@@ -1,6 +1,8 @@
-package ee.taltech.WALLE.Screens;
+package ee.taltech.walle.Screens;
 
 import Network.*;
+import Network.PacketPosition;
+import Network.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -15,12 +17,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Client;
-import ee.taltech.WALLE.Scenes.Hud;
-import ee.taltech.WALLE.Sprites.PlayerSprite;
-import ee.taltech.WALLE.Tools.B2WorldCreator;
-import ee.taltech.WALLE.Tools.TiledMapLoader;
-import ee.taltech.WALLE.Tools.WorldContactListener;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.Scenes.Hud;
+import ee.taltech.walle.Sprites.PlayerSprite;
+import ee.taltech.walle.Tools.B2WorldCreator;
+import ee.taltech.walle.Tools.TiledMapLoader;
+import ee.taltech.walle.Tools.WorldContactListener;
+import ee.taltech.walle.walleGame;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,10 +30,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.badlogic.gdx.utils.Array; // LISATUD KUULIDE HALDAMISEKS
-import ee.taltech.WALLE.Sprites.Bullet; // LISATUD KUULI KLASS
+import ee.taltech.walle.Sprites.Bullet; // LISATUD KUULI KLASS
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Playscreen implements Screen {
-    private WALLEGame game;
+    private walleGame game;
     private TextureAtlas atlas;
 
     private OrthographicCamera gameCam;
@@ -52,15 +57,16 @@ public class Playscreen implements Screen {
     private HashMap<Integer, Bullet> remoteBullets = new HashMap<>();
     private int tempBulletId = 1000;
 
+    private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
 
-    public Playscreen(WALLEGame game, Client client) {
+    public Playscreen(walleGame game, Client client) {
         this.client = client;
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
         bullets = new Array<>();
         gameCam = new OrthographicCamera();
 
-        gamePort = new FitViewport(WALLEGame.V_WIDTH / WALLEGame.PPM, WALLEGame.V_HEIGHT / WALLEGame.PPM, gameCam);
+        gamePort = new FitViewport(walleGame.V_WIDTH / walleGame.PPM, walleGame.V_HEIGHT / walleGame.PPM, gameCam);
 
         hud = new Hud(game.batch);
 
@@ -88,7 +94,7 @@ public class Playscreen implements Screen {
         return atlas;
     }
 
-    // === Saada mängija asukoht serverile ===
+    // Saada mängija asukoht serverile
     private void sendPositionInfoToServer() {
         PacketPosition packet = new PacketPosition();
         packet.id = client.getID();
@@ -111,7 +117,7 @@ public class Playscreen implements Screen {
                 bullet.setId(packet.bulletId);
                 remoteBullets.put(packet.bulletId, bullet);
 
-                System.out.println("✅ REMOTE KUUL LISATUD ID-ga: " + packet.bulletId);
+                logger.info("✅ REMOTE KUUL LISATUD ID-ga: " + packet.bulletId);
             }
         });
     }
@@ -122,16 +128,18 @@ public class Playscreen implements Screen {
                 Bullet bullet = remoteBullets.get(bulletId);
                 bullet.markForDestruction();
                 remoteBullets.remove(bulletId);
-                System.out.println(remoteBullets.size());
+                logger.info("remoteBullets size: {}", remoteBullets.size());
             }
         });
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // hetkel pole vajalik, pop up menüüde jaoks ette valmistus
+    }
 
-    // === Mängija sisendi haldamine ===
-    public void handleInput(float dt) {
+    // Mängija sisendi haldamine
+    public void handleInput() {
         float moveSpeed = 3.5f;
         float acceleration = 0.5f;
 
@@ -193,7 +201,7 @@ public class Playscreen implements Screen {
             packet.directionY = bulletDirection.y;
             packet.shooterID = client.getID();
             packet.gameID = game.gameId;
-            System.out.println("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId +
+            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId +
                 " | POSITSIOON: " + packet.x + ", " + packet.y);
 
             client.sendUDP(packet);
@@ -201,7 +209,7 @@ public class Playscreen implements Screen {
     }
 
     public void update(float dt) {
-        handleInput(dt);
+        handleInput();
         world.step(1 / 60f, 6, 2);
         world.setContactListener(new WorldContactListener(game));
 
@@ -230,10 +238,10 @@ public class Playscreen implements Screen {
             }
         }
 
-        player.update(dt);
+        player.update();
         sendPositionInfoToServer();
 
-        HashMap<Integer, Player> players = game.getPlayers();
+        Map<Integer, Player> players = game.getPlayers();
         for (Map.Entry<Integer, Player> entry : players.entrySet()) {
             int id = entry.getKey();
             Player data = entry.getValue();
@@ -297,13 +305,19 @@ public class Playscreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+    }
 
     @Override
     public void dispose() {

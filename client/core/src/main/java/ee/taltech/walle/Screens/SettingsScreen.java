@@ -1,4 +1,4 @@
-package ee.taltech.WALLE.Screens;
+package ee.taltech.walle.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,12 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.walleGame;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 public class SettingsScreen implements Screen {
-    private final WALLEGame game;
+    private final walleGame game;
     private final Screen previousScreen;
     private Stage stage;
     private Skin skin;
@@ -39,7 +39,7 @@ public class SettingsScreen implements Screen {
     // Declare the background textures
     private Texture background1, background2, background3, background4;
 
-    public SettingsScreen(WALLEGame game, Screen previousScreen) {
+    public SettingsScreen(walleGame game, Screen previousScreen) {
         this.game = game;
         this.previousScreen = previousScreen;
         stage = new Stage(new ScreenViewport());
@@ -187,7 +187,9 @@ public class SettingsScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // not needed right now, for pop up menus later
+    }
 
     @Override
     public void render(float delta) {
@@ -236,11 +238,17 @@ public class SettingsScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // for future multiplayer use
+    }
     @Override
-    public void resume() {}
+    public void resume() {
+        // for future multiplayer use
+    }
     @Override
-    public void hide() {}
+    public void hide() {
+        // for future multiplayer use
+    }
 
     @Override
     public void dispose() {

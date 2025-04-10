@@ -1,4 +1,4 @@
-package ee.taltech.WALLE.Scenes;
+package ee.taltech.walle.Scenes;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,13 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.walleGame;
 
 public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
     private Integer worldTimer;
-    private float timeCount;
     private Integer score;
 
     Label countdownLabel;
@@ -28,9 +27,8 @@ public class Hud implements Disposable {
 
     public Hud(SpriteBatch sb) {
         worldTimer = 300;
-        timeCount = 0;
         score = 0;
-        viewport = new FitViewport(WALLEGame.V_WIDTH, WALLEGame.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(walleGame.V_WIDTH, walleGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();

@@ -1,10 +1,10 @@
-package ee.taltech.WALLE.Sprites;
+package ee.taltech.walle.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import ee.taltech.WALLE.Screens.Playscreen;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.Screens.Playscreen;
+import ee.taltech.walle.walleGame;
 
 public class PlayerSprite extends Sprite {
     public World world;
@@ -16,11 +16,11 @@ public class PlayerSprite extends Sprite {
         super(screen.getAtlas().findRegion("little_mario"));
         definePlayer(world, startX, startY);
         playerStand = new TextureRegion(getTexture(),0, 8, 16, 16);
-        setBounds(0,0, 16 / WALLEGame.PPM, 16 / WALLEGame.PPM);
+        setBounds(0,0, 16 / walleGame.PPM, 16 / walleGame.PPM);
         setRegion(playerStand);
     }
 
-    public void update(float dt) {
+    public void update() {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
     public void definePlayer(World world, float startX, float startY) {
@@ -31,22 +31,24 @@ public class PlayerSprite extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / WALLEGame.PPM);
+        shape.setRadius(6 / walleGame.PPM);
 
         fdef.shape = shape;
 
         // Lisa bitmaskid kokkupõrke jaoks
-        fdef.filter.categoryBits = WALLEGame.PLAYER_BIT;
-        fdef.filter.maskBits = WALLEGame.WALL_BIT | WALLEGame.ENEMY_BIT;
+        fdef.filter.categoryBits = walleGame.PLAYER_BIT;
+        fdef.filter.maskBits = walleGame.WALL_BIT | walleGame.ENEMY_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
         shape.dispose();
     }
 
+    @Override
     public void setRotation(float angle) {
         this.rotationAngle = angle;
     }
 
+    @Override
     public float getRotation() {
         return rotationAngle;
     }
