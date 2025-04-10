@@ -5,239 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d569b1a3-373d-4a37-b2da-ad530e715494" name="Changes" comment="merge conflikt solve?">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/iti0301-2025.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-006.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-007.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-008.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-009.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-010.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-011.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-013.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-016.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-017.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-018.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-020.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-021.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-022.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-023.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-025.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-026.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-027.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-028.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-029.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-030.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/Transparent_border/panel-transparent-border-031.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/bullet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-006.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-007.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-008.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-009.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-010.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-011.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-013.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-016.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-017.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-018.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-020.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-021.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-022.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-023.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-025.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-026.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-027.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-028.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-029.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-030.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Border/panel-border-031.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-003-reverse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider Fade/divider-fade-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-002-reverse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Divider/divider-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-006.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-007.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-008.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-009.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-010.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-011.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-013.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-016.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-017.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-018.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-020.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-021.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-022.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-023.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-025.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-026.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-027.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-028.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-029.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-030.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Panel/panel-031.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-006.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-007.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-008.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-009.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-010.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-011.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-013.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-016.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-017.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-018.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-020.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-021.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-022.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-023.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-025.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-026.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-027.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-028.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-029.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-030.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent border/panel-transparent-border-031.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-002.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-003.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-004.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-005.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-006.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-007.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-008.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-009.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-010.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-011.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-012.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-013.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-014.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-015.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-016.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-017.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-018.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-020.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-021.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-022.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-023.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-024.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-025.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-026.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-027.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-028.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-029.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-030.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/buttons_dividers/Transparent center/panel-transparent-center-031.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/fonts/cinzel-settings.fnt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/fonts/cinzel-settings.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/fonts/cinzel.fnt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/fonts/cinzel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/menu_background/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/menu_background/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/menu_background/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/assets/menu_background/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/BulletData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketBulletDestroy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketDisconnect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketGameId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketIsMultiPlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketIsSinglePlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MultiplayerScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Tools/WorldContactListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.gradle/8.10/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.gradle/8.10/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.gradle/8.10/expanded/expanded.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/BulletData.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketBulletDestroy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketDisconnect.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketGameId.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketIsMultiPlayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketIsSinglePlayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameInstance.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/scripts/server" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/scripts/server.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer$1.class.uniqueId0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer.class.uniqueId1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/BulletData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketBulletDestroy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketDisconnect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketGameId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketIsMultiPlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketIsSinglePlayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/PacketPosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/Network/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/Network/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/Playscreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/Playscreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/PlayerSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/PlayerSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Tools/B2WorldCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Tools/B2WorldCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
@@ -247,11 +19,20 @@
       <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/scripts/server" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/scripts/server" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer$1.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer.class.uniqueId1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/Network/PacketPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/Network/PacketPosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/Network/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/Network/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -298,7 +79,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "Merging 40-seadistada-tulemuur-ja-crowdsec",
+    "git-widget-placeholder": "40-seadistada-tulemuur-ja-crowdsec",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/abc/IdeaProjects/iti0301-2025",

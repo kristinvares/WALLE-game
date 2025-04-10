@@ -26,6 +26,8 @@ public class GameServer {
     private Set<Integer> readyPlayers = new HashSet<>();
 
     public GameServer() {
+
+        // see kood on liiga pikk, aga hetkeseisuga ei vota seda riski et seda muuta
         server = new Server();
         server.start();
         int firstId = gameInstanceId.getAndIncrement();
@@ -62,7 +64,7 @@ public class GameServer {
 
                 if (object instanceof PacketPosition packet) {
                     if (!readyPlayers.contains(packet.id)) {
-                        System.out.println("Hoiatus: Mängija " + packet.id + " saatis positsiooni enne, kui ta oli mängus valmis.");
+                        logger.warn("Hoiatus: Mängija {} saatis positsiooni enne, kui ta oli mängus valmis.", packet.id);
                         return; // Ära töötle positsiooni
                     }
                     GameInstance instance = gameInstances.get(packet.gameId);
@@ -77,7 +79,7 @@ public class GameServer {
                     }
                 }
                 if (object instanceof PacketIsSinglePlayer packet) {
-                    System.out.println("Klient " + connection.getID() + " tahab SP mängu");
+                    logger.info("Klient {} tahab sp mängu", connection.getID());
                     int spGameId = gameInstanceId.getAndIncrement();
                     GameInstance singlePlayerGame = new GameInstance(spGameId);
                     gameInstances.put(spGameId, singlePlayerGame);
@@ -87,7 +89,7 @@ public class GameServer {
                     connection.sendTCP(new PacketGameId(spGameId));
                 }
                 if (object instanceof PacketIsMultiPlayer packet) {
-                    System.out.println("Klient " + connection.getID() + " tahab MP mängu");
+                    logger.info("Klient {} tahab MP mängu", connection.getID());
                     int mpGameId = firstId;
                     GameInstance mpGame = gameInstances.get(mpGameId);
                     Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID(), mpGameId);
@@ -124,7 +126,8 @@ public class GameServer {
 
             @Override
             public void disconnected(Connection connection) {
-                System.out.println("CLIENT DISCONNECTED: " + connection.getID());
+                logger.info("CLIENT DISCONNECTED: {}", connection.getID());
+
 
                 int disconnectedId = connection.getID();
 

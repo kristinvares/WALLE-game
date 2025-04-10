@@ -14,7 +14,11 @@ import ee.taltech.walle.Screens.Playscreen;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class walleGame extends Game {
+    private static final Logger logger = LoggerFactory.getLogger(walleGame.class);
     public static final int V_WIDTH = 480;
     public static final int V_HEIGHT = 360;
     public static final float PPM = 100;// Pixels Per Meter — jääb samaks, nagu sul algselt oli
@@ -57,9 +61,9 @@ public class walleGame extends Game {
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
-            System.out.println("ÜHENDUS SERVERIGA LOODUD!");
+            logger.error("ÜHENDUS SERVERIGA LOODUD!");
         } catch (IOException e) {
-            System.err.println("Ühenduse loomine ebaõnnestus: " + e.getMessage());
+            logger.error("Ühenduse loomine ebaõnnestus: {}", e.getMessage());
         }
 
         // Kuula serverilt saadetud andmeid
@@ -70,14 +74,12 @@ public class walleGame extends Game {
                     players.putAll(packet.players);
                 }
 
-                if (object instanceof PacketPosition packet) {
-
-                    if (players.containsKey(packet.id)) {
-                        Player player = players.get(packet.id);
-                        player.x = packet.x;
-                        player.y = packet.y;
-                    }
+                if (object instanceof PacketPosition packet && players.containsKey(packet.id)) {
+                    Player player = players.get(packet.id);
+                    player.x = packet.x;
+                    player.y = packet.y;
                 }
+
                 if (object instanceof BulletData packet) {
                     playscreen.createRemoteBullet(packet);
                 }
@@ -93,7 +95,7 @@ public class walleGame extends Game {
 
             @Override
             public void disconnected(Connection connection) {
-                System.out.println("MÄNGIJA LAHKUS: " + connection.getID());
+                logger.info("MÄNGIJA LAHKUS: {}", connection.getID());
                 players.remove(connection.getID());
             }
         });
@@ -111,6 +113,7 @@ public class walleGame extends Game {
     @Override
     public void render() {
         super.render();
+        // currently not needed but might be useful later
     }
 
     @Override

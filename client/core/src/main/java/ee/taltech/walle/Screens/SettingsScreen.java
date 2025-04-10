@@ -187,7 +187,9 @@ public class SettingsScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // not needed right now, for pop up menus later
+    }
 
     @Override
     public void render(float delta) {
@@ -236,11 +238,17 @@ public class SettingsScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // for future multiplayer use
+    }
     @Override
-    public void resume() {}
+    public void resume() {
+        // for future multiplayer use
+    }
     @Override
-    public void hide() {}
+    public void hide() {
+        // for future multiplayer use
+    }
 
     @Override
     public void dispose() {

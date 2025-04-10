@@ -114,7 +114,9 @@ public class PauseScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // for future multiplayer use
+    }
 
     @Override
     public void render(float delta) {
@@ -159,13 +161,19 @@ public class PauseScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        // for future multiplayer use
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        // for future multiplayer use
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+        // for future multiplayer use
+    }
 
     @Override
     public void dispose() {

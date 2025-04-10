@@ -15,7 +15,7 @@ public class Bullet extends Sprite {
     public Body b2body;
     private boolean destroyed;
     private boolean markedForDestruction; // ← LISATUD!
-    private float speed = 6f;
+    // private float speed = 6f; when we might wanna change it after
     private Texture bulletTexture;
     private int bulletId;
     private boolean isRemote;
@@ -26,7 +26,7 @@ public class Bullet extends Sprite {
         this(world, screen, x, y, direction, false); // <-- Vaikimisi kohalik kuul
     }
 
-    public Bullet(World world, Playscreen screen, float x, float y, Vector2 direction, boolean isRemote) {
+    public Bullet(World world, Playscreen screen, float x, float y, Vector2 direction, boolean isRemote) {  // igaks juhuks jatan
         this.world = world;
         destroyed = false;
         markedForDestruction = false;
@@ -73,7 +73,7 @@ public class Bullet extends Sprite {
         return bulletId;
     }
 
-    public void update(float dt) {
+    public void update(float dt) {  // antakse edasi uhte teisse filei ei vota ara igaks juhuks
         if (!destroyed) {
             setPosition(b2body.getPosition().x - getWidth() / 2,
                 b2body.getPosition().y - getHeight() / 2);

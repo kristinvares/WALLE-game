@@ -6,7 +6,7 @@ import Network.Player;
 import java.util.HashMap;
 
 public class GameInstance {
-    private int gameId;
+    private int gameId; // it isnt unused
     private HashMap<Integer, Player> players;
     private HashMap<Integer, BulletData> bullets;
 
