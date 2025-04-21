@@ -1,4 +1,4 @@
-package Network;
+package networks;
 
 public class BulletData {
     public int bulletId;

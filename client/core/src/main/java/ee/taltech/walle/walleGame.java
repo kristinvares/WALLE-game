@@ -1,6 +1,11 @@
 package ee.taltech.walle;
 
-import Network.*;
+import networks.PacketPosition;
+import networks.PacketUpdatePlayers;
+import networks.Player;
+import networks.PacketDisconnect;
+import networks.BulletData;
+import networks.PacketBulletDestroy;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,6 +48,7 @@ public class walleGame extends Game {
         batch = new SpriteBatch();
         client = new Client();
         client.start();
+
 
         // Registreeri Kryo jaoks kõik vajalikud klassid
         Kryo kryo = client.getKryo();

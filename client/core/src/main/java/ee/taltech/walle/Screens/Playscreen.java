@@ -1,8 +1,8 @@
 package ee.taltech.walle.Screens;
 
-import Network.*;
-import Network.PacketPosition;
-import Network.Player;
+import networks.*;
+import networks.BulletData;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -223,7 +223,6 @@ public class Playscreen implements Screen {
             if (bullet.isDestroyed()) {
                 PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                 destroyPacket.bulletId = bullet.getId();
-                destroyPacket.gameId = game.gameId;
                 client.sendUDP(destroyPacket);
                 iter.remove();
             }

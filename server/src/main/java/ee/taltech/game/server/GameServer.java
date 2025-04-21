@@ -1,6 +1,6 @@
 package ee.taltech.game.server;
 
-import Network.*;
+import networks.*;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -20,6 +20,9 @@ public class GameServer {
     private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
 
     private Server server;
+    private HashMap<Integer, Player> players = new HashMap<>();
+    private HashMap<Integer, BulletData> activeBullets = new HashMap<>();
+    private Queue<Integer> availableIds = new LinkedList<>();
     private AtomicInteger nextBulletId = new AtomicInteger(1); // Unikaalsed ID-d
     private HashMap<Integer, GameInstance> gameInstances= new HashMap<>();
     private AtomicInteger gameInstanceId = new AtomicInteger(1);
@@ -46,6 +49,8 @@ public class GameServer {
         kryo.register(PacketIsSinglePlayer.class);
         kryo.register(PacketIsMultiPlayer.class);
         kryo.register(PacketGameId.class);
+        kryo.register(PacketPlayerHealth.class);
+
 
         try {
             server.bind(8080, 8081);

@@ -2,9 +2,11 @@ package ee.taltech.walle.Scenes;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
@@ -19,7 +21,6 @@ public class Hud implements Disposable {
     private Integer score;
 
     Label countdownLabel;
-    Label scoreLabel;
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
@@ -34,24 +35,33 @@ public class Hud implements Disposable {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        playerLabel = new Label("Player", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
+        BitmapFont font = new BitmapFont();
+        Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
+
+        timeLabel = new Label("TIME", style);
+        worldLabel = new Label("WORLD", style);
+        playerLabel = new Label("Player", style);
+
+        countdownLabel = new Label(String.format("%03d", worldTimer), style);
+        levelLabel = new Label("1-1", style);
+
+        // Ülemine rida (pealkirjad)
         table.add(playerLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
 
+        // Alumine rida (väärtused)
         table.row();
-        table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
-        table.add(countdownLabel).expandX();
+
+        Texture heartTexture = new Texture("health/heart_animated_elud_tais.png");
+        Image heartImage = new Image(heartTexture);
+        table.add(heartImage).expandX(); // südamed Player all
+
+        table.add(levelLabel).expandX();  // level WORLD all
+        table.add(countdownLabel).expandX();  // taimer TIME all
 
         stage.addActor(table);
-
     }
 
     @Override
