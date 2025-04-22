@@ -1,10 +1,10 @@
-package ee.taltech.WALLE.Sprites;
+package ee.taltech.walle.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import ee.taltech.WALLE.Screens.Playscreen;
-import ee.taltech.WALLE.WALLEGame;
+import ee.taltech.walle.Screens.Playscreen;
+import ee.taltech.walle.walleGame;
 // Kristin lisas juurde
 import com.badlogic.gdx.utils.Timer;
 

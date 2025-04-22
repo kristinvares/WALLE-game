@@ -74,7 +74,7 @@ public class GameServer {
                     }
                     GameInstance instance = gameInstances.get(packet.gameId);
                     if (instance != null) {
-                        HashMap<Integer, Network.Player> players = instance.getPlayers();
+                        HashMap<Integer, networks.Player> players = instance.getPlayers();
                         Player player = players.get(packet.id);
                         if (player != null) {
                             player.x = packet.x;
@@ -138,11 +138,11 @@ public class GameServer {
 
                 // Itereerime kõik gameInstances läbi ja otsime mängija selle ID-ga
                 for (GameInstance instance : gameInstances.values()) {
-                    HashMap<Integer, Network.Player> players = instance.getPlayers();
+                    HashMap<Integer, networks.Player> players = instance.getPlayers();
 
                     Integer playerIdToRemove = null;
 
-                    for (Map.Entry<Integer, Network.Player> entry : players.entrySet()) {
+                    for (Map.Entry<Integer, networks.Player> entry : players.entrySet()) {
                         if (entry.getValue().id == disconnectedId) {
                             playerIdToRemove = entry.getKey();
                             break;
@@ -159,7 +159,7 @@ public class GameServer {
         });
     }
 
-    private void sendUpdatedPlayers(HashMap<Integer, Network.Player> players) {
+    private void sendUpdatedPlayers(HashMap<Integer, networks.Player> players) {
         PacketUpdatePlayers packet = new PacketUpdatePlayers(players);
         for (Player player : players.values()) {
             server.sendToUDP(player.id, packet);
