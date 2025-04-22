@@ -2,20 +2,16 @@ package ee.taltech.walle.Tools;
 
 import networks.PacketBulletDestroy;
 import com.badlogic.gdx.physics.box2d.*;
-import ee.taltech.WALLE.Sprites.Bullet;
-import ee.taltech.WALLE.Sprites.PlayerSprite;
-import ee.taltech.WALLE.WALLEGame;
-import networks.PacketPlayerHealth;
 import ee.taltech.walle.Sprites.Bullet;
 import ee.taltech.walle.Sprites.PlayerSprite;
 import ee.taltech.walle.walleGame;
+import networks.PacketPlayerHealth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WorldContactListener implements ContactListener {
     private final walleGame game;
     private static final Logger logger = LoggerFactory.getLogger(WorldContactListener.class);
-
 
     public WorldContactListener(walleGame game) {
         this.game = game;
@@ -30,7 +26,6 @@ public class WorldContactListener implements ContactListener {
         if ((fixA.getUserData() instanceof Bullet || fixB.getUserData() instanceof Bullet) &&
             ((fixA.getUserData() != null && fixA.getUserData().equals("WALL")) ||
                 (fixB.getUserData() != null && fixB.getUserData().equals("WALL")))) {
-
 
             Bullet bullet = fixA.getUserData() instanceof Bullet ? (Bullet) fixA.getUserData() : (Bullet) fixB.getUserData();
             bullet.markForDestruction();
@@ -50,6 +45,7 @@ public class WorldContactListener implements ContactListener {
 
             player.takeDamage(1);
             System.out.println("Mängija sai tabamuse! Elud: " + player.getHealth());
+
             if (fixA.getUserData().equals("WALL") || fixB.getUserData().equals("WALL")) {
                 bullet.markForDestruction(); // ← Muudetud eemaldamiseks ohutult
                 if (!bullet.isRemote()) { // Ainult lokaalse kuuli korral
@@ -58,6 +54,7 @@ public class WorldContactListener implements ContactListener {
                     destroyPacket.gameId = game.gameId;
                     game.client.sendUDP(destroyPacket);
                 }
+            }
 
             PacketPlayerHealth healthPacket = new PacketPlayerHealth();
             healthPacket.id = game.client.getID(); // ← või `player.getId()` kui sul on meetod
@@ -80,8 +77,6 @@ public class WorldContactListener implements ContactListener {
             // Siin saad vajadusel lisada tagasilöögi (knockback) või muud efekti
             logger.info("Mängija põrkas vastu seina!");
         }
-
-
     }
 
     @Override
@@ -99,4 +94,3 @@ public class WorldContactListener implements ContactListener {
         // Hetkel pole vajalik, ettevalmistus
     }
 }
-

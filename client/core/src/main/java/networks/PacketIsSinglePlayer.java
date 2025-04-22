@@ -1,4 +1,4 @@
-package Network;
+package networks;
 
 public class PacketIsSinglePlayer {
     int clientId;
@@ -6,7 +6,6 @@ public class PacketIsSinglePlayer {
     public PacketIsSinglePlayer(Integer clientId) {
         this.clientId = clientId;
     }
-    public PacketIsSinglePlayer() {
-    }
+    public PacketIsSinglePlayer() {}
 }
 

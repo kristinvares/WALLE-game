@@ -1,11 +1,6 @@
 package ee.taltech.walle;
 
-import networks.PacketPosition;
-import networks.PacketUpdatePlayers;
-import networks.Player;
-import networks.PacketDisconnect;
-import networks.BulletData;
-import networks.PacketBulletDestroy;
+import networks.*;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -56,14 +51,15 @@ public class walleGame extends Game {
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
         kryo.register(HashMap.class);
-        kryo.register(PacketDisconnect.class);
-
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketDisconnect.class);
+        kryo.register(BulletData.class);
+        kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketIsSinglePlayer.class);
         kryo.register(PacketIsMultiPlayer.class);
         kryo.register(PacketGameId.class);
+        kryo.register(PacketPlayerHealth.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);

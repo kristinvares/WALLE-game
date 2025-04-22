@@ -1,7 +1,7 @@
 package ee.taltech.game.server;
 
-import Network.BulletData;
-import Network.Player;
+import networks.BulletData;
+import networks.Player;
 
 import java.util.HashMap;
 
