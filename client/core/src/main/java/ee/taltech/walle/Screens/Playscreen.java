@@ -101,9 +101,6 @@ public class Playscreen implements Screen {
 
         player = new PlayerSprite(world, this, spawnPosition.x, spawnPosition.y);
 
-        logger.info("📦 Saadan kaardi serverile konstruktoris!");
-        sendMapToServer();
-
     }
 
     public TextureAtlas getAtlas() {
@@ -256,10 +253,6 @@ public class Playscreen implements Screen {
                 }
             }
         }
-
-        PacketMapData packet = new PacketMapData(collisionMap);
-        client.sendTCP(packet);
-        logger.info("🗺️ Kaart saadeti serverile: " + width + "x" + height);
     }
 
 

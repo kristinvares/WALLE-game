@@ -61,7 +61,6 @@ public class walleGame extends Game {
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
 
-        kryo.register(PacketMapData.class);
         kryo.register(int[].class);
         kryo.register(int[][].class);
 
