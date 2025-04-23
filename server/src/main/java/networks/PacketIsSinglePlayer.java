@@ -1,12 +1,13 @@
 package networks;
 
 public class PacketIsSinglePlayer {
-    int clientId;
+    public int clientId;
+    public int[][] mapData;
 
-    public PacketIsSinglePlayer(Integer clientId) {
+    public PacketIsSinglePlayer(Integer clientId, int[][] mapData) {
         this.clientId = clientId;
+        this.mapData = mapData;
     }
-    public PacketIsSinglePlayer() {
-    }
-}
 
+    public PacketIsSinglePlayer() {}
+}

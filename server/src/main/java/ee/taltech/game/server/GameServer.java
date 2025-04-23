@@ -31,7 +31,7 @@ public class GameServer {
     public GameServer() {
 
         // see kood on liiga pikk, aga hetkeseisuga ei vota seda riski et seda muuta
-        server = new Server();
+        server = new Server(1024 * 1024, 1024 * 1024);
         server.start();
         int firstId = gameInstanceId.getAndIncrement();
         gameInstances.put(firstId, new GameInstance(firstId));
@@ -51,6 +51,10 @@ public class GameServer {
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
 
+        kryo.register(int[].class);
+        kryo.register(int[][].class);
+
+        kryo.register(PacketEnemyPosition.class);
 
         try {
             server.bind(8080, 8081);
@@ -84,24 +88,45 @@ public class GameServer {
                     }
                 }
                 if (object instanceof PacketIsSinglePlayer packet) {
-                    logger.info("Klient {} tahab sp mängu", connection.getID());
+                    logger.info("Klient {} tahab SP mängu", connection.getID());
+
                     int spGameId = gameInstanceId.getAndIncrement();
                     GameInstance singlePlayerGame = new GameInstance(spGameId);
+                    singlePlayerGame.setCollisionMap(packet.mapData);
+
                     gameInstances.put(spGameId, singlePlayerGame);
+
                     Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID(), spGameId);
                     singlePlayerGame.addPlayer(newPlayer);
-                    readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
+                    readyPlayers.add(connection.getID());
+
                     connection.sendTCP(new PacketGameId(spGameId));
+                    logger.info("🎮 Mängija lisatud SP instantsi ID-ga {}", newPlayer.gameId);
+
+                    singlePlayerGame.spawnBotIfNeeded(); // ✅
                 }
+
                 if (object instanceof PacketIsMultiPlayer packet) {
                     logger.info("Klient {} tahab MP mängu", connection.getID());
+
                     int mpGameId = firstId;
                     GameInstance mpGame = gameInstances.get(mpGameId);
+
+                    if (mpGame.getCollisionMap() == null) {
+                        mpGame.setCollisionMap(packet.mapData);
+                        logger.info("✅ MP mängule lisati kaart");
+                    }
+
                     Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID(), mpGameId);
                     mpGame.addPlayer(newPlayer);
-                    readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
+                    readyPlayers.add(connection.getID());
+
                     connection.sendTCP(new PacketGameId(mpGameId));
+                    logger.info("🎮 Mängija lisatud MP instantsi ID-ga {}", newPlayer.gameId);
+
+                    mpGame.spawnBotIfNeeded(); // ✅
                 }
+
                 if (object instanceof BulletData packet) {
                     int realBulletId = nextBulletId.getAndIncrement(); // Uus serveri bullet ID
                     packet.bulletId = realBulletId;  // Kirjuta peale
@@ -157,6 +182,23 @@ public class GameServer {
                 }
             }
         });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (GameInstance instance : gameInstances.values()) {
+                    // Uuenda bottide positsiooni
+                    instance.updateBots(1f);
+
+                    // Saada igale mängijale info boti positsiooni kohta
+                    for (PacketEnemyPosition packet : instance.getEnemyPositions()) {
+                        for (Player player : instance.getPlayers().values()) {
+                            server.sendToUDP(player.id, packet);
+                        }
+                    }
+                }
+            }
+        }, 10, 10);
     }
 
     private void sendUpdatedPlayers(HashMap<Integer, networks.Player> players) {
@@ -165,7 +207,6 @@ public class GameServer {
             server.sendToUDP(player.id, packet);
         }
     }
-
     public static void main(String[] args) {
         new GameServer();
     }

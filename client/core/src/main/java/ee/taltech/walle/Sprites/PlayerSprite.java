@@ -1,10 +1,12 @@
 package ee.taltech.walle.Sprites;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ee.taltech.walle.Screens.Playscreen;
 import ee.taltech.walle.walleGame;
+
 // Kristin lisas juurde
 import com.badlogic.gdx.utils.Timer;
 
@@ -13,20 +15,27 @@ public class PlayerSprite extends Sprite {
     public Body b2body;
     private TextureRegion playerStand;
     private float rotationAngle;
+
+    private Texture witchTexture;
+    private TextureRegion witchRegion;
+
     // Kristin lisas juurde alumised
     private int health;
     private int maxHealth;
 
     public PlayerSprite(World world, Playscreen screen, float startX, float startY) {
-        super(screen.getAtlas().findRegion("little_mario"));
+        witchTexture = new Texture("B_witch_idle.png");
+
+        // Oletame, et sprite hakkab koordinaatidest (0,0) ja on 32x32 suurune
+        witchRegion = new TextureRegion(witchTexture, 0, 0, 32, 42);
+
+        // Määra sprite'il visuaalsed mõõtmed ja pildiallikas
+        setBounds(0, 0, 32 / walleGame.PPM, 32 / walleGame.PPM);
+        setRegion(witchRegion);
+
         definePlayer(world, startX, startY);
-        playerStand = new TextureRegion(getTexture(),0, 8, 16, 16);
-        setBounds(0,0, 16 / walleGame.PPM, 16 / walleGame.PPM);
-        setRegion(playerStand);
-        // Kristin lisas juurde elude algväärtuse
-        // kui palju elu mängijal maksimaalselt olla saab
+
         maxHealth = 10;
-        // kui palju elu tal praegu alles on
         health = maxHealth;
     }
 

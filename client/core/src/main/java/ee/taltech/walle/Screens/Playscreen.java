@@ -1,7 +1,6 @@
 package ee.taltech.walle.Screens;
 
 import networks.*;
-import networks.BulletData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -24,10 +23,20 @@ import ee.taltech.walle.Tools.TiledMapLoader;
 import ee.taltech.walle.Tools.WorldContactListener;
 import ee.taltech.walle.walleGame;
 
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
+
+// map to server
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+// vastased
+import ee.taltech.walle.Sprites.EnemySprite;
+import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.utils.Array; // LISATUD KUULIDE HALDAMISEKS
 import ee.taltech.walle.Sprites.Bullet; // LISATUD KUULI KLASS
@@ -56,6 +65,10 @@ public class Playscreen implements Screen {
     private Array<Bullet> bullets;
     private HashMap<Integer, Bullet> remoteBullets = new HashMap<>();
     private int tempBulletId = 1000;
+
+    // vastane
+    private HashMap<Integer, EnemySprite> enemies = new HashMap<>();
+    private Texture enemyTexture;
 
     private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
 
@@ -87,6 +100,9 @@ public class Playscreen implements Screen {
 
 
         player = new PlayerSprite(world, this, spawnPosition.x, spawnPosition.y);
+
+        logger.info("📦 Saadan kaardi serverile konstruktoris!");
+        sendMapToServer();
 
     }
 
@@ -201,12 +217,47 @@ public class Playscreen implements Screen {
             packet.directionY = bulletDirection.y;
             packet.shooterID = client.getID();
             packet.gameID = game.gameId;
-            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId +
-                " | POSITSIOON: " + packet.x + ", " + packet.y);
+            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId + " | POSITSIOON: " + packet.x + ", " + packet.y);
 
             client.sendUDP(packet);
         }
     }
+
+    private void sendMapToServer() {
+        int width = map.getProperties().get("width", Integer.class);
+        int height = map.getProperties().get("height", Integer.class);
+        int tileWidth = map.getProperties().get("tilewidth", Integer.class);
+        int tileHeight = map.getProperties().get("tileheight", Integer.class);
+
+        int[][] collisionMap = new int[width][height];
+
+        // Collision layer
+        MapLayer collisionLayer = map.getLayers().get("collision");
+        if (collisionLayer == null) {
+            logger.error("Kaardil puudub 'collision' layer!");
+            return;
+        }
+
+        for (MapObject object : collisionLayer.getObjects()) {
+            if (object instanceof RectangleMapObject rectObj) {
+                Rectangle rect = rectObj.getRectangle();
+
+                int startX = (int) (rect.getX() / tileWidth);
+                int startY = (int) (rect.getY() / tileHeight);
+                int endX = (int) ((rect.getX() + rect.getWidth()) / tileWidth);
+                int endY = (int) ((rect.getY() + rect.getHeight()) / tileHeight);
+
+                for (int x = startX; x < endX; x++) {
+                    for (int y = startY; y < endY; y++) {
+                        if (x >= 0 && x < width && y >= 0 && y < height) {
+                            collisionMap[x][y] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     public void update(float dt) {
         handleInput();
@@ -278,6 +329,10 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
 
+        for (EnemySprite enemy : enemies.values()) {
+            enemy.draw(game.batch);
+        }
+
         for (PlayerSprite remotePlayer : remotePlayers.values()) {
             remotePlayer.draw(game.batch);
         }
@@ -297,6 +352,7 @@ public class Playscreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -337,6 +393,25 @@ public class Playscreen implements Screen {
         b2dr.dispose();
         hud.dispose();
     }
+
+    public void updateEnemyPosition(PacketEnemyPosition packet) {
+        Gdx.app.postRunnable(() -> {
+            EnemySprite enemy = enemies.get(packet.id);
+            if (enemy == null) {
+                float x = packet.x * 16 / walleGame.PPM;
+                float y = packet.y * 16 / walleGame.PPM;
+                enemy = new EnemySprite(world, this, x, y, packet.id);
+                enemy.update(packet.x, packet.y);
+                enemies.put(packet.id, enemy);
+                logger.info("🎯 BOT loodud ID-ga {} positsioonil ({}, {})", packet.id, packet.x, packet.y);
+            } else {
+                enemy.update(packet.x, packet.y);
+                logger.info("Bot update: id={}, pos=({}, {})", packet.id, packet.x, packet.y);
+            }
+        });
+    }
 }
+
+
 
 
