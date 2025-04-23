@@ -53,7 +53,6 @@ public class GameServer {
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
 
-        kryo.register(PacketMapData.class);
         kryo.register(int[].class);
         kryo.register(int[][].class);
 
@@ -74,24 +73,6 @@ public class GameServer {
             @Override
             public void received(Connection connection, Object object) {
 
-                try {
-                    if (object instanceof PacketMapData packet) {
-                        logger.info("🗺️ Server sai kaardi! Suurus: {} x {}", packet.mapData.length, packet.mapData[0].length);
-
-                        int clientId = connection.getID();
-                        for (GameInstance instance : gameInstances.values()) {
-                            if (instance.getPlayers().containsKey(clientId)) {
-                                instance.setCollisionMap(packet.mapData);
-                                logger.info("✅ Collision kaart salvestatud mängule ID-ga {}", instance.getGameId());
-                                break;
-                            }
-                        }
-                    }
-
-                } catch (Exception e) {
-                    logger.error("❌ Viga paketi töötlemisel!", e);
-                }
-
                 if (object instanceof PacketPosition packet) {
                     if (!readyPlayers.contains(packet.id)) {
                         logger.warn("Hoiatus: Mängija {} saatis positsiooni enne, kui ta oli mängus valmis.", packet.id);
@@ -109,34 +90,45 @@ public class GameServer {
                     }
                 }
                 if (object instanceof PacketIsSinglePlayer packet) {
-                    logger.info("Klient {} tahab sp mängu", connection.getID());
+                    logger.info("Klient {} tahab SP mängu", connection.getID());
+
                     int spGameId = gameInstanceId.getAndIncrement();
                     GameInstance singlePlayerGame = new GameInstance(spGameId);
+                    singlePlayerGame.setCollisionMap(packet.mapData); // ⬅️ Pane kaart otse
+
                     gameInstances.put(spGameId, singlePlayerGame);
+
                     Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID(), spGameId);
                     singlePlayerGame.addPlayer(newPlayer);
-                    readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
-                    connection.sendTCP(new PacketGameId(spGameId));
+                    readyPlayers.add(connection.getID());
 
-                    Bot bot = new Bot(singlePlayerGame, 30 * 16 / 100f, 15 * 16 / 100f);
-                    bot.setId(singlePlayerGame.getBotIdCounter().getAndIncrement());
-                    singlePlayerGame.addBot(bot);
-                    logger.info("🤖 BOT lisatud mängu ID-ga {} ja positsiooniga ({}, {})", spGameId, bot.getX(), bot.getY());
+                    connection.sendTCP(new PacketGameId(spGameId));
+                    logger.info("🎮 Mängija lisatud SP instantsi ID-ga {}", newPlayer.gameId);
+
+                    singlePlayerGame.spawnBotIfNeeded(); // ✅
                 }
+
                 if (object instanceof PacketIsMultiPlayer packet) {
                     logger.info("Klient {} tahab MP mängu", connection.getID());
+
                     int mpGameId = firstId;
                     GameInstance mpGame = gameInstances.get(mpGameId);
+
+                    if (mpGame.getCollisionMap() == null) {
+                        mpGame.setCollisionMap(packet.mapData);
+                        logger.info("✅ MP mängule lisati kaart");
+                    }
+
                     Player newPlayer = new Player(connection.getID(), 0, 0, "Player_" + connection.getID(), mpGameId);
                     mpGame.addPlayer(newPlayer);
-                    readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
-                    connection.sendTCP(new PacketGameId(mpGameId));
+                    readyPlayers.add(connection.getID());
 
-                    Bot bot = new Bot(mpGame, 30 * 16 / 100f, 15 * 16 / 100f);
-                    bot.setId(mpGame.getBotIdCounter().getAndIncrement());
-                    mpGame.addBot(bot);
-                    logger.info("🤖 BOT lisatud MP mängu ID-ga {} ja positsiooniga ({}, {})", bot.getId(), bot.getX(), bot.getY());
+                    connection.sendTCP(new PacketGameId(mpGameId));
+                    logger.info("🎮 Mängija lisatud MP instantsi ID-ga {}", newPlayer.gameId);
+
+                    mpGame.spawnBotIfNeeded(); // ✅
                 }
+
                 if (object instanceof BulletData packet) {
                     int realBulletId = nextBulletId.getAndIncrement(); // Uus serveri bullet ID
                     packet.bulletId = realBulletId;  // Kirjuta peale
@@ -208,7 +200,7 @@ public class GameServer {
                     }
                 }
             }
-        }, 1000, 1000);
+        }, 10, 10);
     }
 
     private void sendUpdatedPlayers(HashMap<Integer, networks.Player> players) {

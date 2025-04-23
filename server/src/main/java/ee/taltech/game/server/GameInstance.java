@@ -7,7 +7,6 @@ import networks.Player;
 import java.util.HashMap;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +89,14 @@ public class GameInstance {
 
     public int getGameId() {
         return gameId;
+    }
+
+    public void spawnBotIfNeeded() {
+        if (collisionMap != null && bots.isEmpty()) {
+            Bot bot = new Bot(this, 5, 3);
+            bot.setId(botIdCounter.getAndIncrement());
+            addBot(bot);
+            System.out.println("🤖 [GameInstance] Bot loodud instantsi " + gameId + " jaoks");
+        }
     }
 }

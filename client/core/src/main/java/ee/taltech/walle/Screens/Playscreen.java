@@ -101,6 +101,9 @@ public class Playscreen implements Screen {
 
         player = new PlayerSprite(world, this, spawnPosition.x, spawnPosition.y);
 
+        logger.info("📦 Saadan kaardi serverile konstruktoris!");
+        sendMapToServer();
+
     }
 
     public TextureAtlas getAtlas() {

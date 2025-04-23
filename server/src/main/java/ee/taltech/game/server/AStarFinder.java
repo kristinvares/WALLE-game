@@ -24,16 +24,20 @@ public class AStarFinder {
 
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
-                    if (Math.abs(dx) + Math.abs(dy) != 1) continue;
+                    if (dx == 0 && dy == 0) continue; // Ära lisa iseend
 
                     int nx = current.x + dx;
                     int ny = current.y + dy;
 
-                    if (nx < 0 || ny < 0 || nx >= map.length || ny >= map[0].length || map[nx][ny] == 1)
-                        continue;
+                    // Kontrolli kaardi piire
+                    if (nx < 0 || ny < 0 || nx >= map.length || ny >= map[0].length) continue;
+                    if (map[nx][ny] == 1) continue; // Väldi seina
+
+                    // Arvuta hind: diagonaal = 1.414, muidu 1
+                    float cost = (dx == 0 || dy == 0) ? 1f : 1.414f;
 
                     Point neighborPoint = new Point(nx, ny);
-                    float newG = current.g + 1;
+                    float newG = current.g + cost;
 
                     AStarNode neighbor = allNodes.getOrDefault(neighborPoint, new AStarNode(nx, ny));
                     if (newG < neighbor.g || !allNodes.containsKey(neighborPoint)) {
@@ -51,7 +55,9 @@ public class AStarFinder {
     }
 
     private static float heuristic(int x1, int y1, int x2, int y2) {
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+        int dx = Math.abs(x1 - x2);
+        int dy = Math.abs(y1 - y2);
+        return dx + dy + (1.414f - 2f) * Math.min(dx, dy);
     }
 
     private static List<Point> buildPath(AStarNode endNode) {

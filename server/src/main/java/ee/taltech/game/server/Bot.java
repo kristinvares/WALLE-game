@@ -64,7 +64,7 @@ public class Bot {
             float dy = nextY - y;
             float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-            float speed = 0.2f; // aeglane liikumine
+            float speed = 0.05f;
             if (distance < 0.2f) {
                 pathIndex++;
             } else {
