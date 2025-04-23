@@ -23,10 +23,18 @@ public class PauseScreen implements Screen {
     private Texture buttonTexture;
     private final Screen previousScreen;
 
-    // Declare the background textures
-    private Texture background1, background2, background3, background4;
-    private float scaleX, scaleY, scale;
-    private float x, y;
+    private Texture background1;
+    private Texture background2;
+    private Texture background3;
+    private Texture background4;
+
+    private float scaleX;
+    private float scaleY;
+    private float scale;
+
+    private float x;
+    private float y;
+
 
     public PauseScreen(walleGame game, Screen previousScreen) {
         this.game = game;
@@ -37,25 +45,25 @@ public class PauseScreen implements Screen {
         font = new BitmapFont(Gdx.files.internal("fonts/cinzel.fnt"));
         buttonTexture = new Texture(Gdx.files.internal("buttons_dividers/Transparent border/panel-transparent-border-030.png"));
 
-        // Load background images
+        // Lae background
         background1 = new Texture(Gdx.files.internal("menu_background/1.png"));
         background2 = new Texture(Gdx.files.internal("menu_background/2.png"));
         background3 = new Texture(Gdx.files.internal("menu_background/3.png"));
         background4 = new Texture(Gdx.files.internal("menu_background/4.png"));
 
-        // Create buttons
+        // Tee nupud
         TextButton resumeButton = createCustomButton("RESUME");
         TextButton settingsButton = createCustomButton("SETTINGS");
         TextButton mainMenuButton = createCustomButton("MAIN MENU");
         TextButton exitButton = createCustomButton("EXIT");
 
-        // Add listeners to buttons
+        // Lisa listenerid nuppudele
         addButtonListeners(resumeButton, settingsButton, mainMenuButton, exitButton);
 
-        // Create and center the table
+        // Loo ja pane tabel keskele
         Table table = new Table();
         table.setFillParent(true);
-        table.center(); // Center table on screen
+        table.center();
 
         table.add(resumeButton).fillX().uniformX().pad(10);
         table.row();
@@ -69,7 +77,7 @@ public class PauseScreen implements Screen {
     }
 
     private TextButton createCustomButton(String buttonText) {
-        // Create a NinePatch from the button texture (preserve 8px borders)
+        // Tee NinePatch nupu tekstuurist (hoia 8px bordereid)
         TextureRegion buttonRegion = new TextureRegion(buttonTexture);
         NinePatch ninePatch = new NinePatch(buttonRegion, 20, 20, 8, 8);
 
@@ -87,35 +95,35 @@ public class PauseScreen implements Screen {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.setScreen(previousScreen); // Return to the previous screen (game)
+                game.setScreen(previousScreen); // Mine eelmisele ekraanile
             }
         });
 
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.setScreen(new SettingsScreen(game, PauseScreen.this)); // Settings screen
+                game.setScreen(new SettingsScreen(game, PauseScreen.this)); // Mine settingutesse
             }
         });
 
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.setScreen(new MenuScreen(game, null)); // Go to main menu
+                game.setScreen(new MenuScreen(game, null)); // Mine main menuusse
             }
         });
 
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                Gdx.app.exit();  // Exit the game
+                Gdx.app.exit();  // Lahku mangust
             }
         });
     }
 
     @Override
     public void show() {
-        // for future multiplayer use
+        // Tuleviku menuu featureite jaoks
     }
 
     @Override
@@ -123,26 +131,25 @@ public class PauseScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
-        // Get screen dimensions
+        // saa ekraani suurus
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
-        // Get background image dimensions
+        // saa background suurus
         float bgWidth = background1.getWidth();
         float bgHeight = background1.getHeight();
 
-        // Calculate the scale factors for the background
+        // scalei
         scaleX = screenWidth / bgWidth;
         scaleY = screenHeight / bgHeight;
 
-        // Choose the smaller scale factor to avoid distortion (letterboxing or pillarboxing)
         scale = Math.max(scaleX, scaleY);
 
-        // Calculate the position of the background to center it
+        // centerimiseks vaja
         x = (screenWidth - bgWidth * scale) / 2;
         y = (screenHeight - bgHeight * scale) / 2;
 
-        // Draw the background images, scaling and positioning them appropriately
+        // joonista background
         game.batch.begin();
         game.batch.draw(background1, x, y, bgWidth * scale, bgHeight * scale);
         game.batch.draw(background2, x, y, bgWidth * scale, bgHeight * scale);
@@ -150,7 +157,7 @@ public class PauseScreen implements Screen {
         game.batch.draw(background4, x, y, bgWidth * scale, bgHeight * scale);
         game.batch.end();
 
-        // Draw the UI elements (buttons, sliders, labels)
+        // joonista up elemendid)
         stage.act(delta);
         stage.draw();
     }
@@ -162,17 +169,17 @@ public class PauseScreen implements Screen {
 
     @Override
     public void pause() {
-        // for future multiplayer use
+        // Tuleviku menuu featureite jaoks
     }
 
     @Override
     public void resume() {
-        // for future multiplayer use
+        // Tuleviku menuu featureite jaoks
     }
 
     @Override
     public void hide() {
-        // for future multiplayer use
+        // Tuleviku menuu featureite jaoks
     }
 
     @Override

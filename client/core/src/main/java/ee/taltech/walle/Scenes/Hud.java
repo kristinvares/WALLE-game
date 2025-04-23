@@ -39,7 +39,7 @@ public class Hud implements Disposable {
         BitmapFont font = new BitmapFont();
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
 
-        timeLabel = new Label("TIME", style);
+        timeLabel = new Label("TIME", style);  // Tee lables
         worldLabel = new Label("WORLD", style);
         playerLabel = new Label("Player", style);
 

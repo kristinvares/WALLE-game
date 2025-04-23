@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,7 +35,6 @@ import java.util.Map;
 
 // vastased
 import ee.taltech.walle.Sprites.EnemySprite;
-import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.utils.Array; // LISATUD KUULIDE HALDAMISEKS
 import ee.taltech.walle.Sprites.Bullet; // LISATUD KUULI KLASS
@@ -45,65 +43,67 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Playscreen implements Screen {
+    // Põhiobjektid mängu kuvamiseks
     private walleGame game;
     private TextureAtlas atlas;
-
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
     private PlayerSprite player;
 
+    // Kaardi ja Box2D maailmaga seotud objektid
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-
     private World world;
     private Box2DDebugRenderer b2dr;
+
+    // Võrgumängu komponendid
     private Client client;
     private Map<Integer, PlayerSprite> remotePlayers = new HashMap<>();
     private TiledMapLoader tiledMapLoader;
-    Vector2 spawnPosition;
+    private Vector2 spawnPosition;
+
+    // Kuulide haldus
     private Array<Bullet> bullets;
     private HashMap<Integer, Bullet> remoteBullets = new HashMap<>();
     private int tempBulletId = 1000;
 
-    // vastane
+    // Vastaste haldus
     private HashMap<Integer, EnemySprite> enemies = new HashMap<>();
-    private Texture enemyTexture;
 
     private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
 
     public Playscreen(walleGame game, Client client) {
+        // Kaardi ja maailma initsialiseerimine
         this.client = client;
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
+        atlas = new TextureAtlas("Mario_and_Enemies.pack");
         bullets = new Array<>();
+
         gameCam = new OrthographicCamera();
-
         gamePort = new FitViewport(walleGame.V_WIDTH / walleGame.PPM, walleGame.V_HEIGHT / walleGame.PPM, gameCam);
-
         hud = new Hud(game.batch);
 
         tiledMapLoader = new TiledMapLoader("map.tmx");
         map = tiledMapLoader.getMap();
-
         renderer = tiledMapLoader.setupMap();
         renderer.setMap(map);
 
+        // Kaamera algpositsioon
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
+        // Box2D maailm ja selle kontaktide kuulaja
         world = new World(new Vector2(0, 0), true);
-        world.setContactListener(new WorldContactListener(game));
         b2dr = new Box2DDebugRenderer();
+        world.setContactListener(new WorldContactListener(game));
 
+        // Mängija spawni määramine
         B2WorldCreator worldCreator = new B2WorldCreator(world, map);
         spawnPosition = worldCreator.getPlayerSpawnPosition();
-
-
         player = new PlayerSprite(world, this, spawnPosition.x, spawnPosition.y);
 
-        logger.info("📦 Saadan kaardi serverile konstruktoris!");
+        // Collision-kaardi saatmine serverile
         sendMapToServer();
-
     }
 
     public TextureAtlas getAtlas() {
@@ -121,6 +121,7 @@ public class Playscreen implements Screen {
     }
 
     public void createRemoteBullet(BulletData packet) {
+        // Kontrollib, kas kuul on teiselt mängijalt, ja lisab selle
         if (packet.shooterID == client.getID()) {
             return;
         }
@@ -133,12 +134,13 @@ public class Playscreen implements Screen {
                 bullet.setId(packet.bulletId);
                 remoteBullets.put(packet.bulletId, bullet);
 
-                logger.info("✅ REMOTE KUUL LISATUD ID-ga: " + packet.bulletId);
+                logger.info("✅ REMOTE KUUL LISATUD ID-ga: {}", packet.bulletId);
             }
         });
     }
 
     public void removeRemoteBullet(int bulletId) {
+        // Eemaldab kuuli kui see on serverist kustutatud
         Gdx.app.postRunnable(() -> {
             if (remoteBullets.containsKey(bulletId)) {
                 Bullet bullet = remoteBullets.get(bulletId);
@@ -194,18 +196,18 @@ public class Playscreen implements Screen {
             game.setScreen(new PauseScreen(game, this));
         }
 
-        // KUULI LASKMINE
+        // Kuuli laskmine
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             Vector2 bulletDirection = new Vector2(
                 (float) Math.cos(Math.toRadians(player.getRotation())),
                 (float) Math.sin(Math.toRadians(player.getRotation()))
             ).nor();
-            int assignedId = tempBulletId++;  // ← Ajutine ID
+            int assignedId = tempBulletId++;  //  Ajutine ID
             Bullet bullet = new Bullet(world, this,
                 player.b2body.getPosition().x,
                 player.b2body.getPosition().y,
                 bulletDirection);
-            bullet.setId(assignedId); // ← Määra ajutine ID
+            bullet.setId(assignedId); //  Määra ajutine ID
             bullets.add(bullet);
 
             // Saada serverisse
@@ -217,13 +219,14 @@ public class Playscreen implements Screen {
             packet.directionY = bulletDirection.y;
             packet.shooterID = client.getID();
             packet.gameID = game.gameId;
-            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: " + packet.bulletId + " | POSITSIOON: " + packet.x + ", " + packet.y);
+            logger.info("➡️ KLIENT SAADAB KUULI ID-ga: {} | POSITSIOON: {}, {}", packet.bulletId, packet.x, packet.y);
 
             client.sendUDP(packet);
         }
     }
 
-    private void sendMapToServer() {
+    private void sendMapToServer() {  // Funktsionaalsuse sailitamiseks palun ajutiselt ara tee luhemaks
+        // Collision-layeri andmed saadetakse serverisse
         int width = map.getProperties().get("width", Integer.class);
         int height = map.getProperties().get("height", Integer.class);
         int tileWidth = map.getProperties().get("tilewidth", Integer.class);
@@ -260,10 +263,12 @@ public class Playscreen implements Screen {
 
 
     public void update(float dt) {
+        // Uuendab mänguloogikat
         handleInput();
         world.step(1 / 60f, 6, 2);
         world.setContactListener(new WorldContactListener(game));
 
+        // Kuulide elutsükli haldamine
         Iterator<Bullet> iter = bullets.iterator();
         while (iter.hasNext()) {
             Bullet bullet = iter.next();
@@ -288,6 +293,7 @@ public class Playscreen implements Screen {
             }
         }
 
+        // Mängijate sünkroniseerimine
         player.update();
         sendPositionInfoToServer();
 
@@ -310,6 +316,7 @@ public class Playscreen implements Screen {
             }
         }
 
+        // Kaamera liikumine mängijaga kaasa
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
         gameCam.update();
@@ -323,6 +330,7 @@ public class Playscreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // Mängukaardi ja objektide joonistamine
         renderer.render();
         b2dr.render(world, gameCam.combined);
 
@@ -349,6 +357,7 @@ public class Playscreen implements Screen {
 
         game.batch.end();
 
+        // HUD joonistamine
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
@@ -361,17 +370,17 @@ public class Playscreen implements Screen {
 
     @Override
     public void pause() {
-        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+        // hetkel pole kasutusel lisa featurite jaoks
     }
 
     @Override
     public void resume() {
-        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+        // hetkel pole kasutusel lisa featurite jaoks
     }
 
     @Override
     public void hide() {
-        // hetkel pole kasutusel voetakse kasutusse koos menüü impllementeerimisega
+        // hetkel pole kasutusel lisa featurite jaoks
     }
 
     @Override

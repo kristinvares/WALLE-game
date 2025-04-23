@@ -21,7 +21,7 @@ public class walleGame extends Game {
     private static final Logger logger = LoggerFactory.getLogger(walleGame.class);
     public static final int V_WIDTH = 480;
     public static final int V_HEIGHT = 360;
-    public static final float PPM = 100;// Pixels Per Meter — jääb samaks, nagu sul algselt oli
+    public static final float PPM = 100;
     public static final short DEFAULT_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short BULLET_BIT = 4;
@@ -38,15 +38,22 @@ public class walleGame extends Game {
     public Playscreen getPlayscreen() {
         return playscreen;
     }
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         client = new Client(1024 * 1024, 1024 * 1024);
         client.start();
 
+        registerClientClasses(client.getKryo());
+        connectToServer();
+        setupClientListener();
 
-        // Registreeri Kryo jaoks kõik vajalikud klassid
-        Kryo kryo = client.getKryo();
+        setScreen(new MenuScreen(this, client));
+        playscreen = new Playscreen(this, client);
+    }
+
+    private void registerClientClasses(Kryo kryo) {
         kryo.register(PacketPosition.class);
         kryo.register(Player.class);
         kryo.register(PacketUpdatePlayers.class);
@@ -54,71 +61,53 @@ public class walleGame extends Game {
         kryo.register(BulletData.class);
         kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketDisconnect.class);
-        kryo.register(BulletData.class);
-        kryo.register(PacketBulletDestroy.class);
         kryo.register(PacketIsSinglePlayer.class);
         kryo.register(PacketIsMultiPlayer.class);
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
-
         kryo.register(int[].class);
         kryo.register(int[][].class);
-
         kryo.register(PacketEnemyPosition.class);
+    }
 
+    private void connectToServer() {
         try {
             client.connect(5000, "localhost", 8080, 8081);
-            logger.error("ÜHENDUS SERVERIGA LOODUD!");
+            logger.error("\u00dcHENDUS SERVERIGA LOODUD!");
         } catch (IOException e) {
-            logger.error("Ühenduse loomine ebaõnnestus: {}", e.getMessage());
+            logger.error("\u00dchenduse loomine eba\u00f5nnestus: {}", e.getMessage());
         }
+    }
 
-        // Kuula serverilt saadetud andmeid
+    private void setupClientListener() {
         client.addListener(new Listener() {
             @Override
             public void received(Connection connection, Object object) {
                 if (object instanceof PacketUpdatePlayers packet) {
                     players.putAll(packet.players);
-                }
-
-                if (object instanceof PacketPosition packet && players.containsKey(packet.id)) {
+                } else if (object instanceof PacketPosition packet && players.containsKey(packet.id)) {
                     Player player = players.get(packet.id);
                     player.x = packet.x;
                     player.y = packet.y;
-                }
-
-                if (object instanceof BulletData packet) {
+                } else if (object instanceof BulletData packet) {
                     playscreen.createRemoteBullet(packet);
-                }
-
-                if (object instanceof PacketGameId packet) {
+                } else if (object instanceof PacketGameId packet) {
                     gameId = packet.getGameId();
-                }
-
-                if (object instanceof PacketBulletDestroy packet) {
+                } else if (object instanceof PacketBulletDestroy packet) {
                     playscreen.removeRemoteBullet(packet.bulletId);
-                }
-
-                if (object instanceof PacketEnemyPosition packet) {
-                    if (playscreen != null) {
-                        playscreen.updateEnemyPosition(packet);
-                    }
+                } else if (object instanceof PacketEnemyPosition packet && playscreen != null) {
+                    playscreen.updateEnemyPosition(packet);
                 }
             }
 
             @Override
             public void disconnected(Connection connection) {
-                logger.info("MÄNGIJA LAHKUS: {}", connection.getID());
+                logger.info("M\u00c4NGIJA LAHKUS: {}", connection.getID());
                 players.remove(connection.getID());
             }
         });
-
-        // Ava mängu põhiekraan
-        setScreen(new MenuScreen(this, client));
-        playscreen = new Playscreen(this, client);
     }
 
-    // Tagastab kõik mängijad (kasutatakse Playscreen-is)
     public HashMap<Integer, Player> getPlayers() {
         return players;
     }
@@ -126,7 +115,6 @@ public class walleGame extends Game {
     @Override
     public void render() {
         super.render();
-        // currently not needed but might be useful later
     }
 
     @Override
