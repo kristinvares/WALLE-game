@@ -1,5 +1,6 @@
 package ee.taltech.walle.Sprites;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
@@ -7,22 +8,26 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ee.taltech.walle.Screens.Playscreen;
 import ee.taltech.walle.walleGame;
 
+
 public class EnemySprite extends Sprite {
     public Body b2body;
-    private TextureRegion botTexture;
+    private Texture slimeTexture;
+    private TextureRegion slimeRegion;
 
     public EnemySprite(World world, Playscreen screen, float x, float y, int id) {
-        super(screen.getAtlas().findRegion("little_mario")); // sama region kui mängijal
-        defineEnemy(world, x, y);
-        botTexture = new TextureRegion(getTexture(), 0, 8, 16, 16);
+        slimeTexture = new Texture("Slime_idle.png");
+        slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // ← võtab vasak-ülalt 16x16 piksli sprite'i
+
+        setRegion(slimeRegion);
         setBounds(0, 0, 16 / walleGame.PPM, 16 / walleGame.PPM);
-        setRegion(botTexture);
+
+        defineEnemy(world, x, y);
     }
 
     private void defineEnemy(World world, float x, float y) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
-        bdef.type = BodyDef.BodyType.StaticBody; // või DynamicBody kui tahad liikumist
+        bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
 
         CircleShape shape = new CircleShape();
@@ -47,6 +52,10 @@ public class EnemySprite extends Sprite {
     public void draw(Batch batch) {
         super.draw(batch);
     }
+
+    public void dispose() {
+        if (slimeTexture != null) {
+            slimeTexture.dispose();
+        }
+    }
 }
-
-

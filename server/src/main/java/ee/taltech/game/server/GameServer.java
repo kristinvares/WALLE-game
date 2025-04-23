@@ -10,8 +10,6 @@ import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import java.util.HashMap;
 
-import ee.taltech.game.server.Bot;
-
 // Logger
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,7 +92,7 @@ public class GameServer {
 
                     int spGameId = gameInstanceId.getAndIncrement();
                     GameInstance singlePlayerGame = new GameInstance(spGameId);
-                    singlePlayerGame.setCollisionMap(packet.mapData); // ⬅️ Pane kaart otse
+                    singlePlayerGame.setCollisionMap(packet.mapData);
 
                     gameInstances.put(spGameId, singlePlayerGame);
 
