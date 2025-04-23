@@ -5,34 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d569b1a3-373d-4a37-b2da-ad530e715494" name="Changes" comment="merge conflikt solve?">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/AStarFinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/AStarNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/MenuScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/PauseScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Screens/SettingsScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/Sprites/Bullet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/core/src/main/java/ee/taltech/walle/walleGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/8.10/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketPosition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/PacketUpdatePlayers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/Network/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/ee/taltech/game/server/GameServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.tar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/distributions/server-1.0-SNAPSHOT.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/libs/server-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/scripts/server" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/scripts/server" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer$1.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/compileTransaction/stash-dir/GameServer.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/jar/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/Bot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ee/taltech/game/server/GameServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="37-menu-loomine-2" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,31 +57,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.C:/Users/abc/IdeaProjects/iti0301-2025/client/core/build.gradle.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "40-seadistada-tulemuur-ja-crowdsec",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/abc/IdeaProjects/iti0301-2025",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.C:/Users/abc/IdeaProjects/iti0301-2025/client/core/build.gradle.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;71-ai-tegemine-janne&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/abc/IdeaProjects/iti0301-2025&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\abc\IdeaProjects\iti0301-2025\player_test\src" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="player_test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="player_test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="player_test" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="player_test" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="player_test" />
       <method v="2">
@@ -135,6 +141,12 @@
       <workItem from="1744150912521" duration="47000" />
       <workItem from="1744227870031" duration="819000" />
       <workItem from="1744228697756" duration="633000" />
+      <workItem from="1745262960185" duration="354000" />
+      <workItem from="1745321521947" duration="4187000" />
+      <workItem from="1745326633792" duration="599000" />
+      <workItem from="1745352602338" duration="603000" />
+      <workItem from="1745392320062" duration="846000" />
+      <workItem from="1745395320690" duration="1200000" />
     </task>
     <task id="LOCAL-00001" summary="merge conflikt solve?">
       <option name="closed" value="true" />

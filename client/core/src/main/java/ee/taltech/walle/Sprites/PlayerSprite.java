@@ -19,14 +19,14 @@ public class PlayerSprite extends Sprite {
     private Texture witchTexture;
     private TextureRegion witchRegion;
 
-    // Kristin lisas juurde alumised
+    // health jaoks
     private int health;
     private int maxHealth;
 
     public PlayerSprite(World world, Playscreen screen, float startX, float startY) {
         witchTexture = new Texture("B_witch_idle.png");
 
-        // Oletame, et sprite hakkab koordinaatidest (0,0) ja on 32x32 suurune
+        // 32 x 42 tukk sprite jaoks
         witchRegion = new TextureRegion(witchTexture, 0, 0, 32, 42);
 
         // Määra sprite'il visuaalsed mõõtmed ja pildiallikas
@@ -39,9 +39,12 @@ public class PlayerSprite extends Sprite {
         health = maxHealth;
     }
 
+    // Updatei positsiooni
     public void update() {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
+
+    // Defineeri playeri omadused
     public void definePlayer(World world, float startX, float startY) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(startX, startY);
@@ -72,7 +75,7 @@ public class PlayerSprite extends Sprite {
         return rotationAngle;
     }
 
-    // Kristin lisas juurde
+    // elude jaoks
     public void takeDamage(int amount) {
         health -= amount;
         if (health < 0) health = 0;

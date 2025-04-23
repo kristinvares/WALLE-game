@@ -26,18 +26,27 @@ public class SettingsScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-    private Slider brightnessSlider, volumeSlider, bgmSlider, sfxSlider;
-    private Label brightnessLabel, volumeLabel, bgmLabel, sfxLabel;
+    private Slider brightnessSlider;
+    private Slider volumeSlider;
+    private Slider bgmSlider;
+    private Slider sfxSlider;
+    private Label brightnessLabel;
+    private Label volumeLabel;
+    private Label bgmLabel;
+    private Label sfxLabel;
     private Texture arrowTexture;
 
-    // Declare both fonts
+    // Kaks fonti
     private BitmapFont whiteFont;
     private BitmapFont blueFont;
 
     private SpriteBatch batch;
 
-    // Declare the background textures
-    private Texture background1, background2, background3, background4;
+    // Background
+    private Texture background1;
+    private Texture background2;
+    private Texture background3;
+    private Texture background4;
 
     public SettingsScreen(walleGame game, Screen previousScreen) {
         this.game = game;
@@ -50,20 +59,20 @@ public class SettingsScreen implements Screen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         arrowTexture = new Texture(Gdx.files.internal("buttons_dividers/Divider Fade/divider-fade-003.png"));
 
-        // Load fonts
+        // Fontdid
         whiteFont = new BitmapFont(Gdx.files.internal("fonts/cinzel-settings.fnt"));
         blueFont = new BitmapFont(Gdx.files.internal("fonts/cinzel.fnt"));
 
-        // Load background images
+        // Background
         background1 = new Texture(Gdx.files.internal("menu_background/1.png"));
         background2 = new Texture(Gdx.files.internal("menu_background/2.png"));
         background3 = new Texture(Gdx.files.internal("menu_background/3.png"));
         background4 = new Texture(Gdx.files.internal("menu_background/4.png"));
 
-        // Initialize sliders and labels
+        // Sliderid
         initializeSliders();
 
-        // Create a back button
+        // Back nupp
         TextButton backButton = createCustomButton("BACK", blueFont);
         backButton.addListener(new ClickListener() {
             @Override
@@ -72,12 +81,12 @@ public class SettingsScreen implements Screen {
             }
         });
 
-        // Set up the settings menu layout
+        // Menu layout
         setUpMenuLayout(backButton);
     }
 
     private void initializeSliders() {
-        // === BRIGHTNESS SLIDER ===
+        // Brightness slider
         brightnessSlider = new Slider(-100, 100, 1, false, skin);
         brightnessSlider.setValue(0);
         brightnessLabel = new Label("Brightness: " + (int) brightnessSlider.getValue(), new Label.LabelStyle(whiteFont, null));
@@ -86,7 +95,7 @@ public class SettingsScreen implements Screen {
             return false;
         });
 
-        // === VOLUME SLIDER ===
+        // Volume slider
         volumeSlider = new Slider(1, 100, 1, false, skin);
         volumeSlider.setValue(50);
         volumeLabel = new Label("Master volume: " + (int) volumeSlider.getValue(), new Label.LabelStyle(whiteFont, null));
@@ -95,7 +104,7 @@ public class SettingsScreen implements Screen {
             return false;
         });
 
-        // === BGM SLIDER ===
+        // BGM slider
         bgmSlider = new Slider(1, 100, 1, false, skin);
         bgmSlider.setValue(50);
         bgmLabel = new Label("Background music: " + (int) bgmSlider.getValue(), new Label.LabelStyle(whiteFont, null));
@@ -104,7 +113,7 @@ public class SettingsScreen implements Screen {
             return false;
         });
 
-        // === SFX SLIDER ===
+        // SFK slider
         sfxSlider = new Slider(1, 100, 1, false, skin);
         sfxSlider.setValue(50);
         sfxLabel = new Label("SFX / UI: " + (int) sfxSlider.getValue(), new Label.LabelStyle(whiteFont, null));
@@ -115,6 +124,7 @@ public class SettingsScreen implements Screen {
     }
 
     private void setUpMenuLayout(TextButton backButton) {
+        // Paneb paika menuu layouti
         Table mainTable = new Table();
         mainTable.setFillParent(true);
 
@@ -146,6 +156,7 @@ public class SettingsScreen implements Screen {
     }
 
     private Table createLabeledRow(Label label) {
+        // Teeb labelid
         Texture rightArrowTexture = new Texture(Gdx.files.internal("buttons_dividers/Divider Fade/divider-fade-003-reverse.png"));
         Image rightArrow = new Image(new TextureRegionDrawable(new TextureRegion(rightArrowTexture)));
 
@@ -165,6 +176,7 @@ public class SettingsScreen implements Screen {
     }
 
     private TextButton createCustomButton(String buttonText, BitmapFont buttonFont) {
+        // Teeb back return nupu
         TextureRegion buttonRegion = new TextureRegion(new Texture(Gdx.files.internal("buttons_dividers/Transparent border/panel-transparent-border-030.png")));
         NinePatch ninePatch = new NinePatch(buttonRegion, 20, 20, 8, 8);
 
@@ -178,6 +190,7 @@ public class SettingsScreen implements Screen {
     }
 
     private void exitSettings() {
+        // Lahkumiseks
         if (previousScreen instanceof MenuScreen) {
             Gdx.input.setInputProcessor(((MenuScreen) previousScreen).getStage());
         } else if (previousScreen instanceof PauseScreen) {
@@ -193,28 +206,23 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        // Joonistab elemendid ja scalib backgroundi
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Get screen dimensions
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
-        // Get background image dimensions
         float bgWidth = background1.getWidth();
         float bgHeight = background1.getHeight();
 
-        // Calculate the scale factors for the background
         float scaleX = screenWidth / bgWidth;
         float scaleY = screenHeight / bgHeight;
 
-        // Choose the smaller scale factor to avoid distortion (letterboxing or pillarboxing)
         float scale = Math.max(scaleX, scaleY);
 
-        // Calculate the position of the background to center it
         float x = (screenWidth - bgWidth * scale) / 2;
         float y = (screenHeight - bgHeight * scale) / 2;
 
-        // Draw the background images, scaling and positioning them appropriately
         batch.begin();
         batch.draw(background1, x, y, bgWidth * scale, bgHeight * scale);
         batch.draw(background2, x, y, bgWidth * scale, bgHeight * scale);
@@ -222,7 +230,6 @@ public class SettingsScreen implements Screen {
         batch.draw(background4, x, y, bgWidth * scale, bgHeight * scale);
         batch.end();
 
-        // Draw the UI elements (buttons, sliders, labels)
         stage.act(delta);
         stage.draw();
 
@@ -239,15 +246,15 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void pause() {
-        // for future multiplayer use
+        // hetkel pole kasutusel lisa featurite jaoks
     }
     @Override
     public void resume() {
-        // for future multiplayer use
+        // hetkel pole kasutusel lisa featurite jaoks
     }
     @Override
     public void hide() {
-        // for future multiplayer use
+        // hetkel pole kasutusel lisa featurite jaoks
     }
 
     @Override
@@ -257,7 +264,7 @@ public class SettingsScreen implements Screen {
         arrowTexture.dispose();
         whiteFont.dispose();
         blueFont.dispose();
-        batch.dispose();  // Dispose of the SpriteBatch
+        batch.dispose();
         background1.dispose();
         background2.dispose();
         background3.dispose();

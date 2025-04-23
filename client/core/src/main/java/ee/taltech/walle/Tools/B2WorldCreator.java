@@ -41,7 +41,7 @@ public class B2WorldCreator {
             body.createFixture(fdef).setUserData("WALL");
         }
 
-        // Mängija `spawn` punkt
+        // Mängija "spawn" punkt
         for (MapObject object : map.getLayers().get("collision").getObjects()) {
             if (object.getProperties().containsKey("spawn") && object instanceof RectangleMapObject rectangleMapObject) {
                 Rectangle rect = rectangleMapObject.getRectangle();

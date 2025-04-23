@@ -29,46 +29,61 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 
 public class MenuScreen implements Screen {
     private final walleGame game;
+    private static final String TAG_MAP_GEN = "MapGen"; // Logimise jaoks konstandiks defineeritud silt
     private Stage stage;
     private Client client;
     private BitmapFont font;
     private Texture buttonTexture;
 
-    private Texture background1, background2, background3, background4;
-    private float scaleX, scaleY, scale;
-    private float x, y;
+    private Texture background1;
+    private Texture background2;
+    private Texture background3;
+    private Texture background4;
+    private float scaleX;
+    private float scaleY;
+    private float scale;
+    private float x;
+    private float y;
 
+    // Peamenüü nupud
     private TextButton playButton, multiplayerButton, settingsButton, exitButton;
 
     public MenuScreen(walleGame game, Client client) {
         this.game = game;
         this.client = client;
+
+        // Lava ja sisendi seadistamine
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        // Font ja nupu tekstuur
         font = new BitmapFont(Gdx.files.internal("fonts/cinzel.fnt"));
         buttonTexture = new Texture(Gdx.files.internal("buttons_dividers/Transparent border/panel-transparent-border-030.png"));
 
+        // Menüü taustad
         background1 = new Texture(Gdx.files.internal("menu_background/1.png"));
         background2 = new Texture(Gdx.files.internal("menu_background/2.png"));
         background3 = new Texture(Gdx.files.internal("menu_background/3.png"));
         background4 = new Texture(Gdx.files.internal("menu_background/4.png"));
 
+        // Nuppude loomine ja kuulajate lisamine
         playButton = createCustomButton("PLAY");
         multiplayerButton = createCustomButton("MULTIPLAYER");
         settingsButton = createCustomButton("SETTINGS");
         exitButton = createCustomButton("QUIT");
 
+        // Üksikmängu nupp
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                int[][] map = generateCollisionMap();
-                client.sendTCP(new PacketIsSinglePlayer(client.getID(), map));
+                int[][] map = generateCollisionMap(); // Collision-kaardi loomine
+                client.sendTCP(new PacketIsSinglePlayer(client.getID(), map)); // Saada serverile
                 Gdx.app.log("Menu", "📨 SP kaardi info saadetud serverile");
-                game.setScreen(game.getPlayscreen());
+                game.setScreen(game.getPlayscreen()); // Ava mäng
             }
         });
 
+        // Mitmikmängu nupp
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -78,6 +93,7 @@ public class MenuScreen implements Screen {
             }
         });
 
+        // Seadete nupp
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -85,6 +101,7 @@ public class MenuScreen implements Screen {
             }
         });
 
+        // Välju nupust
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -92,10 +109,10 @@ public class MenuScreen implements Screen {
             }
         });
 
+        // Nuppude paigutus tabelisse
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-
         table.add(playButton).fillX().uniformX().pad(10);
         table.row();
         table.add(multiplayerButton).fillX().uniformX().pad(10);
@@ -108,6 +125,7 @@ public class MenuScreen implements Screen {
     }
 
     private TextButton createCustomButton(String buttonText) {
+        // Kohandatud nupu loomine tekstuuri ja fondiga
         TextureRegion buttonRegion = new TextureRegion(buttonTexture);
         NinePatch ninePatch = new NinePatch(buttonRegion, 20, 20, 8, 8);
 
@@ -120,8 +138,8 @@ public class MenuScreen implements Screen {
     }
 
     private int[][] generateCollisionMap() {
-        Gdx.app.log("MapGen", "📦 Alustan collision-kaardi genereerimist...");
-
+        // Collision-kaardi genereerimine 'collision' layeri põhjal
+        Gdx.app.log(TAG_MAP_GEN, "📦 Alustan collision-kaardi genereerimist...");
         TiledMapLoader loader = new TiledMapLoader("map.tmx");
         TiledMap map = loader.getMap();
 
@@ -134,10 +152,11 @@ public class MenuScreen implements Screen {
 
         MapLayer collisionLayer = map.getLayers().get("collision");
         if (collisionLayer == null) {
-            Gdx.app.error("MapGen", "⛔ Kaardil puudub 'collision' layer!");
+            Gdx.app.error(TAG_MAP_GEN, "⛔ Kaardil puudub 'collision' layer!");
             return collisionMap;
         }
 
+        // Tuvasta kõik ristkülikud ja märgi need kollisioonina
         for (MapObject object : collisionLayer.getObjects()) {
             if (object instanceof RectangleMapObject rectObj) {
                 Rectangle rect = rectObj.getRectangle();
@@ -156,12 +175,13 @@ public class MenuScreen implements Screen {
             }
         }
 
-        Gdx.app.log("MapGen", "✅ Collision-map genereeritud suurusega " + width + "x" + height);
+        Gdx.app.log(TAG_MAP_GEN, "✅ Collision-map genereeritud suurusega " + width + "x" + height);
         return collisionMap;
     }
 
-
-    @Override public void show() {}
+    @Override public void show() {
+        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+    }
     @Override public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -193,9 +213,15 @@ public class MenuScreen implements Screen {
     @Override public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override public void pause() {
+        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+    }
+    @Override public void resume() {
+        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+    }
+    @Override public void hide() {
+        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+    }
 
     @Override public void dispose() {
         stage.dispose();

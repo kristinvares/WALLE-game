@@ -14,9 +14,10 @@ public class EnemySprite extends Sprite {
     private Texture slimeTexture;
     private TextureRegion slimeRegion;
 
+    // Teeb spritei
     public EnemySprite(World world, Playscreen screen, float x, float y, int id) {
         slimeTexture = new Texture("Slime_idle.png");
-        slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // ← võtab vasak-ülalt 16x16 piksli sprite'i
+        slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // võtab vasak-ülalt 16x16 piksli sprite'i
 
         setRegion(slimeRegion);
         setBounds(0, 0, 16 / walleGame.PPM, 16 / walleGame.PPM);
@@ -24,6 +25,7 @@ public class EnemySprite extends Sprite {
         defineEnemy(world, x, y);
     }
 
+    // Hitbox
     private void defineEnemy(World world, float x, float y) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
@@ -41,6 +43,7 @@ public class EnemySprite extends Sprite {
         shape.dispose();
     }
 
+    // Updatei positsiooni
     public void update(float x, float y) {
         setPosition(x - getWidth() / 2, y - getHeight() / 2);
         if (b2body != null) {

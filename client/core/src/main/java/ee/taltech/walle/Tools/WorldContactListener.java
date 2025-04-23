@@ -22,21 +22,27 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-        // Kontrollime, kas kuul tabas seina
+        handleBulletHitsWall(fixA, fixB);
+        handleBulletHitsPlayer(fixA, fixB);
+        handlePlayerHitsWall(fixA, fixB);
+    }
+
+    private void handleBulletHitsWall(Fixture fixA, Fixture fixB) {
         if ((fixA.getUserData() instanceof Bullet || fixB.getUserData() instanceof Bullet) &&
-            ((fixA.getUserData() != null && fixA.getUserData().equals("WALL")) ||
-                (fixB.getUserData() != null && fixB.getUserData().equals("WALL")))) {
+            ("WALL".equals(fixA.getUserData()) || "WALL".equals(fixB.getUserData()))) {
 
             Bullet bullet = fixA.getUserData() instanceof Bullet ? (Bullet) fixA.getUserData() : (Bullet) fixB.getUserData();
             bullet.markForDestruction();
+
             if (!bullet.isRemote()) {
                 PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                 destroyPacket.bulletId = bullet.getId();
                 game.client.sendUDP(destroyPacket);
             }
         }
+    }
 
-        // Kontrollime, kas kuul tabas mängijat
+    private void handleBulletHitsPlayer(Fixture fixA, Fixture fixB) {
         if ((fixA.getUserData() instanceof Bullet && fixB.getUserData() instanceof PlayerSprite) ||
             (fixB.getUserData() instanceof Bullet && fixA.getUserData() instanceof PlayerSprite)) {
 
@@ -44,40 +50,31 @@ public class WorldContactListener implements ContactListener {
             PlayerSprite player = fixA.getUserData() instanceof PlayerSprite ? (PlayerSprite) fixA.getUserData() : (PlayerSprite) fixB.getUserData();
 
             player.takeDamage(1);
-            System.out.println("Mängija sai tabamuse! Elud: " + player.getHealth());
-
-            if (fixA.getUserData().equals("WALL") || fixB.getUserData().equals("WALL")) {
-                bullet.markForDestruction(); // ← Muudetud eemaldamiseks ohutult
-                if (!bullet.isRemote()) { // Ainult lokaalse kuuli korral
-                    PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
-                    destroyPacket.bulletId = bullet.getId();
-                    destroyPacket.gameId = game.gameId;
-                    game.client.sendUDP(destroyPacket);
-                }
-            }
+            logger.info("Mängija sai tabamuse! Elud: {}", player.getHealth());
 
             PacketPlayerHealth healthPacket = new PacketPlayerHealth();
-            healthPacket.id = game.client.getID(); // ← või `player.getId()` kui sul on meetod
+            healthPacket.id = game.client.getID();
             healthPacket.newHealth = player.getHealth();
             game.client.sendUDP(healthPacket);
 
             bullet.markForDestruction();
+
             if (!bullet.isRemote()) {
                 PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                 destroyPacket.bulletId = bullet.getId();
+                destroyPacket.gameId = game.gameId;
                 game.client.sendUDP(destroyPacket);
             }
         }
+    }
 
-        // Kontrollime, kas mängija põrkas vastu seina
-        if ((fixA.getUserData() != null && fixA.getUserData().equals("WALL") && fixB.getUserData() instanceof PlayerSprite) ||
-            (fixB.getUserData() != null && fixB.getUserData().equals("WALL") && fixA.getUserData() instanceof PlayerSprite)) {
-
-            System.out.println("Mängija põrkas vastu seina!");
-            // Siin saad vajadusel lisada tagasilöögi (knockback) või muud efekti
+    private void handlePlayerHitsWall(Fixture fixA, Fixture fixB) {
+        if (("WALL".equals(fixA.getUserData()) && fixB.getUserData() instanceof PlayerSprite) ||
+            ("WALL".equals(fixB.getUserData()) && fixA.getUserData() instanceof PlayerSprite)) {
             logger.info("Mängija põrkas vastu seina!");
         }
     }
+
 
     @Override
     public void endContact(Contact contact) {
