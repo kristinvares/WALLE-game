@@ -10,6 +10,8 @@ import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import java.util.HashMap;
 
+import ee.taltech.game.server.Bot;
+
 // Logger
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,7 @@ public class GameServer {
     public GameServer() {
 
         // see kood on liiga pikk, aga hetkeseisuga ei vota seda riski et seda muuta
-        server = new Server();
+        server = new Server(1024 * 1024, 1024 * 1024);
         server.start();
         int firstId = gameInstanceId.getAndIncrement();
         gameInstances.put(firstId, new GameInstance(firstId));
@@ -51,6 +53,11 @@ public class GameServer {
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
 
+        kryo.register(PacketMapData.class);
+        kryo.register(int[].class);
+        kryo.register(int[][].class);
+
+        kryo.register(PacketEnemyPosition.class);
 
         try {
             server.bind(8080, 8081);
@@ -66,6 +73,24 @@ public class GameServer {
 
             @Override
             public void received(Connection connection, Object object) {
+
+                try {
+                    if (object instanceof PacketMapData packet) {
+                        logger.info("🗺️ Server sai kaardi! Suurus: {} x {}", packet.mapData.length, packet.mapData[0].length);
+
+                        int clientId = connection.getID();
+                        for (GameInstance instance : gameInstances.values()) {
+                            if (instance.getPlayers().containsKey(clientId)) {
+                                instance.setCollisionMap(packet.mapData);
+                                logger.info("✅ Collision kaart salvestatud mängule ID-ga {}", instance.getGameId());
+                                break;
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+                    logger.error("❌ Viga paketi töötlemisel!", e);
+                }
 
                 if (object instanceof PacketPosition packet) {
                     if (!readyPlayers.contains(packet.id)) {
@@ -92,6 +117,11 @@ public class GameServer {
                     singlePlayerGame.addPlayer(newPlayer);
                     readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
                     connection.sendTCP(new PacketGameId(spGameId));
+
+                    Bot bot = new Bot(singlePlayerGame, 30 * 16 / 100f, 15 * 16 / 100f);
+                    bot.setId(singlePlayerGame.getBotIdCounter().getAndIncrement());
+                    singlePlayerGame.addBot(bot);
+                    logger.info("🤖 BOT lisatud mängu ID-ga {} ja positsiooniga ({}, {})", spGameId, bot.getX(), bot.getY());
                 }
                 if (object instanceof PacketIsMultiPlayer packet) {
                     logger.info("Klient {} tahab MP mängu", connection.getID());
@@ -101,6 +131,11 @@ public class GameServer {
                     mpGame.addPlayer(newPlayer);
                     readyPlayers.add(connection.getID()); // Märgi mängija valmisolek
                     connection.sendTCP(new PacketGameId(mpGameId));
+
+                    Bot bot = new Bot(mpGame, 30 * 16 / 100f, 15 * 16 / 100f);
+                    bot.setId(mpGame.getBotIdCounter().getAndIncrement());
+                    mpGame.addBot(bot);
+                    logger.info("🤖 BOT lisatud MP mängu ID-ga {} ja positsiooniga ({}, {})", bot.getId(), bot.getX(), bot.getY());
                 }
                 if (object instanceof BulletData packet) {
                     int realBulletId = nextBulletId.getAndIncrement(); // Uus serveri bullet ID
@@ -157,6 +192,23 @@ public class GameServer {
                 }
             }
         });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (GameInstance instance : gameInstances.values()) {
+                    // Uuenda bottide positsiooni
+                    instance.updateBots(1f);
+
+                    // Saada igale mängijale info boti positsiooni kohta
+                    for (PacketEnemyPosition packet : instance.getEnemyPositions()) {
+                        for (Player player : instance.getPlayers().values()) {
+                            server.sendToUDP(player.id, packet);
+                        }
+                    }
+                }
+            }
+        }, 1000, 1000);
     }
 
     private void sendUpdatedPlayers(HashMap<Integer, networks.Player> players) {
@@ -165,7 +217,6 @@ public class GameServer {
             server.sendToUDP(player.id, packet);
         }
     }
-
     public static void main(String[] args) {
         new GameServer();
     }

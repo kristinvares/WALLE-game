@@ -41,7 +41,7 @@ public class walleGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        client = new Client();
+        client = new Client(1024 * 1024, 1024 * 1024);
         client.start();
 
 
@@ -60,6 +60,12 @@ public class walleGame extends Game {
         kryo.register(PacketIsMultiPlayer.class);
         kryo.register(PacketGameId.class);
         kryo.register(PacketPlayerHealth.class);
+
+        kryo.register(PacketMapData.class);
+        kryo.register(int[].class);
+        kryo.register(int[][].class);
+
+        kryo.register(PacketEnemyPosition.class);
 
         try {
             client.connect(5000, "localhost", 8080, 8081);
@@ -92,6 +98,12 @@ public class walleGame extends Game {
 
                 if (object instanceof PacketBulletDestroy packet) {
                     playscreen.removeRemoteBullet(packet.bulletId);
+                }
+
+                if (object instanceof PacketEnemyPosition packet) {
+                    if (playscreen != null) {
+                        playscreen.updateEnemyPosition(packet);
+                    }
                 }
             }
 
