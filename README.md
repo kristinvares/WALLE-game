@@ -6,8 +6,8 @@ Tegemist on shooter mänguga, mida saab mängida nii single- kui ka multiplayeri
 
 ### Klahviseosed:
 
-leftarrow, uparrow, rightarrow, downarrow - liikumine
-space - tulistamine
+- leftarrow, uparrow, rightarrow, downarrow - liikumine
+- space - tulistamine
 
 ### Kuidas mäng tööle saada:
 
