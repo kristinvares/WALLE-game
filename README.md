@@ -24,6 +24,7 @@ Eeldusel, et server on üleval, siis:
 
 ```java
 client.connect(5000, "193.40.255.32", 8080, 8081);
+```
 
 ### Kuidas mängida
 
