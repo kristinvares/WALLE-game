@@ -21,6 +21,7 @@ public class Hud implements Disposable {
     private Integer score;
 
     Label countdownLabel;
+    Label scoreLabel;
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
@@ -35,6 +36,14 @@ public class Hud implements Disposable {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
+
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        playerLabel = new Label("Player", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
 
         BitmapFont font = new BitmapFont();
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
@@ -60,6 +69,9 @@ public class Hud implements Disposable {
 
         table.add(levelLabel).expandX();  // level WORLD all
         table.add(countdownLabel).expandX();  // taimer TIME all
+        table.add(scoreLabel).expandX();
+        table.add(levelLabel).expandX();
+        table.add(countdownLabel).expandX();
 
         stage.addActor(table);
     }
