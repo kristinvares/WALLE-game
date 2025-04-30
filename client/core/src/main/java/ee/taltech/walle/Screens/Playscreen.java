@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -279,6 +280,7 @@ public class Playscreen implements Screen {
             if (bullet.isDestroyed()) {
                 PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
                 destroyPacket.bulletId = bullet.getId();
+                destroyPacket.gameId = game.gameId;
                 client.sendUDP(destroyPacket);
                 iter.remove();
             }
