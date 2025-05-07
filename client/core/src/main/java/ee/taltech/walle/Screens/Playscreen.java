@@ -85,7 +85,7 @@ public class Playscreen implements Screen {
         gamePort = new FitViewport(walleGame.V_WIDTH / walleGame.PPM, walleGame.V_HEIGHT / walleGame.PPM, gameCam);
         hud = new Hud(game.batch);
 
-        tiledMapLoader = new TiledMapLoader("map.tmx");
+        tiledMapLoader = new TiledMapLoader("tarkvara_projekt_map.tmx");
         map = tiledMapLoader.getMap();
         renderer = tiledMapLoader.setupMap();
         renderer.setMap(map);
