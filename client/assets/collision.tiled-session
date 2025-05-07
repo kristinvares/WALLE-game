@@ -1,0 +1,22 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+    },
+    "last.imagePath": "C:/Users/krist/iti0301-2025/client/assets/simple_tileset_32x32_version1.0",
+    "map.height": 60,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 70,
+    "openFiles": [
+    ],
+    "project": "collision.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
