@@ -158,7 +158,7 @@ public class Playscreen implements Screen {
     // Mängija sisendi haldamine
     public void handleInput() {
         float moveSpeed = 1.5f;
-        float acceleration = 0.05f;
+        float acceleration = 0.1f;
 
         Vector2 velocity = player.b2body.getLinearVelocity();
         Vector2 movement = new Vector2(velocity.x, velocity.y);
