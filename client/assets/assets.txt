@@ -1,3 +1,4 @@
+Asset_basic.tsx
 B_witch_idle.png
 Map_tiles.png
 Map_tiles.tsx
@@ -37,6 +38,7 @@ Transparent_border/panel-transparent-border-028.png
 Transparent_border/panel-transparent-border-029.png
 Transparent_border/panel-transparent-border-030.png
 Transparent_border/panel-transparent-border-031.png
+assets_spritesheet.tsx
 bullet.png
 buttons_dividers/Border/panel-border-000.png
 buttons_dividers/Border/panel-border-001.png
@@ -180,11 +182,17 @@ buttons_dividers/Transparent center/panel-transparent-center-028.png
 buttons_dividers/Transparent center/panel-transparent-center-029.png
 buttons_dividers/Transparent center/panel-transparent-center-030.png
 buttons_dividers/Transparent center/panel-transparent-center-031.png
+collision.tiled-project
+collision.tiled-session
+decorations.tsx
+dirthpath_tiles.tsx
 drop.jpg
+fence.tsx
 fonts/cinzel-settings.fnt
 fonts/cinzel-settings.png
 fonts/cinzel.fnt
 fonts/cinzel.png
+ground_decoration.tsx
 health/heart_animated_elud_tais.png
 health/heart_animated_elud_vahenevad.png
 libgdx.png
@@ -193,8 +201,20 @@ menu_background/1.png
 menu_background/2.png
 menu_background/3.png
 menu_background/4.png
+simple_tileset_32x32_version1.0/assets_basic.png
+simple_tileset_32x32_version1.0/assets_spritesheet_v2_free.png
+simple_tileset_32x32_version1.0/decorations.png
+simple_tileset_32x32_version1.0/dirtpath_tiles.png
+simple_tileset_32x32_version1.0/fence.png
+simple_tileset_32x32_version1.0/ground_decorations.png
+simple_tileset_32x32_version1.0/terrain_tiles_v2.png
+simple_tileset_32x32_version1.0/tilesheet_basic.png
+simple_tileset_32x32_version1.0/water_and_island_tiles_v2.png
 slime_idle.png
+tarkvara_projekt_map.tmx
+terrain_tiles.tsx
 tileset_gutter.png
+tilesheet_basic.tsx
 ui/font-list.fnt
 ui/font-subtitle.fnt
 ui/font-window.fnt
@@ -202,3 +222,4 @@ ui/font.fnt
 ui/uiskin.atlas
 ui/uiskin.json
 ui/uiskin.png
+water_island_tiles.tsx
