@@ -2,6 +2,7 @@ package ee.taltech.game.server;
 
 import networks.BulletData;
 import networks.PacketEnemyPosition;
+import networks.PacketEnemyHealth;
 import networks.Player;
 
 import java.util.HashMap;
@@ -46,11 +47,27 @@ public class GameInstance {
     }
 
     public void updateBots(float dt) {
-        // Uuenda kõiki botte
-        for (Bot bot : bots.values()) {
+        List<Integer> removedBotIds = new ArrayList<>();
+
+        bots.values().removeIf(bot -> {
             bot.update(dt);
+            if (bot.isDead()) {
+                logger.info("[BOT {}] eemaldatud – elud otsas", bot.getId());
+
+                PacketEnemyHealth deathPacket = new PacketEnemyHealth(bot.getId(), 0, gameId);
+                GameServer.getServer().sendToAllUDP(deathPacket); // see saadab info kõikidele klientidele
+
+                removedBotIds.add(bot.getId());
+                return true;
+            }
+            return false;
+        });
+
+        if (!removedBotIds.isEmpty()) {
+            logger.info("📤 Saadetud death-paketid bottidele: {}", removedBotIds);
         }
     }
+
 
     public List<PacketEnemyPosition> getEnemyPositions() {
         // Tagastab kõikide bottide asukohad, et neid saata mängijatele

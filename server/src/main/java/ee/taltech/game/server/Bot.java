@@ -18,6 +18,9 @@ public class Bot {
     private int pathIndex = 0; // Järgmine punkt teel, mille poole bot liigub
     private float pathTimer = 0; // Aeg mõõtmaks, millal tee uuesti arvutada
 
+    private int health = 100;
+    private int maxHealth = 100;
+
     public Bot(GameInstance gameInstance, float x, float y) {
         this.gameInstance = gameInstance;
         this.x = x;
@@ -26,8 +29,6 @@ public class Bot {
 
     // Kutsutakse iga kaadri jooksul, et uuendada boti loogikat
     public void update(float dt) {
-        logger.debug("🤖 [BOT {}] Alustas update(). Pos: ({}, {})", id, x, y);
-
         // Kontrolli, kas mängus on mängijaid
         if (gameInstance.getPlayers().isEmpty()) {
             logger.warn("⚠️ [BOT {}] Mängijaid ei ole.", id);
@@ -58,9 +59,6 @@ public class Bot {
             path = AStarFinder.findPath(map, startX, startY, endX, endY);
             if (!path.isEmpty()) {
                 pathIndex = 1; // Hüppa esimese sihtpunkti peale
-                logger.info("✅ [BOT {}] Leitud tee, pikkus: {}", id, path.size());
-            } else {
-                logger.info("❌ [BOT {}] Tee puudub.", id);
             }
         }
 
@@ -101,9 +99,21 @@ public class Bot {
         return closest;
     }
 
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+        logger.info("[BOT {}] Sai {} dmg, elud nüüd: {}/{}", id, amount, health, maxHealth);
+    }
+
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+
     // Getterid ja setter
     public float getX() { return x; }
     public float getY() { return y; }
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+    public int getHealth() { return health; }
 }

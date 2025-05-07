@@ -18,7 +18,7 @@ public class GameServer {
     // Konstruktor käivitab serveri, registreerib klassid ja loob esimese mänguinstantsi
     private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
 
-    private Server server;
+    private static Server server;
     private final AtomicInteger nextBulletId = new AtomicInteger(1);
     private final HashMap<Integer, GameInstance> gameInstances = new HashMap<>();
     private final AtomicInteger gameInstanceId = new AtomicInteger(1);
@@ -61,6 +61,8 @@ public class GameServer {
         kryo.register(int[].class);
         kryo.register(int[][].class);
         kryo.register(PacketEnemyPosition.class);
+        kryo.register(PacketEnemyHealth.class);
+        kryo.register(PacketEnemyHit.class);
     }
 
     private void bindServer() {
@@ -93,6 +95,8 @@ public class GameServer {
                     handleBulletDataPacket(packet);
                 } else if (object instanceof PacketBulletDestroy packet) {
                     handleBulletDestroyPacket(packet);
+                } else if (object instanceof PacketEnemyHit packet) {
+                    handleEnemyHitPacket(packet);
                 }
             }
 
@@ -191,6 +195,20 @@ public class GameServer {
             for (Player player : instance.getPlayers().values()) {
                 server.sendToUDP(player.id, packet);
             }
+            for (Bot bot : instance.getBots()) {
+                float dx = packet.x - bot.getX();
+                float dy = packet.y - bot.getY();
+                float distanceSq = dx * dx + dy * dy;
+
+                float hitRadius = 0.1f;
+
+                if (distanceSq < hitRadius * hitRadius) {
+                    bot.takeDamage(1);
+
+                    logger.info("[BOT {}] tabatud kuuliga. HP: {}", bot.getId(), bot.getHealth());
+                    break;
+                }
+            }
         }
     }
 
@@ -204,6 +222,34 @@ public class GameServer {
             }
         }
     }
+
+    private void handleEnemyHitPacket(PacketEnemyHit packet) {
+        GameInstance instance = gameInstances.get(packet.gameId);
+        if (instance == null) return;
+
+        Bot bot = null;
+        for (Bot b : instance.getBots()) {
+            if (b.getId() == packet.enemyId) {
+                bot = b;
+                break;
+            }
+        }
+
+        if (bot != null) {
+            bot.takeDamage(1); // Lahutab 1 elu
+
+            logger.info("[BOT {}] sai kliendilt hiti. Uus HP: {}", bot.getId(), bot.getHealth());
+
+            // Saada uuendatud HP kõikidele mängijatele
+            PacketEnemyHealth hpPacket = new PacketEnemyHealth(bot.getId(), bot.getHealth(), packet.gameId);
+            for (Player player : instance.getPlayers().values()) {
+                server.sendToUDP(player.id, hpPacket);
+            }
+
+            // Kui HP null, eemalda järgmisel tickil updateBots sees
+        }
+    }
+
 
     private void setupBotUpdateLoop() {
         // Kasutab "Timer"-it, et regulaarselt uuendada bottide liikumist ja saata nende asukohad mängijatele
@@ -233,5 +279,9 @@ public class GameServer {
     public static void main(String[] args) {
         // Käivitab serveri
         new GameServer();
+    }
+
+    public static Server getServer() {
+        return server;
     }
 }
