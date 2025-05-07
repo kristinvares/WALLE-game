@@ -10,12 +10,14 @@ import ee.taltech.walle.walleGame;
 
 
 public class EnemySprite extends Sprite {
+    private int id;
     public Body b2body;
     private Texture slimeTexture;
     private TextureRegion slimeRegion;
 
     // Teeb spritei
     public EnemySprite(World world, Playscreen screen, float x, float y, int id) {
+        this.id = id;
         slimeTexture = new Texture("Slime_idle.png");
         slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // võtab vasak-ülalt 16x16 piksli sprite'i
 
@@ -61,4 +63,9 @@ public class EnemySprite extends Sprite {
             slimeTexture.dispose();
         }
     }
+
+    public int getId() {
+        return id;
+    }
+
 }

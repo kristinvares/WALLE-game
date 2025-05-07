@@ -68,6 +68,8 @@ public class walleGame extends Game {
         kryo.register(int[].class);
         kryo.register(int[][].class);
         kryo.register(PacketEnemyPosition.class);
+        kryo.register(PacketEnemyHealth.class);
+        kryo.register(PacketEnemyHit.class);
     }
 
     private void connectToServer() {
@@ -97,6 +99,8 @@ public class walleGame extends Game {
                     playscreen.removeRemoteBullet(packet.bulletId);
                 } else if (object instanceof PacketEnemyPosition packet && playscreen != null) {
                     playscreen.updateEnemyPosition(packet);
+                } else if (object instanceof PacketEnemyHealth packet && playscreen != null) {
+                    playscreen.handleEnemyHealthUpdate(packet);
                 }
             }
 

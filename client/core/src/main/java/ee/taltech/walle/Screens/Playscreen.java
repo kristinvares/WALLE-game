@@ -70,7 +70,6 @@ public class Playscreen implements Screen {
 
     // Vastaste haldus
     private HashMap<Integer, EnemySprite> enemies = new HashMap<>();
-
     private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
 
     public Playscreen(walleGame game, Client client) {
@@ -158,8 +157,8 @@ public class Playscreen implements Screen {
 
     // Mängija sisendi haldamine
     public void handleInput() {
-        float moveSpeed = 3.5f;
-        float acceleration = 0.5f;
+        float moveSpeed = 1.5f;
+        float acceleration = 0.05f;
 
         Vector2 velocity = player.b2body.getLinearVelocity();
         Vector2 movement = new Vector2(velocity.x, velocity.y);
@@ -258,6 +257,20 @@ public class Playscreen implements Screen {
                     }
                 }
             }
+        }
+    }
+
+    public void handleEnemyHealthUpdate(PacketEnemyHealth packet) {
+        logger.info("⬅️ Enemy HP update received: ID={}, HP={}", packet.id, packet.health);
+        if (packet.health <= 0) {
+            Gdx.app.postRunnable(() -> {
+                EnemySprite sprite = enemies.remove(packet.id);
+                if (sprite != null) {
+                    world.destroyBody(sprite.b2body);
+                    sprite.dispose();
+                    logger.info("☠️ BOT eemaldatud ID-ga {} (HP = 0)", packet.id);
+                }
+            });
         }
     }
 
@@ -405,18 +418,18 @@ public class Playscreen implements Screen {
 
     public void updateEnemyPosition(PacketEnemyPosition packet) {
         Gdx.app.postRunnable(() -> {
+            // Kas sprite juba eksisteerib
             EnemySprite enemy = enemies.get(packet.id);
             if (enemy == null) {
                 float x = packet.x * 16 / walleGame.PPM;
                 float y = packet.y * 16 / walleGame.PPM;
                 enemy = new EnemySprite(world, this, x, y, packet.id);
-                enemy.update(packet.x, packet.y);
                 enemies.put(packet.id, enemy);
-                logger.info("🎯 BOT loodud ID-ga {} positsioonil ({}, {})", packet.id, packet.x, packet.y);
-            } else {
-                enemy.update(packet.x, packet.y);
-                logger.info("Bot update: id={}, pos=({}, {})", packet.id, packet.x, packet.y);
+                logger.info("BOT loodud ID-ga {} positsioonil ({}, {})", packet.id, packet.x, packet.y);
             }
+
+            // Uuenda sprite positsiooni
+            enemy.update(packet.x, packet.y);
         });
     }
 }
