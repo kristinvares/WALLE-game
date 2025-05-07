@@ -31,18 +31,22 @@ public class WorldContactListener implements ContactListener {
         handleBulletHitsEnemy(fixA, fixB);
         handlePlayerHitsWall(fixA, fixB);
     }
-
     private void handleBulletHitsWall(Fixture fixA, Fixture fixB) {
-        if ((fixA.getUserData() instanceof Bullet || fixB.getUserData() instanceof Bullet) &&
-            ("WALL".equals(fixA.getUserData()) || "WALL".equals(fixB.getUserData()))) {
+        // Kontrollime, kas kokkupõrge on kuuliga
+        if (fixA.getUserData() instanceof Bullet || fixB.getUserData() instanceof Bullet) {
+            Bullet bullet = fixA.getUserData() instanceof Bullet ?
+                (Bullet) fixA.getUserData() :
+                (Bullet) fixB.getUserData();
 
-            Bullet bullet = fixA.getUserData() instanceof Bullet ? (Bullet) fixA.getUserData() : (Bullet) fixB.getUserData();
-            bullet.markForDestruction();
+            if (fixA.getUserData().equals("WALL") || fixB.getUserData().equals("WALL")) {
+                bullet.markForDestruction(); // ← Muudetud eemaldamiseks ohutult
+                if (!bullet.isRemote()) { // Ainult lokaalse kuuli korral
+                    PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
+                    destroyPacket.bulletId = bullet.getId();
+                    destroyPacket.gameId = game.gameId;
+                    game.client.sendUDP(destroyPacket);
+                }
 
-            if (!bullet.isRemote()) {
-                PacketBulletDestroy destroyPacket = new PacketBulletDestroy();
-                destroyPacket.bulletId = bullet.getId();
-                game.client.sendUDP(destroyPacket);
             }
         }
     }
