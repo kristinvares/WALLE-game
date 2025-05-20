@@ -2,6 +2,7 @@ package ee.taltech.walle.Sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ee.taltech.walle.Screens.Playscreen;
@@ -30,7 +31,7 @@ public class PlayerSprite extends Sprite {
         witchRegion = new TextureRegion(witchTexture, 0, 0, 32, 42);
 
         // Määra sprite'il visuaalsed mõõtmed ja pildiallikas
-        setBounds(0, 0, 32 / walleGame.PPM, 32 / walleGame.PPM);
+        setBounds(0, 0, 48 / walleGame.PPM, 48 / walleGame.PPM);
         setRegion(witchRegion);
 
         definePlayer(world, startX, startY);
@@ -53,7 +54,8 @@ public class PlayerSprite extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / walleGame.PPM);
+        shape.setRadius(12 / walleGame.PPM);
+        shape.setPosition(new Vector2(0, -6 / walleGame.PPM));
 
         fdef.shape = shape;
 
