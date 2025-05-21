@@ -1,5 +1,6 @@
 package ee.taltech.walle.Tools;
 
+import ee.taltech.walle.Screens.EndScreen;
 import networks.PacketBulletDestroy;
 import com.badlogic.gdx.physics.box2d.*;
 import ee.taltech.walle.Sprites.Bullet;
@@ -30,6 +31,7 @@ public class WorldContactListener implements ContactListener {
         handleBulletHitsPlayer(fixA, fixB);
         handleBulletHitsEnemy(fixA, fixB);
         handlePlayerHitsWall(fixA, fixB);
+        handlePlayerHitsExit(fixA, fixB);
     }
     private void handleBulletHitsWall(Fixture fixA, Fixture fixB) {
         // Kontrollime, kas kokkupõrge on kuuliga
@@ -108,6 +110,14 @@ public class WorldContactListener implements ContactListener {
         if (("WALL".equals(fixA.getUserData()) && fixB.getUserData() instanceof PlayerSprite) ||
             ("WALL".equals(fixB.getUserData()) && fixA.getUserData() instanceof PlayerSprite)) {
             logger.info("Mängija põrkas vastu seina!");
+        }
+    }
+    private void handlePlayerHitsExit(Fixture fixA, Fixture fixB) {
+        if (("EXIT".equals(fixA.getUserData()) && fixB.getUserData() instanceof PlayerSprite) ||
+            ("EXIT".equals(fixB.getUserData()) && fixA.getUserData() instanceof PlayerSprite)) {
+            logger.info("Mängija jõudis lõppu! Käivitame endscreeni.");
+
+            game.setScreen(new EndScreen(game));  // ← Asenda vastava klassiga
         }
     }
 
