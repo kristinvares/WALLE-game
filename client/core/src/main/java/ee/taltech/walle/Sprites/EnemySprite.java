@@ -24,7 +24,7 @@ public class EnemySprite extends Sprite {
         slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // võtab vasak-ülalt 16x16 piksli sprite'i
 
         setRegion(slimeRegion);
-        setBounds(0, 0, 16 / walleGame.PPM, 16 / walleGame.PPM);
+        setBounds(0, 0, 24/ walleGame.PPM, 24 / walleGame.PPM);
 
         defineEnemy(world, x, y);
     }
@@ -37,7 +37,7 @@ public class EnemySprite extends Sprite {
         b2body = world.createBody(bdef);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / walleGame.PPM);
+        shape.setRadius(12 / walleGame.PPM);
 
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;

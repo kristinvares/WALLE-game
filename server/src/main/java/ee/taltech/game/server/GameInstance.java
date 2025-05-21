@@ -28,6 +28,10 @@ public class GameInstance {
     // Collision kaart
     private int[][] collisionMap;
 
+    private long gameStartTime = System.currentTimeMillis();
+    private float gameTime = 0f;        // kogub aja kokku
+    private int totalExpectedBots = 5;  // muutub iga minut kui bot lisandub
+
     public GameInstance(int gameId) {
         this.gameId = gameId;
         this.players = new HashMap<>();
@@ -47,27 +51,35 @@ public class GameInstance {
     }
 
     public void updateBots(float dt) {
-        List<Integer> removedBotIds = new ArrayList<>();
+        long currentTime = System.currentTimeMillis();
+        long elapsedSeconds = (currentTime - gameStartTime) / 1000;
+        int expectedBots = 5 + (int)(elapsedSeconds / 60);
 
+        if (expectedBots > totalExpectedBots) {
+            totalExpectedBots = expectedBots;
+            logger.info("🆕 Uuendatud boti limiit: {}", totalExpectedBots);
+        }
+
+        // Eemalda surnud botid ja uuenda elusolevaid
         bots.values().removeIf(bot -> {
             bot.update(dt);
             if (bot.isDead()) {
-                logger.info("[BOT {}] eemaldatud – elud otsas", bot.getId());
-
                 PacketEnemyHealth deathPacket = new PacketEnemyHealth(bot.getId(), 0, gameId);
-                GameServer.getServer().sendToAllUDP(deathPacket); // see saadab info kõikidele klientidele
-
-                removedBotIds.add(bot.getId());
+                GameServer.server.sendToAllUDP(deathPacket);
+                logger.info("[BOT {}] eemaldatud – elud otsas", bot.getId());
                 return true;
             }
             return false;
         });
 
-        if (!removedBotIds.isEmpty()) {
-            logger.info("📤 Saadetud death-paketid bottidele: {}", removedBotIds);
+        // Lisa uusi bote kui vaja
+        while (bots.size() < totalExpectedBots && collisionMap != null) {
+            Bot newBot = new Bot(this, 5, 3); // Või suvaline spawn
+            newBot.setId(botIdCounter.getAndIncrement());
+            addBot(newBot);
+            logger.info("🤖 Lisati uus bot. Kokku: {}", bots.size());
         }
     }
-
 
     public List<PacketEnemyPosition> getEnemyPositions() {
         // Tagastab kõikide bottide asukohad, et neid saata mängijatele
@@ -77,6 +89,20 @@ public class GameInstance {
         }
         return packets;
     }
+
+    private void tryInitialBotSpawn() {
+        if (collisionMap == null) return;
+
+        while (bots.size() < totalExpectedBots) {
+            float spawnX = 5 + bots.size(); // Liiguta neid natuke eraldi
+            float spawnY = 3;
+            Bot newBot = new Bot(this, spawnX, spawnY);
+            newBot.setId(botIdCounter.getAndIncrement());
+            addBot(newBot);
+            logger.info("🤖 [Alglaadimine] Bot loodud. Kokku: {}", bots.size());
+        }
+    }
+
 
     public void addPlayer(Player player) {
         players.put(player.id, player); // Lisa mängija
@@ -105,6 +131,7 @@ public class GameInstance {
     // Getter & Setter collision-kaardile
     public void setCollisionMap(int[][] map) {
         this.collisionMap = map; // Sea selle mängu kaardi collision-info
+        tryInitialBotSpawn();
     }
 
     public int[][] getCollisionMap() {

@@ -18,7 +18,7 @@ public class GameServer {
     // Konstruktor käivitab serveri, registreerib klassid ja loob esimese mänguinstantsi
     private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
 
-    private static Server server;
+    public static Server server;
     private final AtomicInteger nextBulletId = new AtomicInteger(1);
     private final HashMap<Integer, GameInstance> gameInstances = new HashMap<>();
     private final AtomicInteger gameInstanceId = new AtomicInteger(1);

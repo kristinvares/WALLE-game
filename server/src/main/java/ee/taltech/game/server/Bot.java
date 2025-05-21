@@ -35,13 +35,11 @@ public class Bot {
     public void update(float dt) {
         // Kontrolli, kas mängus on mängijaid
         if (gameInstance.getPlayers().isEmpty()) {
-            logger.warn("⚠️ [BOT {}] Mängijaid ei ole.", id);
             return;
         }
 
         // Kontrolli, kas collision map on olemas
         if (gameInstance.getCollisionMap() == null) {
-            logger.warn("⚠️ [BOT {}] Collision map puudub!", id);
             return;
         }
 
@@ -66,21 +64,31 @@ public class Bot {
             }
         }
 
-        // Liigu järgmise sihtpunkti suunas
+// Liigu kas tee järgi või otse mängijale
         if (path != null && pathIndex < path.size()) {
             Point next = path.get(pathIndex);
-            float nextX = next.x + 0.5f; // Keskpunkt ruudus
+            float nextX = next.x + 0.5f;
             float nextY = next.y + 0.5f;
 
             float dx = nextX - x;
             float dy = nextY - y;
             float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-            float speed = 0.05f; // Liikumiskiirus
+            float speed = 0.03f;
             if (distance < 0.2f) {
-                pathIndex++; // Kui jõudsid punkti kohale, liigu järgmise juurde
+                pathIndex++; // jõudis sihtpunkti
             } else {
-                // Liigu punkti suunas
+                x += dx / distance * speed * dt;
+                y += dy / distance * speed * dt;
+            }
+        } else {
+            // Otse mängija suunas kui tee läbi või puudub
+            float dx = target.x - x;
+            float dy = target.y - y;
+            float distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+            if (distance > 0.1f) { // väldi värelust
+                float speed = 0.02f;
                 x += dx / distance * speed * dt;
                 y += dy / distance * speed * dt;
             }

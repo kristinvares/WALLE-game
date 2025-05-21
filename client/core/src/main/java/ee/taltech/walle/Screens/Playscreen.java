@@ -364,7 +364,6 @@ public class Playscreen implements Screen {
 
         // Mängukaardi ja objektide joonistamine
         renderer.render();
-        b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
