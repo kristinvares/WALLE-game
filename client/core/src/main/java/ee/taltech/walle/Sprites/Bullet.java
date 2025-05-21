@@ -59,7 +59,7 @@ public class Bullet extends Sprite {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.filter.categoryBits = walleGame.BULLET_BIT;
-        fdef.filter.maskBits = walleGame.WALL_BIT | walleGame.PLAYER_BIT | walleGame.ENEMY_BIT; // Mille vastu kuul põrkub
+        fdef.filter.maskBits = walleGame.WALL_BIT | walleGame.EXIT_BIT | walleGame.ENEMY_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
         shape.dispose();
@@ -114,4 +114,3 @@ public class Bullet extends Sprite {
         b2body.setTransform(newX, newY, b2body.getAngle());
     }
 }
-

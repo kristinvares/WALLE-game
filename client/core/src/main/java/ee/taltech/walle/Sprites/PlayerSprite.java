@@ -2,7 +2,6 @@ package ee.taltech.walle.Sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ee.taltech.walle.Screens.Playscreen;
@@ -54,14 +53,13 @@ public class PlayerSprite extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(8 / walleGame.PPM);
-        shape.setPosition(new Vector2(0, -6 / walleGame.PPM));
+        shape.setRadius(6 / walleGame.PPM);
 
         fdef.shape = shape;
 
         // Lisa bitmaskid kokkupõrke jaoks
         fdef.filter.categoryBits = walleGame.PLAYER_BIT;
-        fdef.filter.maskBits = walleGame.WALL_BIT | walleGame.ENEMY_BIT;
+        fdef.filter.maskBits = walleGame.WALL_BIT | walleGame.BULLET_BIT | walleGame.EXIT_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
         shape.dispose();

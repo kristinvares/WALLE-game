@@ -327,6 +327,12 @@ public class Playscreen implements Screen {
 
         // Mängijate sünkroniseerimine
         player.update();
+
+        if (player.isDead()) {
+            Gdx.app.postRunnable(() -> game.setScreen(new DeathScreen(game)));
+            return; // lõpetab uuenduse pärast surma
+        }
+
         sendPositionInfoToServer();
 
         Map<Integer, Player> players = game.getPlayers();
