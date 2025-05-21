@@ -31,13 +31,11 @@ public class Bot {
     public void update(float dt) {
         // Kontrolli, kas mängus on mängijaid
         if (gameInstance.getPlayers().isEmpty()) {
-            logger.warn("⚠️ [BOT {}] Mängijaid ei ole.", id);
             return;
         }
 
         // Kontrolli, kas collision map on olemas
         if (gameInstance.getCollisionMap() == null) {
-            logger.warn("⚠️ [BOT {}] Collision map puudub!", id);
             return;
         }
 

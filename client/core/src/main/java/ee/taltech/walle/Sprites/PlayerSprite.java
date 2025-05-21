@@ -31,7 +31,7 @@ public class PlayerSprite extends Sprite {
         witchRegion = new TextureRegion(witchTexture, 0, 0, 32, 42);
 
         // Määra sprite'il visuaalsed mõõtmed ja pildiallikas
-        setBounds(0, 0, 48 / walleGame.PPM, 48 / walleGame.PPM);
+        setBounds(0, 0, 32 / walleGame.PPM, 32 / walleGame.PPM);
         setRegion(witchRegion);
 
         definePlayer(world, startX, startY);
@@ -54,7 +54,7 @@ public class PlayerSprite extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(12 / walleGame.PPM);
+        shape.setRadius(8 / walleGame.PPM);
         shape.setPosition(new Vector2(0, -6 / walleGame.PPM));
 
         fdef.shape = shape;

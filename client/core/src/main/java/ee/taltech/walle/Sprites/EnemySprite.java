@@ -22,7 +22,7 @@ public class EnemySprite extends Sprite {
         slimeRegion = new TextureRegion(slimeTexture, 0, 0, 32, 32); // võtab vasak-ülalt 16x16 piksli sprite'i
 
         setRegion(slimeRegion);
-        setBounds(0, 0, 32 / walleGame.PPM, 32 / walleGame.PPM);
+        setBounds(0, 0, 24/ walleGame.PPM, 24 / walleGame.PPM);
 
         defineEnemy(world, x, y);
     }
