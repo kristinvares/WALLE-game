@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class B2WorldCreator {
     private Vector2 playerSpawnPosition;
+    private Rectangle exitRect;
     private static final Logger logger = LoggerFactory.getLogger(B2WorldCreator.class);
 
     public B2WorldCreator(World world, TiledMap map) {
@@ -22,43 +23,59 @@ public class B2WorldCreator {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        // Collision layer - seinad
         for (RectangleMapObject object : map.getLayers().get("collision").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
+
+            // Kui objekt on spawn või exit, ÄRA loo sellest kehad
+            if (object.getProperties().containsKey("spawn")) {
+                playerSpawnPosition = new Vector2(rect.getX() / walleGame.PPM, rect.getY() / walleGame.PPM);
+                logger.info("Spawn punkt määratud: {}", playerSpawnPosition);
+                continue;
+            } else if (object.getProperties().containsKey("exit")) {
+                exitRect = rect;
+                logger.info("Exit punkt määratud: {}", exitRect);
+
+                bdef.type = BodyDef.BodyType.StaticBody;
+                bdef.position.set((rect.getX() + rect.getWidth() / 2) / walleGame.PPM,
+                    (rect.getY() + rect.getHeight() / 2) / walleGame.PPM);
+
+                body = world.createBody(bdef);
+                shape.setAsBox((rect.getWidth() / 2) / walleGame.PPM, (rect.getHeight() / 2) / walleGame.PPM);
+                fdef.shape = shape;
+                fdef.isSensor = true;  // ← EI BLOKEERI, ainult annab märku
+                body.createFixture(fdef).setUserData("EXIT");
+                continue;
+            }
+
+            // Seinad
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / walleGame.PPM,
                 (rect.getY() + rect.getHeight() / 2) / walleGame.PPM);
 
             body = world.createBody(bdef);
             shape.setAsBox((rect.getWidth() / 2) / walleGame.PPM, (rect.getHeight() / 2) / walleGame.PPM);
-
             fdef.shape = shape;
-
-            // Lisa seinadele korrektsed bitmaskid
             fdef.filter.categoryBits = walleGame.WALL_BIT;
             fdef.filter.maskBits = walleGame.PLAYER_BIT | walleGame.BULLET_BIT;
 
             body.createFixture(fdef).setUserData("WALL");
         }
 
-        // Mängija "spawn" punkt
-        for (MapObject object : map.getLayers().get("collision").getObjects()) {
-            if (object.getProperties().containsKey("spawn") && object instanceof RectangleMapObject rectangleMapObject) {
-                Rectangle rect = rectangleMapObject.getRectangle();
-                playerSpawnPosition = new Vector2(rect.getX() / walleGame.PPM, rect.getY() / walleGame.PPM);
-                logger.info("Spawn punkt määratud: {}", playerSpawnPosition);
-                return;
-            }
-        }
-
-
         if (playerSpawnPosition == null) {
             logger.error("VIGA: Spawn punkt puudub kaardil!");
+        }
+
+        if (exitRect == null) {
+            logger.error("VIGA: Exit punkt puudub kaardil!");
         }
     }
 
     public Vector2 getPlayerSpawnPosition() {
         return playerSpawnPosition;
+    }
+
+    public Rectangle getExitRect() {
+        return exitRect;
     }
 }
 

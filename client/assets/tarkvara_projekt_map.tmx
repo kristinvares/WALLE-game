@@ -16,7 +16,11 @@
   <object id="16" x="1600" y="-8.66667" width="30" height="302.667"/>
   <object id="17" x="1132" y="2" width="496" height="28"/>
   <object id="18" x="1148" y="0" width="34" height="258"/>
-  <object id="19" x="1324" y="35" width="151" height="202"/>
+  <object id="19" x="1324" y="35" width="151" height="202">
+  <properties>
+        <property name="exit" type="bool" value="false"/>
+       </properties>
+      </object>
   <object id="20" x="1178" y="312" width="392" height="272"/>
   <object id="21" x="242" y="-4" width="906" height="34"/>
   <object id="22" x="-4" y="-6" width="298" height="34"/>
@@ -148,11 +152,6 @@
   <object id="154" x="450" y="1502" width="221" height="35"/>
   <object id="155" x="418" y="1602" width="349" height="32"/>
   <object id="156" x="0" y="1.33333" width="14.6667" height="661.333"/>
-  <object id="157" x="897.333" y="50.6667" width="92" height="152">
-   <properties>
-    <property name="exit" type="bool" value="false"/>
-   </properties>
-  </object>
   <object id="158" x="820" y="396" width="44" height="40">
    <properties>
     <property name="spawn" type="bool" value="false"/>

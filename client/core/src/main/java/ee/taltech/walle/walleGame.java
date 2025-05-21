@@ -31,6 +31,11 @@ public class walleGame extends Game {
     public static final short BRIDGE_BIT = 32;
 
     public SpriteBatch batch;
+
+    public Client getClient() {
+        return client;
+    }
+
     public Client client;
     public HashMap<Integer, Player> players = new HashMap<>();
     public int gameId;
