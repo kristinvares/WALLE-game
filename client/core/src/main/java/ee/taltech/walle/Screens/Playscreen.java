@@ -1,5 +1,7 @@
 package ee.taltech.walle.Screens;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import networks.*;
 
 import com.badlogic.gdx.Gdx;
@@ -72,6 +74,7 @@ public class Playscreen implements Screen {
     // Vastaste haldus
     private HashMap<Integer, EnemySprite> enemies = new HashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(Playscreen.class);
+    private ShapeRenderer shapeRenderer;
 
     public Playscreen(walleGame game, Client client) {
         // Kaardi ja maailma initsialiseerimine
@@ -104,6 +107,7 @@ public class Playscreen implements Screen {
 
         // Collision-kaardi saatmine serverile
         sendMapToServer();
+        shapeRenderer = new ShapeRenderer();
     }
 
     public TextureAtlas getAtlas() {
@@ -154,6 +158,14 @@ public class Playscreen implements Screen {
     @Override
     public void show() {
         // hetkel pole vajalik, pop up menüüde jaoks ette valmistus
+    }
+
+    public PlayerSprite getPlayer() {
+        return player;
+    }
+
+    public PlayerSprite getRemotePlayerById(int id) {
+        return remotePlayers.get(id);
     }
 
     // Mängija sisendi haldamine
@@ -272,6 +284,11 @@ public class Playscreen implements Screen {
                     logger.info("☠️ BOT eemaldatud ID-ga {} (HP = 0)", packet.id);
                 }
             });
+        } else {
+            EnemySprite sprite = enemies.get(packet.id);
+            if (sprite != null) {
+                sprite.setHealth(packet.health); // ← UUS RIDA
+            }
         }
     }
 
@@ -372,7 +389,49 @@ public class Playscreen implements Screen {
 
         game.batch.end();
 
-        // HUD joonistamine
+        shapeRenderer.setProjectionMatrix(gameCam.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (EnemySprite enemy : enemies.values()) {
+            float barX = enemy.getX();
+            float barY = enemy.getY() + enemy.getHeight() + 0.05f;
+            float barWidth = enemy.getWidth();
+            float barHeight = 0.05f;
+            float healthRatio = (float) enemy.getHealth() / enemy.getMaxHealth();
+
+            shapeRenderer.setColor(Color.RED); // taust
+            shapeRenderer.rect(barX, barY, barWidth, barHeight);
+            shapeRenderer.setColor(Color.GREEN); // elud
+            shapeRenderer.rect(barX, barY, barWidth * healthRatio, barHeight);
+        }
+
+        float pX = player.getX();
+        float pY = player.getY() + player.getHeight() + 0.05f;
+        float pW = player.getWidth();
+        float pH = 0.05f;
+        float pRatio = (float) player.getHealth() / player.getMaxHealth();
+
+        shapeRenderer.setColor(Color.DARK_GRAY); // taust
+        shapeRenderer.rect(pX, pY, pW, pH);
+        shapeRenderer.setColor(Color.GREEN);     // täidetud osa
+        shapeRenderer.rect(pX, pY, pW * pRatio, pH);
+
+
+        for (PlayerSprite remote : remotePlayers.values()) {
+            float rX = remote.getX();
+            float rY = remote.getY() + remote.getHeight() + 0.05f;
+            float rW = remote.getWidth();
+            float rH = 0.05f;
+            float rRatio = (float) remote.getHealth() / remote.getMaxHealth();
+
+            shapeRenderer.setColor(Color.DARK_GRAY);
+            shapeRenderer.rect(rX, rY, rW, rH);
+            shapeRenderer.setColor(Color.GREEN);
+            shapeRenderer.rect(rX, rY, rW * rRatio, rH);
+        }
+
+        shapeRenderer.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }

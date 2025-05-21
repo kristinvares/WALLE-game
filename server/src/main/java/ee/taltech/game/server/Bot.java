@@ -1,5 +1,6 @@
 package ee.taltech.game.server;
 
+import networks.PacketPlayerHealth;
 import networks.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ public class Bot {
 
     private int health = 100;
     private int maxHealth = 100;
+    private float attackCooldown = 0f;
+    private final float attackInterval = 1f; // iga 1 sek rünnak
+    private final float attackRange = 0.4f; // ründab, kui lähemal kui 0.4 ühikut
 
     public Bot(GameInstance gameInstance, float x, float y) {
         this.gameInstance = gameInstance;
@@ -79,6 +83,34 @@ public class Bot {
                 // Liigu punkti suunas
                 x += dx / distance * speed * dt;
                 y += dy / distance * speed * dt;
+            }
+        }
+        attackCooldown -= dt;
+        if (attackCooldown <= 0) {
+            for (Player p : gameInstance.getPlayers().values()) {
+                float dx = p.x - x;
+                float dy = p.y - y;
+                float distSq = dx * dx + dy * dy;
+
+                if (distSq <= attackRange * attackRange) {
+                    attackCooldown = attackInterval;
+
+                    p.health -= 1;
+                    if (p.health < 0) p.health = 0;
+
+                    logger.info("[BOT {}] ründas mängijat {} ➝ elud: {}", id, p.id, p.health);
+
+                    PacketPlayerHealth hpPacket = new PacketPlayerHealth();
+                    hpPacket.id = p.id;
+                    hpPacket.newHealth = p.health;
+                    hpPacket.gameId = gameInstance.getGameId();
+
+                    for (Player other : gameInstance.getPlayers().values()) {
+                        GameServer.getServer().sendToUDP(other.id, hpPacket);
+                    }
+
+                    break; // korraga ainult üht rünnakut
+                }
             }
         }
     }

@@ -2,12 +2,12 @@ package networks;
 
 public class Player {
     public int id;         // Mängija ID
-    public float x;     // Mängija koordinaadid x
-    public float y;   // Mängija koordinaadid y
+    public float x, y;     // Mängija koordinaadid
     public String name;    // Mängija nimi (valikuline)
     public int gameId;
+    public int health = 100;
 
-    // Tühi konstruktor (Kryo jaoks kohustuslik)
+    // === Tühi konstruktor (Kryo jaoks kohustuslik) ===
     public Player() {}
 
     // Konstruktor andmete määramiseks

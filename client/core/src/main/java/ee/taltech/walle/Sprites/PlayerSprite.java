@@ -35,7 +35,7 @@ public class PlayerSprite extends Sprite {
 
         definePlayer(world, startX, startY);
 
-        maxHealth = 10;
+        maxHealth = 100;
         health = maxHealth;
     }
 
@@ -98,7 +98,9 @@ public class PlayerSprite extends Sprite {
     public int getMaxHealth() {
         return maxHealth;
     }
-
+    public void setHealth(int health) {
+        this.health = health;
+    }
     public void flashRedOnHit() {
         setColor(1, 0, 0, 1); // muudab sprite punaseks
         Timer.schedule(new Timer.Task() {
