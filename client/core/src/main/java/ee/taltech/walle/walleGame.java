@@ -28,7 +28,7 @@ public class walleGame extends Game {
     public static final short BULLET_BIT = 4;
     public static final short WALL_BIT = 8;
     public static final short ENEMY_BIT = 16;
-    public static final short BRIDGE_BIT = 32;
+    public static final short EXIT_BIT = 32;
 
     public SpriteBatch batch;
 

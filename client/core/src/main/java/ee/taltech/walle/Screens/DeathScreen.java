@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import ee.taltech.walle.walleGame;
 
-public class EndScreen implements Screen {
+public class DeathScreen implements Screen {
 
     private final walleGame game;
     private Stage stage;
@@ -38,7 +38,7 @@ public class EndScreen implements Screen {
 
     private float scaleX, scaleY, scale, x, y;
 
-    public EndScreen(walleGame game) {
+    public DeathScreen(walleGame game) {
         this.game = game;
     }
 
@@ -66,15 +66,15 @@ public class EndScreen implements Screen {
         LabelStyle titleStyle = new LabelStyle(whiteFont, Color.WHITE);
         LabelStyle subtitleStyle = new LabelStyle(whiteFont, Color.WHITE);
 
-        Label title = new Label("VICTORY", titleStyle);
+        Label title = new Label("YOU DIED", titleStyle);
         title.setFontScale(1f);
         title.setAlignment(Align.center);
 
-        Label subtitle = new Label("You survived and escaped", subtitleStyle);
+        Label subtitle = new Label("THAT WAS YOUR ONLY CHANCE", subtitleStyle);
         subtitle.setFontScale(1f);
         subtitle.setAlignment(Align.center);
 
-        TextButton quitButton = createCustomButton("GO HOME");
+        TextButton quitButton = createCustomButton("GIVE UP");
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
