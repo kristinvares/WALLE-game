@@ -1,5 +1,6 @@
 package ee.taltech.walle;
 
+import ee.taltech.walle.Sprites.PlayerSprite;
 import networks.*;
 
 import com.badlogic.gdx.Game;
@@ -101,6 +102,18 @@ public class walleGame extends Game {
                     playscreen.updateEnemyPosition(packet);
                 } else if (object instanceof PacketEnemyHealth packet && playscreen != null) {
                     playscreen.handleEnemyHealthUpdate(packet);
+                }
+                else if (object instanceof PacketPlayerHealth packet && playscreen != null) {
+                    if (packet.id == client.getID()) {
+                        // Kohalik mängija
+                        playscreen.getPlayer().setHealth(packet.newHealth);
+                    } else {
+                        // Teised mängijad
+                        PlayerSprite remote = playscreen.getRemotePlayerById(packet.id);
+                        if (remote != null) {
+                            remote.setHealth(packet.newHealth);
+                        }
+                    }
                 }
             }
 

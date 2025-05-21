@@ -3,6 +3,7 @@ package networks;
 public class PacketPlayerHealth {
     public int id;
     public int newHealth;
+    public int gameId;
 
     public PacketPlayerHealth() {}
 

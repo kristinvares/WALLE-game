@@ -5,6 +5,7 @@ public class Player {
     public float x, y;     // Mängija koordinaadid
     public String name;    // Mängija nimi (valikuline)
     public int gameId;
+    public int health = 100;
 
     // === Tühi konstruktor (Kryo jaoks kohustuslik) ===
     public Player() {}

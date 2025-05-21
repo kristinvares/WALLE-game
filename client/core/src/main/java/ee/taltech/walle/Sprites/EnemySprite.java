@@ -14,6 +14,8 @@ public class EnemySprite extends Sprite {
     public Body b2body;
     private Texture slimeTexture;
     private TextureRegion slimeRegion;
+    private int health = 100;
+    private int maxHealth = 100;
 
     // Teeb spritei
     public EnemySprite(World world, Playscreen screen, float x, float y, int id) {
@@ -66,6 +68,18 @@ public class EnemySprite extends Sprite {
 
     public int getId() {
         return id;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
 }
