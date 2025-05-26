@@ -3,20 +3,66 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "tarkvara_projekt_map.tmx",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Asset_basic.tsx": {
+            "scaleInDock": 1
+        },
+        "Map_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "fence.tsx": {
+            "scaleInDock": 1
+        },
+        "map.tmx": {
+            "scale": 0.13854166666666667,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 963.609022556391,
+                "y": 544.9624060150375
+            }
+        },
+        "tarkvara_projekt_map.tmx": {
+            "expandedObjectLayers": [
+                9
+            ],
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 937,
+                "y": 537
+            }
+        },
+        "tarkvara_projekt_map.tmx#assets_spritesheet": {
+            "scaleInDock": 1
+        },
+        "tilesheet_basic.tsx": {
+            "scaleInDock": 1
+        },
+        "water_island_tiles.tsx": {
+            "scaleInDock": 1
+        }
     },
     "last.imagePath": "C:/Users/krist/iti0301-2025/client/assets/simple_tileset_32x32_version1.0",
     "map.height": 60,
     "map.lastUsedFormat": "tmx",
     "map.width": 70,
     "openFiles": [
+        "tarkvara_projekt_map.tmx",
+        "map.tmx"
     ],
     "project": "collision.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "map.tmx",
+        "tarkvara_projekt_map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

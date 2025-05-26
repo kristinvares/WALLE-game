@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.kryonet.Client;
 import ee.taltech.walle.Tools.TiledMapLoader;
 import ee.taltech.walle.walleGame;
+import com.badlogic.gdx.audio.Music;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
@@ -44,6 +45,9 @@ public class MenuScreen implements Screen {
     private float scale;
     private float x;
     private float y;
+
+    // muusika sound
+    private Music menuMusic;
 
     // Peamenüü nupud
     private TextButton playButton, multiplayerButton, settingsButton, exitButton;
@@ -180,7 +184,10 @@ public class MenuScreen implements Screen {
     }
 
     @Override public void show() {
-        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sound_menu/Map_music.ogg"));
+        menuMusic.setLooping(true);
+        menuMusic.setVolume(0.5f);
+        menuMusic.play();
     }
     @Override public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -231,6 +238,11 @@ public class MenuScreen implements Screen {
         background2.dispose();
         background3.dispose();
         background4.dispose();
+
+        // muusika puhastamine
+        if (menuMusic != null) {
+            menuMusic.dispose();
+        }
     }
 
     public Stage getStage() {
