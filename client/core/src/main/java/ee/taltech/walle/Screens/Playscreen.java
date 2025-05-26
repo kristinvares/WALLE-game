@@ -45,6 +45,10 @@ import ee.taltech.walle.Sprites.Bullet; // LISATUD KUULI KLASS
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// muusika jaoks
+import com.badlogic.gdx.audio.Music;
+
+
 public class Playscreen implements Screen {
     // Põhiobjektid mängu kuvamiseks
     private walleGame game;
@@ -70,6 +74,9 @@ public class Playscreen implements Screen {
     private Array<Bullet> bullets;
     private HashMap<Integer, Bullet> remoteBullets = new HashMap<>();
     private int tempBulletId = 1000;
+
+    // Muusika jaoks
+    private Music gameMusic;
 
     // Vastaste haldus
     private HashMap<Integer, EnemySprite> enemies = new HashMap<>();
@@ -158,6 +165,10 @@ public class Playscreen implements Screen {
     @Override
     public void show() {
         // hetkel pole vajalik, pop up menüüde jaoks ette valmistus
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound_menu/Game_music.mp3"));
+        gameMusic.setLooping(true);
+        gameMusic.setVolume(0.6f);
+        gameMusic.play();
     }
 
     public PlayerSprite getPlayer() {
@@ -459,7 +470,9 @@ public class Playscreen implements Screen {
 
     @Override
     public void hide() {
-        // hetkel pole kasutusel lisa featurite jaoks
+        if (gameMusic != null) {
+            gameMusic.stop();
+        }
     }
 
     @Override
@@ -480,6 +493,11 @@ public class Playscreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+
+        // Muusika puhastamine:
+        if (gameMusic != null) {
+            gameMusic.dispose();
+        }
     }
 
     public void updateEnemyPosition(PacketEnemyPosition packet) {
