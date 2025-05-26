@@ -211,6 +211,7 @@ simple_tileset_32x32_version1.0/terrain_tiles_v2.png
 simple_tileset_32x32_version1.0/tilesheet_basic.png
 simple_tileset_32x32_version1.0/water_and_island_tiles_v2.png
 slime_idle.png
+sound_menu/Game_music.mp3
 sound_menu/Map_music.ogg
 tarkvara_projekt_map.tmx
 terrain_tiles.tsx

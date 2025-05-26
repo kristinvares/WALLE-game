@@ -227,7 +227,10 @@ public class MenuScreen implements Screen {
         // Hetkel pole vajalik, potensiaalseste menuude jaoks
     }
     @Override public void hide() {
-        // Hetkel pole vajalik, potensiaalseste menuude jaoks
+        // Lõpetan muusika
+        if (menuMusic != null) {
+            menuMusic.stop();
+        }
     }
 
     @Override public void dispose() {
