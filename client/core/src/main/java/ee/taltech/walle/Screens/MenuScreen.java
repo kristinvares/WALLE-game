@@ -46,8 +46,6 @@ public class MenuScreen implements Screen {
     private float x;
     private float y;
 
-    // muusika sound
-    private Music menuMusic;
 
     // Peamenüü nupud
     private TextButton playButton, multiplayerButton, settingsButton, exitButton;
@@ -183,12 +181,20 @@ public class MenuScreen implements Screen {
         return collisionMap;
     }
 
-    @Override public void show() {
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sound_menu/Map_music.ogg"));
-        menuMusic.setLooping(true);
-        menuMusic.setVolume(0.5f);
-        menuMusic.play();
+    @Override
+    public void show() {
+        if (game.getMenuMusic() == null) {
+            Music music = Gdx.audio.newMusic(Gdx.files.internal("sound_menu/Map_music.ogg"));
+            music.setLooping(true);
+
+            // Loe helitugevus Preferencesist
+            float volume = game.getPreferences().getFloat("menu_volume", 50f);
+            music.setVolume(volume / 100f);
+            music.play();
+            game.setMenuMusic(music);
+        }
     }
+
     @Override public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -227,10 +233,6 @@ public class MenuScreen implements Screen {
         // Hetkel pole vajalik, potensiaalseste menuude jaoks
     }
     @Override public void hide() {
-        // Lõpetan muusika
-        if (menuMusic != null) {
-            menuMusic.stop();
-        }
     }
 
     @Override public void dispose() {
@@ -241,11 +243,6 @@ public class MenuScreen implements Screen {
         background2.dispose();
         background3.dispose();
         background4.dispose();
-
-        // muusika puhastamine
-        if (menuMusic != null) {
-            menuMusic.dispose();
-        }
     }
 
     public Stage getStage() {
