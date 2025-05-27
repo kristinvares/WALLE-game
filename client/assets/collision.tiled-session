@@ -33,11 +33,11 @@
             "expandedObjectLayers": [
                 9
             ],
-            "scale": 0.5,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 937,
-                "y": 537
+                "x": 1204.5,
+                "y": 303.5
             }
         },
         "tarkvara_projekt_map.tmx#assets_spritesheet": {
