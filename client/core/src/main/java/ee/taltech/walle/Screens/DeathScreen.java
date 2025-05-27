@@ -44,6 +44,12 @@ public class DeathScreen implements Screen {
 
     @Override
     public void show() {
+        // Taasta menüümuusika helitugevus vastavalt salvestatud väärtusele
+        if (game.getMenuMusic() != null && game.getMenuMusic().isPlaying()) {
+            float volume = game.getPreferences().getFloat("menu_volume", 50f);
+            game.getMenuMusic().setVolume(volume / 100f);
+        }
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();

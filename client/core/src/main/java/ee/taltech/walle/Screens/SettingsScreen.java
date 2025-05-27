@@ -2,6 +2,7 @@ package ee.taltech.walle.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,14 +27,10 @@ public class SettingsScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-    private Slider brightnessSlider;
     private Slider volumeSlider;
     private Slider bgmSlider;
-    private Slider sfxSlider;
-    private Label brightnessLabel;
     private Label volumeLabel;
     private Label bgmLabel;
-    private Label sfxLabel;
     private Texture arrowTexture;
 
     // Kaks fonti
@@ -86,41 +83,48 @@ public class SettingsScreen implements Screen {
     }
 
     private void initializeSliders() {
-        // Brightness slider
-        brightnessSlider = new Slider(-100, 100, 1, false, skin);
-        brightnessSlider.setValue(0);
-        brightnessLabel = new Label("Brightness: " + (int) brightnessSlider.getValue(), new Label.LabelStyle(whiteFont, null));
-        brightnessSlider.addListener(event -> {
-            brightnessLabel.setText("Brightness: " + (int) brightnessSlider.getValue());
-            return false;
-        });
+        Preferences prefs = game.getPreferences();
+
+        // Salevestatud volume vaartus voi 50
+        float savedVolume = prefs.getFloat("menu_volume", 50f);
 
         // Volume slider
-        volumeSlider = new Slider(1, 100, 1, false, skin);
-        volumeSlider.setValue(50);
-        volumeLabel = new Label("Master volume: " + (int) volumeSlider.getValue(), new Label.LabelStyle(whiteFont, null));
+        volumeSlider = new Slider(0, 100, 1, false, skin);
+        volumeSlider.setValue(savedVolume);
+        volumeLabel = new Label("menu music: " + (int) savedVolume, new Label.LabelStyle(whiteFont, null));
+
         volumeSlider.addListener(event -> {
-            volumeLabel.setText("Master volume: " + (int) volumeSlider.getValue());
+            float value = volumeSlider.getValue();
+            volumeLabel.setText("menu music: " + (int) value);
+
+            // Muuda heli tugevust
+            if (game.getMenuMusic() != null) {
+                game.getMenuMusic().setVolume(value / 100f);
+            }
+
+            // Salvesta Preferencesisse
+            prefs.putFloat("menu_volume", value);
+            prefs.flush();
+
             return false;
         });
 
         // BGM slider
-        bgmSlider = new Slider(1, 100, 1, false, skin);
-        bgmSlider.setValue(50);
-        bgmLabel = new Label("Background music: " + (int) bgmSlider.getValue(), new Label.LabelStyle(whiteFont, null));
+        float savedBgm = prefs.getFloat("bgm_volume", 50f);
+        bgmSlider = new Slider(0, 100, 1, false, skin);
+        bgmSlider.setValue(savedBgm);
+        bgmLabel = new Label("background music: " + (int) savedBgm, new Label.LabelStyle(whiteFont, null));
+
         bgmSlider.addListener(event -> {
-            bgmLabel.setText("Background music: " + (int) bgmSlider.getValue());
+            float value = bgmSlider.getValue();
+            bgmLabel.setText("background music: " + (int) value);
+
+            // Salvesta Preferencesisse
+            prefs.putFloat("bgm_volume", value);
+            prefs.flush();
             return false;
         });
 
-        // SFK slider
-        sfxSlider = new Slider(1, 100, 1, false, skin);
-        sfxSlider.setValue(50);
-        sfxLabel = new Label("SFX / UI: " + (int) sfxSlider.getValue(), new Label.LabelStyle(whiteFont, null));
-        sfxSlider.addListener(event -> {
-            sfxLabel.setText("SFX / UI: " + (int) sfxSlider.getValue());
-            return false;
-        });
     }
 
     private void setUpMenuLayout(TextButton backButton) {
@@ -130,11 +134,6 @@ public class SettingsScreen implements Screen {
 
         float sliderWidth = 340f;
 
-        mainTable.add(createLabeledRow(brightnessLabel)).padBottom(10);
-        mainTable.row();
-        mainTable.add(brightnessSlider).width(sliderWidth).padBottom(20);
-        mainTable.row();
-
         mainTable.add(createLabeledRow(volumeLabel)).padBottom(10);
         mainTable.row();
         mainTable.add(volumeSlider).width(sliderWidth).padBottom(20);
@@ -143,11 +142,6 @@ public class SettingsScreen implements Screen {
         mainTable.add(createLabeledRow(bgmLabel)).padBottom(10);
         mainTable.row();
         mainTable.add(bgmSlider).width(sliderWidth).padBottom(20);
-        mainTable.row();
-
-        mainTable.add(createLabeledRow(sfxLabel)).padBottom(10);
-        mainTable.row();
-        mainTable.add(sfxSlider).width(sliderWidth).padBottom(20);
         mainTable.row();
 
         mainTable.add(backButton).padTop(20);

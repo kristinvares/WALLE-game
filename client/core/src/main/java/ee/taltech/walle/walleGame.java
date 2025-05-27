@@ -1,5 +1,7 @@
 package ee.taltech.walle;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import ee.taltech.walle.Sprites.PlayerSprite;
 import networks.*;
 
@@ -11,6 +13,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import ee.taltech.walle.Screens.MenuScreen;
 import ee.taltech.walle.Screens.Playscreen;
+
+import com.badlogic.gdx.Preferences;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,6 +33,9 @@ public class walleGame extends Game {
     public static final short WALL_BIT = 8;
     public static final short ENEMY_BIT = 16;
     public static final short EXIT_BIT = 32;
+
+    private Music menuMusic;
+
 
     public SpriteBatch batch;
 
@@ -134,6 +141,18 @@ public class walleGame extends Game {
         return players;
     }
 
+    public void setMenuMusic(Music music) {
+        this.menuMusic = music;
+    }
+
+    public Music getMenuMusic() {
+        return menuMusic;
+    }
+
+    public Preferences getPreferences() {
+        return Gdx.app.getPreferences("wallePreferences");
+    }
+
     @Override
     public void render() {
         super.render();
@@ -141,10 +160,13 @@ public class walleGame extends Game {
 
     @Override
     public void dispose() {
-        super.dispose();
+        if (menuMusic != null) {
+            menuMusic.dispose();
+        }
         batch.dispose();
         if (client != null) {
             client.stop();
         }
+        super.dispose();
     }
 }

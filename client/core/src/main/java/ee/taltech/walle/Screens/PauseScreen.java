@@ -123,7 +123,11 @@ public class PauseScreen implements Screen {
 
     @Override
     public void show() {
-        // Tuleviku menuu featureite jaoks
+        // Taasta menüümuusika helitugevus, kui see mängib
+        if (game.getMenuMusic() != null && game.getMenuMusic().isPlaying()) {
+            float volume = game.getPreferences().getFloat("menu_volume", 50f);
+            game.getMenuMusic().setVolume(volume / 100f);
+        }
     }
 
     @Override

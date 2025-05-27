@@ -164,10 +164,17 @@ public class Playscreen implements Screen {
 
     @Override
     public void show() {
-        // hetkel pole vajalik, pop up menüüde jaoks ette valmistus
+        if (game.getMenuMusic() != null && game.getMenuMusic().isPlaying()) {
+            game.getMenuMusic().setVolume(0f);
+        }
+
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound_menu/Game_music.mp3"));
         gameMusic.setLooping(true);
-        gameMusic.setVolume(0.6f);
+
+        // Loe salvestatud BGM väärtus
+        float volume = game.getPreferences().getFloat("bgm_volume", 50f);
+        gameMusic.setVolume(volume / 100f);
+
         gameMusic.play();
     }
 
@@ -472,6 +479,11 @@ public class Playscreen implements Screen {
     public void hide() {
         if (gameMusic != null) {
             gameMusic.stop();
+        }
+
+        // Taasta menüümuusika heli
+        if (game.getMenuMusic() != null) {
+            game.getMenuMusic().setVolume(0.5f); // või eelmine väärtus
         }
     }
 
