@@ -1,45 +1,56 @@
 # ITI0301-2025
+## Project description:
+
+This project was originally made on gitlab for a development course at TalTech. The original version of the game was runnable on a server remotely. However we cannot extend the same support to the github version. The game was made as a group project with the 3 authors being: Kristin Vares(kristinvares), Janne-Lii Aun-Trepp(jaaunt) and Martin Sõna.
+
 ## WALLE
-### Mängu kirjeldus:
+### Game description:
 
-Tegemist on shooter mänguga, mida saab mängida nii single- kui ka multiplayerina. Mängus saab liikuda, tulistada ning olemas on ka AI, mis hetkel tuvastab talle lähimal oleva mängija ning liigub tema poole.
+Walle is a shooter/RPG game, playable on either single- or multiplayer. The game supports multiple instances that can run at the same time. Some features of the game are stable and easy to use movement, shooting mechanics, 2 diffrent types of AIs (guards and regular hostile npcs). The ai detects the nearest player and finds the shortest path to them. The guards ai is only triggered by proximity. The games end objective is randomly chosen from a set amout of options.
 
-### Klahviseosed:
+### Keybinds:
 
-- leftarrow, uparrow, rightarrow, downarrow - liikumine
-- space - tulistamine
+- leftarrow, uparrow, rightarrow, downarrow - movement
+- space - shoot in the direction you are facing
+- escape - pause menu
 
-### Kuidas mäng tööle saada:
+### How to run the game:
 
-Algselt tuleb see repo endale kloonida ja siis avada too Intellijs. Seal jaguneb see peamiselt kaheks osaks: server ja client. Server läheb tööle, kui jooksutada GameServeri java faili, mis on servr -> src -> main -> java -> ee -> taltech -> game -> server -> GameServer.java. See on serveri launcher. Client läheb tööle, kui jooksutada Lwjg3Launcher java faili, mis on
-client -> lwjgl3 -> src -> main -> java -> ee -> taltech -> WALLE -> lwjgl3 -> Lwjg3Launcher.java. See on kliendi launcher. Kuna tegemist on gradle projektiga, siis on mõistlik avada client kaust ja serveri kaust erinevatest akendes Intellijs. Seda saab teha, kui Intellijs avada File -> Open ning siis valida client kaust ja serveri kaust. Kui need on erinevates akendes avatud tuleb need buildida, selle jaoks peaks olema build.gradle, mida saab jooksutada. Kui builditud, siis tuleb jooksutada vastav launcher. Mängu toimimiseks tuleb algselt panna tööle server ning siis client. Kui sa tahad jooksutada mitut klienti, siis vajuta üleval paremas nurgas kolmele täpile -> edit ->  Gradle ->  client:lwjgl3 [run] ->  modify options ->  allow multiple instances -> sulge aken -> apply -> ok.
+First clone the project repo and open it in an IDE of your choice(must support java). The repo has 2 main parts: server and client. Please open both folders in seperate windows to continue. After that make sure to build the project again with grade for safety. You can find the build tasks in the gradle window on the right side. All server actions must be made on the server side and client side actions on the client side. Run the server first and then the client.
 
-### Kuidas ühenduda taltechi serveriga
+To run the game server locally on your pc you must run the GameServer file. You can find it under servr -> src -> main -> java -> ee -> taltech -> game -> server -> GameServer.java.
 
-Eeldusel, et server on üleval, siis:
+To run the client side  you must run the Lwjg3Launcher file. You can find it under client -> lwjgl3 -> src -> main -> java -> ee -> taltech -> WALLE -> lwjgl3 -> Lwjg3Launcher.java. 
+To play the game on multiplayer on your pc you must first allow multiple instances for the Lwjg3Launcher.
 
-- **Serveri IP aadress:** 193.40.255.32
+### How it connect to the TalTech server
+
+Only applicable when the server is currently running:
+
+- **Server IP aadress:** 193.40.255.32
 - **Port:** TCP: `8080`, UDP: `8081`
-- **Koodijupp, kus saab ühenduda, on walleGame klassis clientis:**
+- **Code on how the client connects:**
 
 ```java
 client.connect(5000, "193.40.255.32", 8080, 8081);
 ```
 
-### Kuidas mängida
+### How to play
 
-1. Kui tahad üksinda mängida vajuta play, kui tahad mängida mitmekesi, siis vajuta multiplayer
-2. Mängus saab liikuda kasutades keyarroweid ning tulistada vajutades space
-3. Hetkel pole Ai collisioneid tehtud, seega ta liigub mängija poole ning midagi ei juhtu
-4. Mängust saab välja, kui vajutada esc, see peaks tooma menüü ette, kus saab vajutada quiti
+1. Select either the singleplayer or multiplayer option.
+2. When the game starts you can move with arrow keys and shoot with space.
+3. Upon joining the game, hostile entities spawn and immidiately take the shortest path to you. Avoid them or kill them
+4. When a hostile entity touches you, you will take damage and eventually die
+5. The game ends when you find the correct house(picked randomly), avoid or kill the guards and enter it.
+6. You can pause and leave the game in the middle by pressting esc and bringig up the pause menu
 
 
-### Tehnoloogiad projektis:
+### Technologies used in the project:
 
 - Java 21 - Programming language
 - LibGDX 1.13.1 - Game development framework
 - KryoNet 2.22 - Network communication
-- Gradle (x.xx) - Build automation tool
+- Gradle - Build automation tool
 
 ### Features:
 
@@ -52,9 +63,7 @@ client.connect(5000, "193.40.255.32", 8080, 8081);
 | Menu                    | Single- and multiplayer options            |
 
 
-
-
-### Authorid:
+### Project athors:
 - Martin Sõna
 - Janne-Lii Aun-Trepp
 - Kristin Vares
