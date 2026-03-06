@@ -20,7 +20,7 @@ Walle is a shooter/RPG game, playable on either single- or multiplayer. The game
 
 First clone the project repo and open it in an IDE of your choice(must support java). The repo has 2 main parts: server and client. Please open both folders in seperate windows to continue. After that make sure to build the project again with grade for safety. You can find the build tasks in the gradle window on the right side. All server actions must be made on the server side and client side actions on the client side. Run the server first and then the client.
 
-To run the game server locally on your pc you must run the GameServer file. You can find it under servr -> src -> main -> java -> ee -> taltech -> game -> server -> GameServer.java.
+To run the game server locally on your pc you must run the GameServer file. You can find it under server -> src -> main -> java -> ee -> taltech -> game -> server -> GameServer.java.
 
 To run the client side  you must run the Lwjg3Launcher file. You can find it under client -> lwjgl3 -> src -> main -> java -> ee -> taltech -> WALLE -> lwjgl3 -> Lwjg3Launcher.java. 
 To play the game on multiplayer on your pc you must first allow multiple instances for the Lwjg3Launcher.
