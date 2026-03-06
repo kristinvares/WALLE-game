@@ -3,6 +3,8 @@
 
 This project was originally made on gitlab for a development course at TalTech. The original version of the game was runnable on a server remotely. However we cannot extend the same support to the github version. The game was made as a group project with the 3 authors being: Kristin Vares([kristinvares](https://github.com/kristinvares)), Janne-Lii Aun-Trepp([jaaunt](https://github.com/jaaunt)) and Martin Sõna.
 
+You can find the original estonian README [here](https://github.com/kristinvares/WALLE-game/blob/main/README_estonian.md)
+
 ## WALLE
 ### Game description:
 
