@@ -1,7 +1,7 @@
 # ITI0301-2025
 ## Project description:
 
-This project was originally made on gitlab for a development course at TalTech. The original version of the game was runnable on a server remotely. However we cannot extend the same support to the github version. The game was made as a group project with the 3 authors being: Kristin Vares(kristinvares), Janne-Lii Aun-Trepp(jaaunt) and Martin Sõna.
+This project was originally made on gitlab for a development course at TalTech. The original version of the game was runnable on a server remotely. However we cannot extend the same support to the github version. The game was made as a group project with the 3 authors being: Kristin Vares(@kristinvares), Janne-Lii Aun-Trepp(@jaaunt) and Martin Sõna.
 
 ## WALLE
 ### Game description:
