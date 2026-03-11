@@ -25,7 +25,7 @@ To run the game server locally on your pc you must run the GameServer file. You 
 To run the client side  you must run the Lwjg3Launcher file. You can find it under client -> lwjgl3 -> src -> main -> java -> ee -> taltech -> WALLE -> lwjgl3 -> Lwjg3Launcher.java. 
 To play the game on multiplayer on your pc you must first allow multiple instances for the Lwjg3Launcher.
 
-### How it connect to the TalTech server
+### How it connects to the TalTech server
 
 Only applicable when the server is currently running:
 
