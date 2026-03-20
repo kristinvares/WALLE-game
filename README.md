@@ -8,7 +8,7 @@ You can find the original estonian README [here](https://github.com/kristinvares
 ## WALLE
 ### Game description:
 
-Walle is a shooter/RPG game, playable on either single- or multiplayer. The game supports multiple instances that can run at the same time. Some features of the game are stable and easy to use movement, shooting mechanics, 2 diffrent types of AIs (guards and regular hostile npcs). The ai detects the nearest player and finds the shortest path to them. The guards ai is only triggered by proximity. The games end objective is randomly chosen from a set amout of options.
+Walle is a shooter/RPG game, playable on either single- or multiplayer. The game supports multiple instances that can run at the same time. Some features of the game are as follows: stable and easy to use movement, shooting mechanics, 2 diffrent types of AIs (guards and regular hostile npcs). The ai detects the nearest player and finds the shortest path to them. The guards ai is only triggered by proximity. The games end objective is randomly chosen from a set amout of options.
 
 ### Keybinds:
 
